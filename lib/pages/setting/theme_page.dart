@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart' show BlockPicker;
-import 'package:fml/constants.dart';
-import 'package:fml/main.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/main.dart';
 
 class ThemePage extends StatefulWidget {
   const ThemePage({super.key});
@@ -60,11 +60,11 @@ class ThemePageState extends State<ThemePage> {
                   label: Text('深色'),
                 ),
               ],
-              selected: {FMLBaseApp.of(context).themeMode},
+              selected: {FMCLBaseApp.of(context).themeMode},
 
               onSelectionChanged: (Set<ThemeMode> newSelection) {
                 setState(() {
-                  FMLBaseApp.of(context).changeTheme(newSelection.first);
+                  FMCLBaseApp.of(context).changeTheme(newSelection.first);
                 });
               },
             ),
@@ -90,7 +90,7 @@ class ThemePageState extends State<ThemePage> {
               title: const Text('主题色'),
               subtitle: const Text('设置配色方案'),
               trailing: CircleAvatar(
-                backgroundColor: FMLBaseApp.of(context).themeColor,
+                backgroundColor: FMCLBaseApp.of(context).themeColor,
                 radius: 12,
                 child: Container(
                   decoration: BoxDecoration(
@@ -112,7 +112,7 @@ class ThemePageState extends State<ThemePage> {
     showDialog(
       context: context,
       builder: (context) {
-        final themeColor = FMLBaseApp.of(context).themeColor;
+        final themeColor = FMCLBaseApp.of(context).themeColor;
 
         return AlertDialog(
           title: const Text('选择主题色'),
@@ -148,7 +148,7 @@ class ThemePageState extends State<ThemePage> {
 
             onColorChanged: (Color color) {
               setState(() {
-                FMLBaseApp.of(context).changeThemeColor(color);
+                FMCLBaseApp.of(context).changeThemeColor(color);
               });
             },
           ),

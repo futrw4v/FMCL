@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fml/utils/slide_page_route.dart';
+import 'package:fmcl/utils/slide_page_route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:fml/utils/log_util.dart';
-import 'package:fml/pages/download/modrinth/type/download_modpack/loader/fabric_modpack_page.dart';
-import 'package:fml/pages/download/modrinth/type/download_modpack/loader/neoforge_modpack_page.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/pages/download/modrinth/type/download_modpack/loader/fabric_modpack_page.dart';
+import 'package:fmcl/pages/download/modrinth/type/download_modpack/loader/neoforge_modpack_page.dart';
 
 class DownloadInfoPage extends StatefulWidget {
   const DownloadInfoPage(this.version, {super.key});

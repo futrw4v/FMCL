@@ -8,11 +8,11 @@ import 'package:archive/archive.dart';
 import 'package:dio/dio.dart';
 import 'package:system_info2/system_info2.dart';
 
-import 'package:fml/utils/dio_client.dart';
-import 'package:fml/utils/download.dart';
-import 'package:fml/constants.dart';
-import 'package:fml/utils/log_util.dart';
-import 'package:fml/utils/extract_natives.dart';
+import 'package:fmcl/utils/dio_client.dart';
+import 'package:fmcl/utils/download.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/utils/extract_natives.dart';
 
 class CurseforgeFabricModpackPage extends StatefulWidget {
   const CurseforgeFabricModpackPage({
@@ -113,8 +113,8 @@ class CurseforgeFabricModpackPageState
           LinuxInitializationSettings(defaultActionName: 'Open');
       const WindowsInitializationSettings initializationSettingsWindows =
           WindowsInitializationSettings(
-            appName: 'FML',
-            appUserModelId: 'lxdklp.fml',
+            appName: kAppName,
+            appUserModelId: 'futrw4v.$kAppId',
             guid: '11451419-0721-0721-0721-114514191981',
           );
       const InitializationSettings initializationSettings =

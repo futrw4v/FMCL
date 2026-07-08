@@ -1,7 +1,7 @@
-name: fml
+name: fmcl
 description: "Flutter Minecraft Launcher"
 publish_to: 'none'
-version: 1.9.0+12
+version: 1.0.0+1
 
 environment:
   sdk: ^3.8.1

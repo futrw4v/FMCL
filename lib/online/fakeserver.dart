@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:fml/utils/log_util.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/utils/log_util.dart';
 
 // Minecraft局域网游戏广播服务器
 class FakeServer {
@@ -58,7 +59,8 @@ class FakeServer {
 
   // 开始定时广播
   Future<void> _startBroadcasting() async {
-    final message = '[MOTD]§6§l双击进入 §r§6FML §l联机大厅[/MOTD][AD]$port[/AD]';
+    final message =
+        '[MOTD]§6§l双击进入 §r§6$kAppNameAbb §l联机大厅[/MOTD][AD]$port[/AD]';
     final messageBytes = Uint8List.fromList(utf8.encode(message));
     _broadcastTimer = Timer.periodic(const Duration(milliseconds: 1500), (_) {
       for (var socket in _sockets) {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fml/utils/slide_page_route.dart';
+import 'package:fmcl/utils/slide_page_route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fml/utils/log_util.dart';
-import 'package:fml/pages/home/account/new_account_page.dart';
-import 'package:fml/pages/home/account/offline_account_management_page.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/pages/home/account/new_account_page.dart';
+import 'package:fmcl/pages/home/account/offline_account_management_page.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});

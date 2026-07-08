@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:fml/utils/log_util.dart';
-import 'package:fml/launch/fabric.dart';
-import 'package:fml/launch/vanilla.dart';
-import 'package:fml/launch/neoforge.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/launch/fabric.dart';
+import 'package:fmcl/launch/vanilla.dart';
+import 'package:fmcl/launch/neoforge.dart';
 
 class PlayPage extends StatefulWidget {
   const PlayPage({super.key});

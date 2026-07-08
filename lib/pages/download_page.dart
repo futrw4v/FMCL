@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fml/constants.dart';
-import 'package:fml/pages/download/download_resources_page.dart';
-import 'package:fml/pages/download/download_version_page.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/pages/download/download_resources_page.dart';
+import 'package:fmcl/pages/download/download_version_page.dart';
 
 class DownloadPage extends StatefulWidget {
   const DownloadPage({super.key});

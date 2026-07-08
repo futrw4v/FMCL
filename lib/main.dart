@@ -2,15 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fml/java/java_service.dart';
-import 'package:fml/pages/home/start.dart';
-import 'package:fml/utils/slide_page_route.dart';
+import 'package:fmcl/java/java_service.dart';
+import 'package:fmcl/pages/home/main_start_page.dart';
+import 'package:fmcl/utils/slide_page_route.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:fml/constants.dart';
-import 'package:fml/utils/log_util.dart';
-import 'package:fml/pages/online/owner_page.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/pages/online/owner_page.dart';
 import 'package:window_manager/window_manager.dart';
 
 void main() async {
@@ -24,7 +24,7 @@ void main() async {
 
   JavaService.initFuture = JavaService.init();
 
-  runApp(const FMLBaseApp());
+  runApp(const FMCLBaseApp());
 }
 
 // 初始化窗口
@@ -70,8 +70,9 @@ Future<void> initVersionInfo() async {
 
   gAppVersion = packageInfo.version;
   gAppBuildNumber = int.tryParse(packageInfo.buildNumber) ?? 0;
-  gAppDefaultUserAgent = 'FML/$gAppVersion';
-  gAppModrinthUserAgent = 'lxdklp/FML/$gAppVersion (fml.lxdklp.top)';
+  gAppDefaultUserAgent = '$kAppNameAbb/$gAppVersion';
+  gAppModrinthUserAgent =
+      'futrw4v/$kAppNameAbb/$gAppVersion (${AppUrls.githubProject})';
 
   final prefs = await SharedPreferences.getInstance();
   await prefs.setString('version', gAppVersion);
@@ -87,22 +88,22 @@ Future<void> initLogs() async {
   }
 
   await LogUtil.log(
-    '启动FML, 平台:${Platform.operatingSystem}, 版本: $gAppVersion, 构建号: $gAppBuildNumber${kDebugMode ? ", debug模式" : ""}',
+    '启动$kAppNameAbb, 平台:${Platform.operatingSystem}, 版本: $gAppVersion, 构建号: $gAppBuildNumber${kDebugMode ? ", debug模式" : ""}',
     level: 'INFO',
   );
 }
 
-class FMLBaseApp extends StatefulWidget {
-  const FMLBaseApp({super.key});
+class FMCLBaseApp extends StatefulWidget {
+  const FMCLBaseApp({super.key});
 
-  static FMLBaseAppState of(BuildContext context) =>
-      context.findAncestorStateOfType<FMLBaseAppState>()!;
+  static FMCLBaseAppState of(BuildContext context) =>
+      context.findAncestorStateOfType<FMCLBaseAppState>()!;
 
   @override
-  FMLBaseAppState createState() => FMLBaseAppState();
+  FMCLBaseAppState createState() => FMCLBaseAppState();
 }
 
-class FMLBaseAppState extends State<FMLBaseApp> {
+class FMCLBaseAppState extends State<FMCLBaseApp> {
   ThemeMode _themeMode = ThemeMode.system;
   Color _themeColor = Colors.blue;
 

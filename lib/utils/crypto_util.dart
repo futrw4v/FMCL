@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:fml/utils/log_util.dart';
+import 'package:fmcl/utils/log_util.dart';
 
 class CryptoUtil {
   static String? _cachedDeviceId;

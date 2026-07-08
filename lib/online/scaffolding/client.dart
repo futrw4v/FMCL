@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:fml/utils/log_util.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/utils/log_util.dart';
 
 /// Scaffolding协议TCP客户端
 class OnlineCenterClient {
@@ -38,7 +39,7 @@ class OnlineCenterClient {
     required this.playerName,
     required this.machineId,
     this.easytierId = '',
-    this.vendor = 'FML',
+    this.vendor = kAppNameAbb,
     this.useIP = false,
   });
 

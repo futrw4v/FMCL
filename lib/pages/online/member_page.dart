@@ -4,13 +4,14 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fml/models/online/easy_tier_peer.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/models/online/easy_tier_peer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_gbk2utf8/flutter_gbk2utf8.dart';
-import 'package:fml/utils/log_util.dart';
-import 'package:fml/online/scaffolding/client.dart';
-import 'package:fml/online/fakeserver.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/online/scaffolding/client.dart';
+import 'package:fmcl/online/fakeserver.dart';
 
 class MemberPage extends StatefulWidget {
   final String etServer;
@@ -264,7 +265,7 @@ class MemberPageState extends State<MemberPage> {
     } catch (e) {
       LogUtil.log('加载玩家名称失败: $e', level: 'ERROR');
       setState(() {
-        _playerName = "FML客户端";
+        _playerName = "$kAppNameAbb客户端";
       });
     }
   }
@@ -658,7 +659,7 @@ class MemberPageState extends State<MemberPage> {
         playerName: _playerName ?? 'Guest',
         machineId: _machineId ?? const Uuid().v4(),
         easytierId: myEasytierId,
-        vendor: 'FML $appVersion, EasyTier v$coreVersion',
+        vendor: '$kAppNameAbb $appVersion, EasyTier v$coreVersion',
         useIP: true,
       );
       await _client!.connect();

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
-import 'package:fml/utils/log_util.dart';
+import 'package:fmcl/utils/log_util.dart';
 
 Future<void> saveOffineAccount(BuildContext context, String name) async {
   String uuid = md5.convert(utf8.encode('OfflinePlayer:$name')).toString();

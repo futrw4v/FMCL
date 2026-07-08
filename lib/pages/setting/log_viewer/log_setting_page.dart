@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fml/constants.dart';
+import 'package:fmcl/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LogSettingPage extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' hide LicensePage;
-import 'package:fml/constants.dart';
+import 'package:fmcl/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatefulWidget {

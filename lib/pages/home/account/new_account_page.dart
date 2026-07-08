@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 // 账号模块
-import 'package:fml/account/offline.dart' as offline_lib;
-import 'package:fml/account/microsoft.dart' as online_lib;
-import 'package:fml/account/external.dart' as external_lib;
+import 'package:fmcl/account/offline.dart' as offline_lib;
+import 'package:fmcl/account/microsoft.dart' as online_lib;
+import 'package:fmcl/account/external.dart' as external_lib;
 
 class NewAccountPage extends StatefulWidget {
   const NewAccountPage({super.key});

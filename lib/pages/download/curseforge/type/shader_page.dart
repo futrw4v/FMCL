@@ -5,10 +5,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:fml/utils/log_util.dart';
-import 'package:fml/utils/download.dart';
-import 'package:fml/constants.dart';
-import 'package:fml/utils/dio_client.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/utils/download.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/utils/dio_client.dart';
 
 class CurseforgeShaderPage extends StatefulWidget {
   const CurseforgeShaderPage({required this.modId, this.modName, super.key});

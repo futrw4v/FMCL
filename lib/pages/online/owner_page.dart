@@ -5,13 +5,14 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fml/models/online/player_list.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/models/online/player_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_gbk2utf8/flutter_gbk2utf8.dart';
-import 'package:fml/utils/log_util.dart';
-import 'package:fml/online/scaffolding/server.dart';
-import 'package:fml/online/scanner.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/online/scaffolding/server.dart';
+import 'package:fmcl/online/scanner.dart';
 
 class OwnerPage extends StatefulWidget {
   final int port;
@@ -297,7 +298,7 @@ class OwnerPageState extends State<OwnerPage> {
     } catch (e) {
       LogUtil.log('加载玩家名称失败: $e', level: 'ERROR');
       setState(() {
-        _playerName = "FML客户端";
+        _playerName = "$kAppNameAbb客户端";
       });
     }
   }
@@ -575,7 +576,7 @@ class OwnerPageState extends State<OwnerPage> {
       _tcpServerPort = await _findAvailablePort();
       _tcpServer = OnlineCenterServer(
         hostName: _playerName,
-        hostVendor: 'FML $appVersion, EasyTier v$coreVersion',
+        hostVendor: '$kAppNameAbb $appVersion, EasyTier v$coreVersion',
         port: _tcpServerPort,
         minecraftServerPort: _port,
       );

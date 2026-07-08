@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:fml/utils/download.dart';
-import 'package:fml/utils/log_util.dart';
+import 'package:fmcl/utils/download.dart';
+import 'package:fmcl/utils/log_util.dart';
 
-import 'package:fml/constants.dart';
+import 'package:fmcl/constants.dart';
 
 ///
 /// 一个自带默认配置的Dio单例

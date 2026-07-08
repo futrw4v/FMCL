@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'package:fml/utils/slide_page_route.dart';
-import 'package:fml/utils/dio_client.dart';
+import 'package:fmcl/utils/slide_page_route.dart';
+import 'package:fmcl/utils/dio_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fml/utils/log_util.dart';
-import 'package:fml/pages/download/modrinth/info_page.dart';
-import 'package:fml/pages/download/curseforge/info_page.dart';
-import 'package:fml/constants.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/pages/download/modrinth/info_page.dart';
+import 'package:fmcl/pages/download/curseforge/info_page.dart';
+import 'package:fmcl/constants.dart';
 
 class DownloadResources extends StatefulWidget {
   const DownloadResources({super.key});

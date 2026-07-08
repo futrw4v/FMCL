@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:fml/utils/log_util.dart';
-import 'package:fml/models/java/java_info.dart';
-import 'package:fml/models/java/java_runtime.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/models/java/java_info.dart';
+import 'package:fmcl/models/java/java_runtime.dart';
 import 'package:win32_registry/win32_registry.dart';
 
 class JavaUtils {

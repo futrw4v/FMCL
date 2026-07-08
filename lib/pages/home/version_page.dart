@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fml/utils/slide_page_route.dart';
+import 'package:fmcl/utils/slide_page_route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:fml/pages/home/version/add_path_page.dart';
-import 'package:fml/pages/home/version/selected_game_page.dart';
+import 'package:fmcl/pages/home/version/add_path_page.dart';
+import 'package:fmcl/pages/home/version/selected_game_page.dart';
 
 class VersionPage extends StatefulWidget {
   const VersionPage({super.key});

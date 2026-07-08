@@ -2,10 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:fml/constants.dart';
-import 'package:fml/utils/log_util.dart';
-import 'package:fml/utils/slide_page_route.dart';
-import 'package:fml/pages/setting/log_viewer/log_setting_page.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/utils/slide_page_route.dart';
+import 'package:fmcl/pages/setting/log_viewer/log_setting_page.dart';
 import 'package:intl/intl.dart';
 
 class LogViewerPage extends StatefulWidget {
@@ -255,13 +255,13 @@ class LogViewerPageState extends State<LogViewerPage> {
           .replaceAll(' ', '_')
           .split('.')[0];
 
-      final logFileName = 'fml_$timestamp.log';
+      final logFileName = '$kAppId$timestamp.log';
       final logFile = File(
         '${directory.path}${Platform.pathSeparator}$logFileName',
       );
 
       final StringBuffer logContent = StringBuffer();
-      logContent.writeln('===== FML 日志 =====');
+      logContent.writeln('===== $kAppNameAbb 日志 =====');
       logContent.writeln('导出时间: ${DateTime.now()}');
       logContent.writeln('====================\n');
 

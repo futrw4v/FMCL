@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:flutter/material.dart';
-import 'package:fml/constants.dart';
-import 'package:fml/models/download/download_result.dart';
-import 'package:fml/utils/log_util.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/models/download/download_result.dart';
+import 'package:fmcl/utils/log_util.dart';
 
 // 进度更新
 class _ProgressUpdater {

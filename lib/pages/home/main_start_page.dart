@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fml/constants.dart';
-import 'package:fml/java/java_service.dart';
-import 'package:fml/pages/download_page.dart';
-import 'package:fml/pages/home_page.dart' show HomePage;
-import 'package:fml/pages/online_page.dart';
-import 'package:fml/pages/setting_page.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/java/java_service.dart';
+import 'package:fmcl/pages/download_page.dart';
+import 'package:fmcl/pages/home_page.dart' show HomePage;
+import 'package:fmcl/pages/online_page.dart';
+import 'package:fmcl/pages/setting_page.dart';
 import 'package:lazy_load_indexed_stack/lazy_load_indexed_stack.dart';
 import 'package:url_launcher/url_launcher.dart';
 

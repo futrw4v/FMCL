@@ -1,12 +1,12 @@
 import 'dart:io';
-import 'package:fml/constants.dart';
-import 'package:fml/java/java_service.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/java/java_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:async';
-import 'package:fml/utils/log_util.dart';
-import 'package:fml/launch/login/microsoft_login.dart' as microsoft_login;
-import 'package:fml/launch/login/external_login.dart' as external_login;
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/launch/login/microsoft_login.dart' as microsoft_login;
+import 'package:fmcl/launch/login/external_login.dart' as external_login;
 
 typedef ProgressCallback = void Function(String message);
 typedef ErrorCallback = void Function(String error);
@@ -167,7 +167,7 @@ Future<void> vanillaLauncher({
     '-XX:-OmitStackTraceInFastThrow',
     '-Dfml.ignoreInvalidMinecraftCertificates=true',
     '-Dfml.ignorePatchDiscrepancies=true',
-    '-Dminecraft.launcher.brand=FML',
+    '-Dminecraft.launcher.brand=$kAppNameAbb',
     if (Platform.isMacOS) '-XstartOnFirstThread',
     '-Djava.library.path=$nativesPath',
     '-Djna.tmpdir=$nativesPath',

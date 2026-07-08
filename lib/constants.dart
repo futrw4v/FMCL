@@ -2,7 +2,8 @@
 /// 应用常量
 ///
 const kAppName = 'Flutter Minecraft Launcher';
-const kAppNameAbb = 'FML';
+const kAppNameAbb = 'FCML';
+const kAppId = 'fmcl';
 const kDefaultPadding = 16.0;
 
 ///
@@ -37,8 +38,8 @@ class AppUrls {
   static const String javaDownload =
       'https://www.oracle.com/cn/java/technologies/downloads/';
   static const String githubReleasesApi =
-      'https://api.github.com/repos/futrw4v/FML/releases';
-  static const String githubProject = 'https://github.com/futrw4v/FML';
+      'https://api.github.com/repos/futrw4v/FMCL/releases';
+  static const String githubProject = 'https://github.com/futrw4v/FMCL';
   static const String githubLatestRelease =
       '${AppUrls.githubProject}/releases/latest';
 }
@@ -47,4 +48,3 @@ class AppUrls {
 // 路由
 //
 const String kOnlineOwnerRoute = '/online/owner';
-const String kNativeMethodChannel = 'lxdklp/fml_native';

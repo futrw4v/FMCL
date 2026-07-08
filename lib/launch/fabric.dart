@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:fml/java/java_service.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/java/java_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:path/path.dart' as p;
-import 'package:fml/utils/log_util.dart';
-import 'package:fml/launch/login/microsoft_login.dart' as microsoft_login;
-import 'package:fml/launch/login/external_login.dart' as external_login;
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/launch/login/microsoft_login.dart' as microsoft_login;
+import 'package:fmcl/launch/login/external_login.dart' as external_login;
 
 typedef ProgressCallback = void Function(String message);
 typedef ErrorCallback = void Function(String error);
@@ -448,7 +449,7 @@ Future<void> fabricLauncher({
     '-XX:-OmitStackTraceInFastThrow',
     '-Dfml.ignoreInvalidMinecraftCertificates=true',
     '-Dfml.ignorePatchDiscrepancies=true',
-    '-Dminecraft.launcher.brand=FML',
+    '-Dminecraft.launcher.brand=$kAppNameAbb',
     "-Duser.home=null",
     if (Platform.isMacOS) '-XstartOnFirstThread',
     '-Djava.library.path=$nativesPath',
@@ -483,7 +484,7 @@ Future<void> fabricLauncher({
     if (accountInfo[0] == '2') '--clientId',
     token,
     '--versionType',
-    '"FML $version"',
+    '"$kAppNameAbb $version"',
     '--xuid',
     '"\${auth_xuid}"',
     '--width',

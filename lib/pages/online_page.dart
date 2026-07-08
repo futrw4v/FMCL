@@ -1,16 +1,16 @@
 import 'dart:io';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:fml/utils/slide_page_route.dart';
-import 'package:fml/utils/dio_client.dart';
+import 'package:fmcl/utils/slide_page_route.dart';
+import 'package:fmcl/utils/dio_client.dart';
 import 'package:system_info2/system_info2.dart';
 import 'package:archive/archive.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fml/utils/log_util.dart';
-import 'package:fml/utils/download.dart';
-import 'package:fml/pages/online/owner_page.dart';
-import 'package:fml/pages/online/member_page.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/utils/download.dart';
+import 'package:fmcl/pages/online/owner_page.dart';
+import 'package:fmcl/pages/online/member_page.dart';
 
 class OnlinePage extends StatefulWidget {
   const OnlinePage({super.key});
@@ -396,7 +396,7 @@ class OnlinePageState extends State<OnlinePage> {
             Card(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: ListTile(
-                title: const Text('支持与 FML、HMCL、PCL2-CE、FCL 客户端联机'),
+                title: const Text('支持与 FCML、HMCL、PCL2-CE、FCL 客户端联机'),
                 subtitle: const Text('基于p2p,使用Scaffolding协议通讯,联机效果取决于你的网络环境'),
                 leading: const Icon(Icons.info),
               ),

@@ -4,14 +4,14 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:dio/dio.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fml/utils/slide_page_route.dart';
-import 'package:fml/utils/dio_client.dart';
-import 'package:fml/constants.dart';
-import 'package:fml/utils/log_util.dart';
-import 'package:fml/pages/download/modrinth/type/mod_page.dart';
-import 'package:fml/pages/download/modrinth/type/modpack_page.dart';
-import 'package:fml/pages/download/modrinth/type/resourcepack_page.dart';
-import 'package:fml/pages/download/modrinth/type/shader_page.dart';
+import 'package:fmcl/utils/slide_page_route.dart';
+import 'package:fmcl/utils/dio_client.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/pages/download/modrinth/type/mod_page.dart';
+import 'package:fmcl/pages/download/modrinth/type/modpack_page.dart';
+import 'package:fmcl/pages/download/modrinth/type/resourcepack_page.dart';
+import 'package:fmcl/pages/download/modrinth/type/shader_page.dart';
 
 class InfoPage extends StatefulWidget {
   final String slug;

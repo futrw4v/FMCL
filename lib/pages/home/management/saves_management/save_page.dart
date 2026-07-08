@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 
-import 'package:fml/pages/home/management/saves_management/save/save_info_tab.dart';
-import 'package:fml/pages/home/management/saves_management/save/save_backups_tab.dart';
+import 'package:fmcl/pages/home/management/saves_management/save/save_info_tab.dart';
+import 'package:fmcl/pages/home/management/saves_management/save/save_backups_tab.dart';
 
 class SavePage extends StatefulWidget {
   final String savePath;

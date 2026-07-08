@@ -3,11 +3,11 @@ import 'dart:isolate';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:fml/constants.dart';
-import 'package:fml/java/java_service.dart';
-import 'package:fml/java/java_utils.dart';
-import 'package:fml/models/java/java_info.dart';
-import 'package:fml/models/java/java_runtime.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/java/java_service.dart';
+import 'package:fmcl/java/java_utils.dart';
+import 'package:fmcl/models/java/java_info.dart';
+import 'package:fmcl/models/java/java_runtime.dart';
 import 'package:open_filex/open_filex.dart';
 
 class JavaPage extends StatefulWidget {

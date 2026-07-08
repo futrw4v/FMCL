@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fml/constants.dart';
-import 'package:fml/models/page/navigation_drawer_item.dart';
-import 'package:fml/pages/setting/theme_page.dart';
-import 'package:fml/pages/setting/java_page.dart';
-import 'package:fml/pages/setting/translate_page.dart';
-import 'package:fml/pages/setting/log_viewer_page.dart';
-import 'package:fml/pages/setting/about_page.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/models/page/navigation_drawer_item.dart';
+import 'package:fmcl/pages/setting/theme_page.dart';
+import 'package:fmcl/pages/setting/java_page.dart';
+import 'package:fmcl/pages/setting/translate_page.dart';
+import 'package:fmcl/pages/setting/log_viewer_page.dart';
+import 'package:fmcl/pages/setting/about_page.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});

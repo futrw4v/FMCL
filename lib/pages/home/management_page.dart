@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
-import 'package:fml/pages/home/management/game_settings_tab.dart';
-import 'package:fml/pages/home/management/mod_management_tab.dart';
-import 'package:fml/pages/home/management/resourcepack_management_tab.dart';
-import 'package:fml/pages/home/management/shaderpack_management_tab.dart';
-import 'package:fml/pages/home/management/schematic_management_tab.dart';
-import 'package:fml/pages/home/management/saves_management_tab.dart';
+import 'package:fmcl/pages/home/management/game_settings_tab.dart';
+import 'package:fmcl/pages/home/management/mod_management_tab.dart';
+import 'package:fmcl/pages/home/management/resourcepack_management_tab.dart';
+import 'package:fmcl/pages/home/management/shaderpack_management_tab.dart';
+import 'package:fmcl/pages/home/management/schematic_management_tab.dart';
+import 'package:fmcl/pages/home/management/saves_management_tab.dart';
 
 class ManagementPage extends StatefulWidget {
   const ManagementPage({super.key});

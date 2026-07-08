@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
-import 'package:fml/utils/dio_client.dart';
-import 'package:fml/constants.dart';
-import 'package:fml/utils/log_util.dart';
-import 'package:fml/utils/slide_page_route.dart';
-import 'package:fml/pages/download/modrinth/type/download_modpack/download_info_page.dart';
+import 'package:fmcl/utils/dio_client.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/utils/slide_page_route.dart';
+import 'package:fmcl/pages/download/modrinth/type/download_modpack/download_info_page.dart';
 
 class ModpackPage extends StatefulWidget {
   const ModpackPage({required this.projectId, this.projectName, super.key});

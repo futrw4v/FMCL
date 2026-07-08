@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:fml/utils/download.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/utils/download.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:system_info2/system_info2.dart';
 
-import 'package:fml/utils/extract_natives.dart';
-import 'package:fml/utils/log_util.dart';
+import 'package:fmcl/utils/extract_natives.dart';
+import 'package:fmcl/utils/log_util.dart';
 
 class DownloadFabricPage extends StatefulWidget {
   const DownloadFabricPage({
@@ -91,8 +92,8 @@ class DownloadFabricPageState extends State<DownloadFabricPage> {
           LinuxInitializationSettings(defaultActionName: 'Open');
       const WindowsInitializationSettings initializationSettingsWindows =
           WindowsInitializationSettings(
-            appName: 'FML',
-            appUserModelId: 'lxdklp.fml',
+            appName: kAppName,
+            appUserModelId: 'futrw4v.$kAppId',
             guid: '11451419-0721-0721-0721-114514191981',
           );
       const InitializationSettings initializationSettings =

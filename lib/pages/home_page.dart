@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fml/utils/slide_page_route.dart';
+import 'package:fmcl/utils/slide_page_route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:fml/pages/home/account_page.dart';
-import 'package:fml/pages/home/version_page.dart';
-import 'package:fml/pages/home/management_page.dart';
-import 'package:fml/pages/home/play_page.dart';
+import 'package:fmcl/pages/home/account_page.dart';
+import 'package:fmcl/pages/home/version_page.dart';
+import 'package:fmcl/pages/home/management_page.dart';
+import 'package:fmcl/pages/home/play_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

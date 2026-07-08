@@ -5,10 +5,10 @@ import 'package:path/path.dart' as path;
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:fml/utils/dio_client.dart';
-import 'package:fml/constants.dart';
-import 'package:fml/utils/log_util.dart';
-import 'package:fml/utils/download.dart';
+import 'package:fmcl/utils/dio_client.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/utils/download.dart';
 
 class ShaderPage extends StatefulWidget {
   const ShaderPage({required this.projectId, this.projectName, super.key});

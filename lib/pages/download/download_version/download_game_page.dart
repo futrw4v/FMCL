@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:fml/constants.dart';
-import 'package:fml/utils/dio_client.dart';
-import 'package:fml/utils/slide_page_route.dart';
-import 'package:fml/models/game/minecraft_version.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/utils/dio_client.dart';
+import 'package:fmcl/utils/slide_page_route.dart';
+import 'package:fmcl/models/game/minecraft_version.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 
-import 'package:fml/utils/log_util.dart';
-import 'package:fml/pages/download/download_version/loader/download_vanilla_page.dart';
-import 'package:fml/pages/download/download_version/loader/download_fabric_page.dart';
-import 'package:fml/pages/download/download_version/loader/download_neoforge_page.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/pages/download/download_version/loader/download_vanilla_page.dart';
+import 'package:fmcl/pages/download/download_version/loader/download_fabric_page.dart';
+import 'package:fmcl/pages/download/download_version/loader/download_neoforge_page.dart';
 
 class DownloadGamePage extends StatefulWidget {
   const DownloadGamePage({super.key, required this.version});
