@@ -10,6 +10,11 @@ class AboutPage extends StatefulWidget {
 }
 
 class AboutPageState extends State<AboutPage> {
+  static const kPadding = EdgeInsets.symmetric(
+    horizontal: kDefaultPadding,
+    vertical: kDefaultPadding / 4,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,16 +32,10 @@ class AboutPageState extends State<AboutPage> {
               borderRadius: BorderRadius.circular(12),
             ),
 
-            margin: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+            margin: kPadding,
 
             child: Column(
               children: [
-                Text(
-                  '\n本项目使用GPL3.0协议开源,使用过程中请遵守GPL3.0协议\n',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -58,27 +57,26 @@ class AboutPageState extends State<AboutPage> {
                   ],
                 ),
 
-                const SizedBox(height: kDefaultPadding),
-
                 Text(
-                  '$kAppName Version $gAppVersion',
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                  '$kAppName v$gAppVersion',
+                  style: TextStyle(fontSize: 15),
                   textAlign: TextAlign.center,
                 ),
 
                 Text(
-                  'Copyright © 2026 lxdklp. All rights reserved\n',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  'FMCL 基于 FML (by lxdklp) 二次开发\n'
+                  'Copyright © 2026 futrw4v. Licensed under GPL v3\n',
+                  style: TextStyle(fontSize: 15),
+                  textAlign: TextAlign.center,
+                ),
+
+                Text(
+                  '本项目使用GPL3.0协议开源，在使用过程中请遵守GPL3.0协议！\n',
+                  style: TextStyle(fontSize: 18),
                   textAlign: TextAlign.center,
                 ),
               ],
             ),
-          ),
-
-          _buildCardWithListTile(
-            title: '官网',
-            subtitle: AppUrls.officialWebsite,
-            onTap: () => _launchURL(AppUrls.officialWebsite),
           ),
 
           _buildCardWithListTile(
@@ -100,12 +98,7 @@ class AboutPageState extends State<AboutPage> {
           ),
 
           Card(
-            margin: const EdgeInsets.only(
-              left: kDefaultPadding,
-              right: kDefaultPadding,
-              bottom: kDefaultPadding,
-            ),
-
+            margin: kPadding,
             clipBehavior: Clip.antiAlias,
 
             elevation: 0,
@@ -120,6 +113,16 @@ class AboutPageState extends State<AboutPage> {
             child: Column(
               children: [
                 const ListTile(title: Text('鸣谢'), subtitle: Text('排名不分先后顺序')),
+                ListTile(
+                  title: const Text('lxdklp'),
+                  subtitle: const Text(
+                    'FML作者\nhttps://github.com/lxdklp/FML/releases/',
+                  ),
+                  trailing: const Icon(Icons.open_in_new),
+                  onTap: () =>
+                      _launchURL('https://github.com/lxdklp/FML/releases/'),
+                ),
+
                 ListTile(
                   title: const Text('bangbang93'),
                   subtitle: const Text(
@@ -162,7 +165,7 @@ class AboutPageState extends State<AboutPage> {
                 ListTile(
                   title: const Text('Sawaratsuki'),
                   subtitle: const Text(
-                    'Flutter LOGO 绘制\nhttps://github.com/SAWARATSUKI/KawaiiLogos',
+                    'Flutter Logo \nhttps://github.com/SAWARATSUKI/KawaiiLogos',
                   ),
                   trailing: const Icon(Icons.open_in_new),
                   onTap: () =>
@@ -238,24 +241,29 @@ class AboutPageState extends State<AboutPage> {
                 ),
 
                 ListTile(
-                  title: const Text('futurw4v'),
-                  subtitle: const Text('贡献者\nhttps://github.com/futurw4v'),
+                  title: const Text('PCL'),
+                  subtitle: const Text(
+                    '部分功能实现参考\nhttps://github.com/Meloong-Git/PCL',
+                  ),
                   trailing: const Icon(Icons.open_in_new),
-                  onTap: () => _launchURL('https://github.com/futurw4v'),
+                  onTap: () => _launchURL('https://github.com/Meloong-Git/PCL'),
                 ),
+
                 ListTile(
-                  title: const Text('图标画师'),
+                  title: const Text('图标'),
                   subtitle: const Text('https://github.com/lxdklp/FML/pull/7'),
                   trailing: const Icon(Icons.open_in_new),
                   onTap: () =>
                       _launchURL('https://github.com/lxdklp/FML/pull/7'),
                 ),
+
                 ListTile(
                   title: const Text('Google 翻译'),
                   subtitle: const Text('https://translate.google.com/about'),
                   trailing: const Icon(Icons.open_in_new),
                   onTap: () => _launchURL('https://translate.google.com/about'),
                 ),
+
                 ListTile(
                   title: const Text('Cloudflare'),
                   subtitle: const Text('https://www.cloudflare.com'),
@@ -289,10 +297,7 @@ class AboutPageState extends State<AboutPage> {
         borderRadius: BorderRadius.circular(12),
       ),
 
-      margin: const EdgeInsets.symmetric(
-        horizontal: kDefaultPadding,
-        vertical: kDefaultPadding / 2,
-      ),
+      margin: kPadding,
 
       child: ListTile(
         title: Text(title),
