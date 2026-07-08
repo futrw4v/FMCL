@@ -1,20 +1,15 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:fml/constants.dart';
 import 'package:fml/java/java_service.dart';
 import 'package:fml/pages/download_page.dart';
 import 'package:fml/pages/home_page.dart' show HomePage;
 import 'package:fml/pages/online_page.dart';
 import 'package:fml/pages/setting_page.dart';
-import 'package:fml/utils/dio_client.dart';
 import 'package:lazy_load_indexed_stack/lazy_load_indexed_stack.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:fml/utils/log_util.dart';
 
 class MainStartPage extends StatefulWidget {
   const MainStartPage({super.key});
@@ -32,13 +27,6 @@ class MainStartPageState extends State<MainStartPage> {
     DownloadPage(),
     SettingPage(),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-
-    _checkUpdate();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +118,6 @@ class MainStartPageState extends State<MainStartPage> {
                 label: '关于',
                 onSelected: () => _showAboutDialog(context),
               ),
-              PlatformMenuItem(label: '检查更新', onSelected: () => _checkUpdate()),
               PlatformMenuItem(
                 label: '设置',
                 shortcut: const SingleActivator(
@@ -222,89 +209,6 @@ class MainStartPageState extends State<MainStartPage> {
         context,
       ).showSnackBar(SnackBar(content: Text('发生错误: $e')));
     }
-  }
-
-  // 检查更新
-  Future<void> _checkUpdate() async {
-    try {
-      LogUtil.log('正在检查更新', level: 'INFO');
-      final response = await DioClient().dio.get(
-        AppUrls.latestVersionApi,
-        options: Options(
-          headers: {
-            'User-Agent':
-                '$kAppNameAbb/${Platform.operatingSystem}/$gAppVersion+$gAppBuildNumber ${kDebugMode ? 'debug' : ''}',
-          },
-        ),
-      );
-      if (response.statusCode == 200) {
-        String rawVersionData = response.data.toString();
-        String cleanedVersionString = rawVersionData
-            .replaceAll("[", "")
-            .replaceAll("]", "");
-        final int latestVersion =
-            int.tryParse(cleanedVersionString) ?? gAppBuildNumber;
-        LogUtil.log('最新版本: $latestVersion');
-        if (latestVersion > gAppBuildNumber && mounted) {
-          _showUpdateDialog(latestVersion.toString());
-        }
-      }
-    } catch (e) {
-      LogUtil.log(e.toString(), level: 'ERROR');
-    }
-  }
-
-  // 获取更新日志
-  Future<List<String>> _getUpdateInfo() async {
-    try {
-      final response = await DioClient().dio.get(AppUrls.githubReleasesApi);
-      if (response.statusCode == 200) {
-        Map<String, dynamic> loaderData = response.data[0];
-        return [loaderData['name'], loaderData['body']];
-      }
-    } catch (e) {
-      LogUtil.log('获取更新日志失败: $e', level: 'ERROR');
-      return ['', '请前往 GitHub 查看更新日志'];
-    }
-    return ['', '请前往 GitHub 查看更新日志'];
-  }
-
-  // 显示更新对话框
-  Future<void> _showUpdateDialog(String latestVersion) async {
-    List<String> info = await _getUpdateInfo();
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('发现新版本 ${info[0]}'),
-        content: SizedBox(
-          width: double.maxFinite,
-          height: 300,
-          child: SingleChildScrollView(
-            child: Markdown(
-              data: info[1],
-              selectable: true,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              onTapLink: (text, href, title) {
-                if (href != null) _launchURL(href);
-              },
-            ),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () async {
-              _launchURL(AppUrls.githubLatestRelease);
-            },
-            child: const Text('前往GitHub下载'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('取消'),
-          ),
-        ],
-      ),
-    );
   }
 
   // 显示关于对话框

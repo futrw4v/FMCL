@@ -36,14 +36,11 @@ class AppFontWeights {
 class AppUrls {
   static const String javaDownload =
       'https://www.oracle.com/cn/java/technologies/downloads/';
-  static const String latestVersionApi =
-      'https://api.lxdklp.top/v1/fml/get_version';
   static const String githubReleasesApi =
-      'https://api.github.com/repos/lxdklp/FML/releases';
-  static const String githubProject = 'https://github.com/lxdklp/FML';
+      'https://api.github.com/repos/futrw4v/FML/releases';
+  static const String githubProject = 'https://github.com/futrw4v/FML';
   static const String githubLatestRelease =
       '${AppUrls.githubProject}/releases/latest';
-  static const String officialWebsite = 'https://fml.lxdklp.top';
 }
 
 //
