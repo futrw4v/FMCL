@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fml/constants.dart';
 import 'package:fml/java/java_service.dart';
 import 'package:fml/pages/download_page.dart';
@@ -106,88 +103,6 @@ class MainStartPageState extends State<MainStartPage> {
       },
     );
 
-    // macOS 菜单栏
-    if (Platform.isMacOS) {
-      return PlatformMenuBar(
-        menus: [
-          // FML 菜单
-          PlatformMenu(
-            label: kAppName,
-            menus: [
-              PlatformMenuItem(
-                label: '关于',
-                onSelected: () => _showAboutDialog(context),
-              ),
-              PlatformMenuItem(
-                label: '设置',
-                shortcut: const SingleActivator(
-                  LogicalKeyboardKey.comma,
-                  meta: true,
-                ),
-                onSelected: () => setState(() => _selectedIndex = 3),
-              ),
-              PlatformMenuItem(
-                label: '退出',
-                shortcut: const SingleActivator(
-                  LogicalKeyboardKey.keyQ,
-                  meta: true,
-                ),
-                onSelected: () => SystemNavigator.pop(),
-              ),
-            ],
-          ),
-          // 导航菜单
-          PlatformMenu(
-            label: '导航',
-            menus: [
-              PlatformMenuItem(
-                label: '启动',
-                shortcut: const SingleActivator(
-                  LogicalKeyboardKey.digit1,
-                  meta: true,
-                ),
-                onSelected: () => setState(() => _selectedIndex = 0),
-              ),
-              PlatformMenuItem(
-                label: '联机',
-                shortcut: const SingleActivator(
-                  LogicalKeyboardKey.digit2,
-                  meta: true,
-                ),
-                onSelected: () => setState(() => _selectedIndex = 1),
-              ),
-              PlatformMenuItem(
-                label: '下载',
-                shortcut: const SingleActivator(
-                  LogicalKeyboardKey.digit3,
-                  meta: true,
-                ),
-                onSelected: () => setState(() => _selectedIndex = 2),
-              ),
-              PlatformMenuItem(
-                label: '设置',
-                shortcut: const SingleActivator(
-                  LogicalKeyboardKey.digit4,
-                  meta: true,
-                ),
-                onSelected: () => setState(() => _selectedIndex = 3),
-              ),
-            ],
-          ),
-          // 帮助菜单
-          PlatformMenu(
-            label: '帮助',
-            menus: [
-              PlatformMenuItem(
-                label: '访问 GitHub',
-                onSelected: () => _launchURL(AppUrls.githubProject),
-              ),
-            ],
-          ),
-        ],
-        child: mainContent,
-      );
-    }
     return mainContent;
   }
 
@@ -209,11 +124,5 @@ class MainStartPageState extends State<MainStartPage> {
         context,
       ).showSnackBar(SnackBar(content: Text('发生错误: $e')));
     }
-  }
-
-  // 显示关于对话框
-  Future<void> _showAboutDialog(BuildContext context) async {
-    const channel = MethodChannel(kNativeMethodChannel);
-    await channel.invokeMethod('showAboutPanel');
   }
 }
