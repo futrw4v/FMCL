@@ -3,7 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 class LogUtil {
-
   // 解析调用信息
   static String _resolveCaller() {
     final stack = StackTrace.current.toString().split('\n');

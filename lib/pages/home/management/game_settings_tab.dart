@@ -79,7 +79,6 @@ class GameSettingsTabState extends State<GameSettingsTab> {
     });
   }
 
-
   // 加载游戏配置
   Future<void> _loadGameConfig() async {
     final prefs = await SharedPreferences.getInstance();
@@ -240,7 +239,8 @@ class GameSettingsTabState extends State<GameSettingsTab> {
                         ListTile(
                           title: const Text('最大堆内存 (-Xmx)'),
                           subtitle: Text(
-                            '设备总内存: ${(memory / 1024).toStringAsFixed(1)} GiB, 当前分配${_xmxController.text} MiB (约 ${(double.parse(_xmxController.text) / 1024).toStringAsFixed(1)} GiB)'),
+                            '设备总内存: ${(memory / 1024).toStringAsFixed(1)} GiB, 当前分配${_xmxController.text} MiB (约 ${(double.parse(_xmxController.text) / 1024).toStringAsFixed(1)} GiB)',
+                          ),
                         ),
                         Slider(
                           value: double.tryParse(_xmxController.text) ?? 1.0,
@@ -251,9 +251,9 @@ class GameSettingsTabState extends State<GameSettingsTab> {
                               _xmxController.text = value.toStringAsFixed(0);
                             });
                           },
-                        )
+                        ),
                       ],
-                    )
+                    ),
                   ),
                   Card(
                     margin: const EdgeInsets.symmetric(
@@ -365,7 +365,8 @@ class GameSettingsTabState extends State<GameSettingsTab> {
                             const SnackBar(content: Text('请填写所有字段')),
                           );
                           return;
-                        } if (_xmxController.text == "0") {
+                        }
+                        if (_xmxController.text == "0") {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('最大堆内存不能为 0')),
                           );

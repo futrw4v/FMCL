@@ -29,16 +29,18 @@ class AddPathPageState extends State<AddPathPage> {
   // 文件夹选择器
   Future<void> _selectDirectory() async {
     final path = await FilePicker.platform.getDirectoryPath(
-      dialogTitle: '选择版本路径');
-      if (!mounted) return;
-      if (path == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('未选择任何路径')));
-        return;
-      }
-      setState(() {
-        _dirPath = '$path${Platform.pathSeparator}.minecraft';
-      });
+      dialogTitle: '选择版本路径',
+    );
+    if (!mounted) return;
+    if (path == null) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('未选择任何路径')));
+      return;
+    }
+    setState(() {
+      _dirPath = '$path${Platform.pathSeparator}.minecraft';
+    });
   }
 
   // 创建文件夹和文件
@@ -51,22 +53,28 @@ class AddPathPageState extends State<AddPathPage> {
     final directory = Directory(_dirPath);
     if (await directory.exists()) {
       LogUtil.log('文件夹已存在', level: 'INFO');
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('文件夹已存在')));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('文件夹已存在')));
     } else {
       try {
         await directory.create(recursive: true);
         LogUtil.log('文件夹创建成功', level: 'INFO');
-        final launcherProfilesFile = File('$_dirPath${Platform.pathSeparator}launcher_profiles.json');
-        const launcherProfilesContent = '{"profiles": {"(Default)": {"name": "(Default)"}}, "selectedProfileName": "(Default)"}';
+        final launcherProfilesFile = File(
+          '$_dirPath${Platform.pathSeparator}launcher_profiles.json',
+        );
+        const launcherProfilesContent =
+            '{"profiles": {"(Default)": {"name": "(Default)"}}, "selectedProfileName": "(Default)"}';
         await launcherProfilesFile.writeAsString(launcherProfilesContent);
         LogUtil.log('launcher_profiles.json 已创建', level: 'INFO');
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('文件夹和配置文件已创建')));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('文件夹和配置文件已创建')));
       } catch (e) {
         LogUtil.log('创建文件夹失败: $e', level: 'ERROR');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('创建文件夹失败: $e')));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('创建文件夹失败: $e')));
       }
     }
   }
@@ -77,16 +85,18 @@ class AddPathPageState extends State<AddPathPage> {
     List<String> paths = prefs.getStringList('PathList') ?? [];
     if (paths.contains(name)) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('名称$name已存在')));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('名称$name已存在')));
       return;
     }
     paths.add(name);
     await prefs.setStringList('PathList', paths);
     await prefs.setString('Path_$name', path);
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('路径已添加成功')));
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('路径已添加成功')));
     await prefs.setString('SelectedPath', name);
     Navigator.pop(context);
   }
@@ -94,10 +104,8 @@ class AddPathPageState extends State<AddPathPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('添加版本路径'),
-      ),
-      body:  Center(
+      appBar: AppBar(title: const Text('添加版本路径')),
+      body: Center(
         child: ListView(
           children: [
             Card(
@@ -119,21 +127,24 @@ class AddPathPageState extends State<AddPathPage> {
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: ListTile(
                 title: const Text('点击选择路径'),
-                subtitle: Text(_dirPath.isEmpty ? '当前选择: 无' : '当前选择: $_dirPath'),
+                subtitle: Text(
+                  _dirPath.isEmpty ? '当前选择: 无' : '当前选择: $_dirPath',
+                ),
                 trailing: const Icon(Icons.create_new_folder),
                 onTap: () {
                   _createDirectory();
                 },
               ),
-            )
+            ),
           ],
-        )
+        ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async{
+        onPressed: () async {
           if (_dirPath.isEmpty || _nameController.text.isEmpty) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('路径或名称不能为空')));
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(const SnackBar(content: Text('路径或名称不能为空')));
             return;
           } else {
             await _saveGamePath(_dirPath, _nameController.text);

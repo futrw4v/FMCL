@@ -10,11 +10,11 @@ class FakeServer {
   final List<RawDatagramSocket> _sockets = [];
   Timer? _broadcastTimer;
   bool _isRunning = false;
-  static final InternetAddress _multicastAddressV4 = InternetAddress('224.0.2.60');
+  static final InternetAddress _multicastAddressV4 = InternetAddress(
+    '224.0.2.60',
+  );
   static const int _multicastPort = 4445;
-  FakeServer({
-    required this.port,
-  });
+  FakeServer({required this.port});
 
   // 启动广播服务
   Future<void> start() async {
@@ -31,10 +31,7 @@ class FakeServer {
         for (var address in interface.addresses) {
           if (address.type == InternetAddressType.IPv4) {
             try {
-              final socket = await RawDatagramSocket.bind(
-                address,
-                0,
-              );
+              final socket = await RawDatagramSocket.bind(address, 0);
               socket.broadcastEnabled = true;
               socket.multicastLoopback = true;
               socket.multicastHops = 4;
@@ -63,22 +60,15 @@ class FakeServer {
   Future<void> _startBroadcasting() async {
     final message = '[MOTD]§6§l双击进入 §r§6FML §l联机大厅[/MOTD][AD]$port[/AD]';
     final messageBytes = Uint8List.fromList(utf8.encode(message));
-    _broadcastTimer = Timer.periodic(
-      const Duration(milliseconds: 1500),
-      (_) {
-        for (var socket in _sockets) {
-          try {
-            socket.send(
-              messageBytes,
-              _multicastAddressV4,
-              _multicastPort,
-            );
-          } catch (e) {
-            LogUtil.log('发送广播消息失败: $e', level: 'WARNING');
-          }
+    _broadcastTimer = Timer.periodic(const Duration(milliseconds: 1500), (_) {
+      for (var socket in _sockets) {
+        try {
+          socket.send(messageBytes, _multicastAddressV4, _multicastPort);
+        } catch (e) {
+          LogUtil.log('发送广播消息失败: $e', level: 'WARNING');
         }
-      },
-    );
+      }
+    });
   }
 
   // 停止广播服务
@@ -95,5 +85,6 @@ class FakeServer {
     _isRunning = false;
     LogUtil.log('FakeServer已停止', level: 'INFO');
   }
+
   bool get isRunning => _isRunning;
 }

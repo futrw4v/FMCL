@@ -171,10 +171,7 @@ class ModManagementTabState extends State<ModManagementTab> {
     if (_isFileDisabled(file.path)) {
       try {
         final originalName = file.path.split(Platform.pathSeparator).last;
-        final newName = originalName.substring(
-          0,
-          originalName.length - 4,
-        );
+        final newName = originalName.substring(0, originalName.length - 4);
         final tempDir = Directory.systemTemp;
         sharePath = '${tempDir.path}${Platform.pathSeparator}$newName';
         tempFile = await File(file.path).copy(sharePath);

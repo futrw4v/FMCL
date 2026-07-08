@@ -29,7 +29,10 @@ List<String> _extractNativesInIsolate(_ExtractParams params) {
   final kernelArch = params.kernelArch;
   final lowerName = jarName.toLowerCase();
   bool matches = true;
-  final hasPlatformSuffix = lowerName.contains('macos') || lowerName.contains('linux') || lowerName.contains('windows');
+  final hasPlatformSuffix =
+      lowerName.contains('macos') ||
+      lowerName.contains('linux') ||
+      lowerName.contains('windows');
   if (hasPlatformSuffix) {
     // macos-arm64
     if (lowerName.contains('macos-arm64')) {
@@ -71,7 +74,11 @@ List<String> _extractNativesInIsolate(_ExtractParams params) {
     final name = file.name;
     final lower = name.toLowerCase();
     final isNative =
-        name.contains('natives/') || lower.endsWith('.so') || lower.endsWith('.dll') || lower.endsWith('.dylib') || lower.endsWith('.jnilib');
+        name.contains('natives/') ||
+        lower.endsWith('.so') ||
+        lower.endsWith('.dll') ||
+        lower.endsWith('.dylib') ||
+        lower.endsWith('.jnilib');
     if (!isNative) continue;
     final outName = name.split('/').last;
     final outPath = '${outDirectory.path}${Platform.pathSeparator}$outName';
@@ -83,7 +90,11 @@ List<String> _extractNativesInIsolate(_ExtractParams params) {
 }
 
 // 提取natives库
-Future<List<String>> extractNatives(String jarDir, String jarName, String outDir) async {
+Future<List<String>> extractNatives(
+  String jarDir,
+  String jarName,
+  String outDir,
+) async {
   final os = Platform.operatingSystem.toLowerCase();
   final kernelArch = SysInfo.kernelArchitecture.name.toLowerCase();
   final params = _ExtractParams(

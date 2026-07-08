@@ -54,7 +54,8 @@ Future<int?> getPort() async {
         }
         final adBegin = data.indexOf('[AD]');
         final adEnd = data.indexOf('[/AD]');
-        if (adBegin == -1 || adEnd == -1 || adEnd <= adBegin + '[AD]'.length) return;
+        if (adBegin == -1 || adEnd == -1 || adEnd <= adBegin + '[AD]'.length)
+          return;
         final portStr = data.substring(adBegin + '[AD]'.length, adEnd).trim();
         final port = int.tryParse(portStr);
         if (port == null) return;

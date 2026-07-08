@@ -135,7 +135,8 @@ class AboutPageState extends State<AboutPage> {
                     '资源简介翻译\nhttps://github.com/mcmod-info-mirror',
                   ),
                   trailing: const Icon(Icons.open_in_new),
-                  onTap: () => _launchURL('https://github.com/mcmod-info-mirror'),
+                  onTap: () =>
+                      _launchURL('https://github.com/mcmod-info-mirror'),
                 ),
                 ListTile(
                   title: const Text('gh-proxy.com'),

@@ -7,10 +7,12 @@ class OfflineAccountManagementPage extends StatefulWidget {
   const OfflineAccountManagementPage({super.key, required this.accountName});
 
   @override
-  OfflineAccountManagementPageState createState() => OfflineAccountManagementPageState();
+  OfflineAccountManagementPageState createState() =>
+      OfflineAccountManagementPageState();
 }
 
-class OfflineAccountManagementPageState extends State<OfflineAccountManagementPage> {
+class OfflineAccountManagementPageState
+    extends State<OfflineAccountManagementPage> {
   String _uuid = '';
   bool _isCustomUUID = false;
   String _customUUID = '';
@@ -41,17 +43,9 @@ class OfflineAccountManagementPageState extends State<OfflineAccountManagementPa
     final prefs = await SharedPreferences.getInstance();
     final list = prefs.getStringList('offline_account_$name') ?? [];
     if (list.isEmpty) {
-      return {
-        'uuid': '',
-        'isCustomUUID': '0',
-        'customUUID': '',
-      };
+      return {'uuid': '', 'isCustomUUID': '0', 'customUUID': ''};
     }
-    return {
-      'uuid': list[1],
-      'isCustomUUID': list[2],
-      'customUUID': list[3],
-    };
+    return {'uuid': list[1], 'isCustomUUID': list[2], 'customUUID': list[3]};
   }
 
   Future<void> _loadAccountInfo() async {
@@ -72,14 +66,15 @@ class OfflineAccountManagementPageState extends State<OfflineAccountManagementPa
   Future<void> _saveAccountInfo() async {
     final prefs = await SharedPreferences.getInstance();
     final list = [
-      '0',  // 登录模式
+      '0', // 登录模式
       _isCustomUUID ? _uuid : _uuid, // 保持原始UUID不变
-      _isCustomUUID ? '1' : '0',     // 是否自定义UUID
-      _customUUIDController.text,    // 自定义UUID值
+      _isCustomUUID ? '1' : '0', // 是否自定义UUID
+      _customUUIDController.text, // 自定义UUID值
     ];
     await prefs.setStringList('offline_account_${widget.accountName}', list);
     LogUtil.log('保存${widget.accountName}', level: 'INFO');
   }
+
   // 删除账号
   Future<void> _deleteAccount() async {
     final prefs = await SharedPreferences.getInstance();
@@ -94,9 +89,9 @@ class OfflineAccountManagementPageState extends State<OfflineAccountManagementPa
     if (!mounted) return;
     Navigator.pop(context);
     Navigator.pop(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('已删除账号: ${widget.accountName}')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('已删除账号: ${widget.accountName}')));
   }
 
   // 删除账号提示框
@@ -107,8 +102,11 @@ class OfflineAccountManagementPageState extends State<OfflineAccountManagementPa
         title: const Text('删除账号'),
         content: Text('确定删除账号 ${widget.accountName} ?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('取消')),
-            TextButton(
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('取消'),
+          ),
+          TextButton(
             onPressed: _deleteAccount,
             child: const Text('删除', style: TextStyle(color: Colors.red)),
           ),
@@ -148,7 +146,9 @@ class OfflineAccountManagementPageState extends State<OfflineAccountManagementPa
                       _isCustomUUID = value;
                       // 关闭时保持原有自定义UUID值，只是不使用它
                       if (value) {
-                        _customUUIDController.text = _customUUID.isEmpty ? _uuid : _customUUID;
+                        _customUUIDController.text = _customUUID.isEmpty
+                            ? _uuid
+                            : _customUUID;
                       }
                     });
                     await _saveAccountInfo();
@@ -160,14 +160,14 @@ class OfflineAccountManagementPageState extends State<OfflineAccountManagementPa
                     child: TextField(
                       controller: _customUUIDController,
                       maxLength: 32,
-                      decoration:  InputDecoration(
+                      decoration: InputDecoration(
                         labelText: '自定义 UUID',
                         hintText: _uuid,
                         border: OutlineInputBorder(),
                       ),
                       onChanged: (val) async {
                         _customUUID = val;
-                        if (_isValidUUID(val)){
+                        if (_isValidUUID(val)) {
                           await _saveAccountInfo();
                         }
                       },
@@ -204,9 +204,9 @@ class OfflineAccountManagementPageState extends State<OfflineAccountManagementPa
               }
               await _saveAccountInfo();
               if (!mounted) return;
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('已保存账号信息')),
-              );
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(const SnackBar(content: Text('已保存账号信息')));
             },
             child: const Icon(Icons.save),
           ),

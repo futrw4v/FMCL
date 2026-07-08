@@ -8,17 +8,15 @@ import 'package:fml/utils/log_util.dart';
 class SaveBackupsTab extends StatefulWidget {
   final String savePath;
 
-  const SaveBackupsTab({
-    super.key,
-    required this.savePath,
-    });
+  const SaveBackupsTab({super.key, required this.savePath});
 
   @override
   SaveBackupsTabState createState() => SaveBackupsTabState();
 }
 
 class SaveBackupsTabState extends State<SaveBackupsTab> {
-  late String _backupPath = '${widget.savePath}${Platform.pathSeparator}backups';
+  late String _backupPath =
+      '${widget.savePath}${Platform.pathSeparator}backups';
   List<FileSystemEntity> _backupFiles = [];
 
   // 加载存档文件
@@ -49,7 +47,8 @@ class SaveBackupsTabState extends State<SaveBackupsTab> {
   String _formatBytes(int bytes) {
     if (bytes <= 1024) return '${bytes.toString()} B';
     if (bytes <= 1048576) return '${(bytes / 1024).toStringAsFixed(2)} KB';
-    if (bytes <= 1073741824) return '${(bytes / 1048576).toStringAsFixed(2)} MB';
+    if (bytes <= 1073741824)
+      return '${(bytes / 1048576).toStringAsFixed(2)} MB';
     return '${(bytes / 1073741824).toStringAsFixed(2)} GB';
   }
 
@@ -141,7 +140,10 @@ class SaveBackupsTabState extends State<SaveBackupsTab> {
   // 备份存档
   Future<void> _backupSave() async {
     try {
-      final timestamp = DateTime.now().toIso8601String().replaceAll(':', '-').split('.')[0];
+      final timestamp = DateTime.now()
+          .toIso8601String()
+          .replaceAll(':', '-')
+          .split('.')[0];
       final zipFileName = 'backup_$timestamp.zip';
       final zipFilePath = '$_backupPath${Platform.pathSeparator}$zipFileName';
       final archive = Archive();
@@ -152,12 +154,10 @@ class SaveBackupsTabState extends State<SaveBackupsTab> {
         }
         if (entity is File) {
           final bytes = await entity.readAsBytes();
-          final relativePath = entity.path.substring(widget.savePath.length + 1);
-          final archiveFile = ArchiveFile(
-            relativePath,
-            bytes.length,
-            bytes,
+          final relativePath = entity.path.substring(
+            widget.savePath.length + 1,
           );
+          final archiveFile = ArchiveFile(relativePath, bytes.length, bytes);
           archive.addFile(archiveFile);
         }
       }
@@ -167,16 +167,16 @@ class SaveBackupsTabState extends State<SaveBackupsTab> {
       await zipFile.writeAsBytes(zipBytes);
       await _loadBackupFiles();
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('备份成功: $zipFileName')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('备份成功: $zipFileName')));
       }
     } catch (e) {
       LogUtil.log('备份存档时出错: ${e.toString()}', level: 'ERROR');
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('备份失败: ${e.toString()}')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('备份失败: ${e.toString()}')));
       }
     }
   }
@@ -186,7 +186,6 @@ class SaveBackupsTabState extends State<SaveBackupsTab> {
     super.initState();
     _loadBackupFiles();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -201,11 +200,11 @@ class SaveBackupsTabState extends State<SaveBackupsTab> {
 
   // 构建主内容
   Widget _buildContent() {
-  if (_backupFiles.isEmpty) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+    if (_backupFiles.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
             const Text('暂无备份'),
             const SizedBox(height: 16),
             ElevatedButton.icon(
@@ -243,7 +242,7 @@ class SaveBackupsTabState extends State<SaveBackupsTab> {
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                 child: ListTile(
                   title: Text(fileName),
-                  subtitle: FutureBuilder<FileStat> (
+                  subtitle: FutureBuilder<FileStat>(
                     future: _getFileStat(file),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -254,7 +253,9 @@ class SaveBackupsTabState extends State<SaveBackupsTab> {
                         final stat = snapshot.data!;
                         final modified = stat.modified;
                         final size = stat.size;
-                        return Text('修改时间: $modified  大小: ${_formatBytes(size)}');
+                        return Text(
+                          '修改时间: $modified  大小: ${_formatBytes(size)}',
+                        );
                       } else {
                         return const Text('无法获取文件信息');
                       }

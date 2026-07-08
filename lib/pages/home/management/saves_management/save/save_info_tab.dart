@@ -82,8 +82,12 @@ class _SaveInfoTabState extends State<SaveInfoTab> {
         _allowCommands = ((data['allowCommands'] as NbtByte?)?.value ?? 0) == 1;
         final worldGenSettings = data['WorldGenSettings'] as NbtCompound?;
         if (worldGenSettings != null) {
-          _generateFeatures = ((worldGenSettings['generate_features'] as NbtByte?)?.value ?? 1) == 1;
-          _seed = (worldGenSettings['seed'] as NbtLong?)?.value.toString() ?? '';
+          _generateFeatures =
+              ((worldGenSettings['generate_features'] as NbtByte?)?.value ??
+                  1) ==
+              1;
+          _seed =
+              (worldGenSettings['seed'] as NbtLong?)?.value.toString() ?? '';
         }
       }
       await _loadPlayerData();
@@ -142,15 +146,15 @@ class _SaveInfoTabState extends State<SaveInfoTab> {
         await _savePlayerData(player, showSnackBar: false);
       }
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('所有数据已保存')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('所有数据已保存')));
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('保存失败: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('保存失败: $e')));
       }
     }
   }
@@ -175,7 +179,10 @@ class _SaveInfoTabState extends State<SaveInfoTab> {
   }
 
   // 保存玩家数据
-  Future<void> _savePlayerData(PlayerData player, {bool showSnackBar = true}) async {
+  Future<void> _savePlayerData(
+    PlayerData player, {
+    bool showSnackBar = true,
+  }) async {
     if (player.nbtData == null) return;
     final compound = player.nbtData!;
     compound['playerGameType'] = NbtInt(value: player.gameType);
@@ -187,9 +194,9 @@ class _SaveInfoTabState extends State<SaveInfoTab> {
     final playerFile = File(player.filePath);
     await playerFile.writeAsBytes(bytes);
     if (showSnackBar && mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('玩家数据已保存')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('玩家数据已保存')));
     }
   }
 
@@ -200,14 +207,14 @@ class _SaveInfoTabState extends State<SaveInfoTab> {
       if (await canLaunchUrl(uri)) {
         await launchUrl(uri, mode: LaunchMode.externalApplication);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('无法打开链接: $url')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('无法打开链接: $url')));
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('发生错误: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('发生错误: $e')));
     }
   }
 
@@ -327,9 +334,12 @@ class _SaveInfoTabState extends State<SaveInfoTab> {
             _buildInfoRow('极限模式', _hardcore ? '是' : '否'),
             _buildInfoRow('最后游玩', _formatLastPlayed(_lastPlayed)),
             _buildInfoRow('游戏时间', _formatDayTime(_dayTime)),
-            _buildInfoRow('出生点坐标', 'X: ${_spawnX.toString()} Y: ${_spawnY.toString()} Z: ${_spawnZ.toString()}'),
+            _buildInfoRow(
+              '出生点坐标',
+              'X: ${_spawnX.toString()} Y: ${_spawnY.toString()} Z: ${_spawnZ.toString()}',
+            ),
             _buildInfoRow('世界种子', _seed),
-            _buildWorldSettings()
+            _buildWorldSettings(),
           ],
         ),
       ),
@@ -339,61 +349,61 @@ class _SaveInfoTabState extends State<SaveInfoTab> {
   // 世界设置
   Widget _buildWorldSettings() {
     return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('难度'),
-                DropdownButton<int>(
-                  value: _currentDifficulty,
-                  items: const [
-                    DropdownMenuItem(value: 0, child: Text('和平')),
-                    DropdownMenuItem(value: 1, child: Text('简单')),
-                    DropdownMenuItem(value: 2, child: Text('普通')),
-                    DropdownMenuItem(value: 3, child: Text('困难')),
-                  ],
-                  onChanged: (value) {
-                    if (value != null) {
-                      setState(() {
-                        _currentDifficulty = value;
-                      });
-                    }
-                  },
-                ),
+            const Text('难度'),
+            DropdownButton<int>(
+              value: _currentDifficulty,
+              items: const [
+                DropdownMenuItem(value: 0, child: Text('和平')),
+                DropdownMenuItem(value: 1, child: Text('简单')),
+                DropdownMenuItem(value: 2, child: Text('普通')),
+                DropdownMenuItem(value: 3, child: Text('困难')),
               ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('允许作弊'),
-                Switch(
-                  value: _allowCommands,
-                  onChanged: (value) {
-                    setState(() {
-                      _allowCommands = value;
-                    });
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('生成结构'),
-                Switch(
-                  value: _generateFeatures,
-                  onChanged: (value) {
-                    setState(() {
-                      _generateFeatures = value;
-                    });
-                  },
-                ),
-              ],
+              onChanged: (value) {
+                if (value != null) {
+                  setState(() {
+                    _currentDifficulty = value;
+                  });
+                }
+              },
             ),
           ],
+        ),
+        const SizedBox(height: 8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('允许作弊'),
+            Switch(
+              value: _allowCommands,
+              onChanged: (value) {
+                setState(() {
+                  _allowCommands = value;
+                });
+              },
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('生成结构'),
+            Switch(
+              value: _generateFeatures,
+              onChanged: (value) {
+                setState(() {
+                  _generateFeatures = value;
+                });
+              },
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -577,21 +587,30 @@ class _SaveInfoTabState extends State<SaveInfoTab> {
               children: [
                 const Icon(Icons.map),
                 const SizedBox(width: 8),
-                Text('种子地图 (chunkbase)', style: Theme.of(context).textTheme.titleMedium),
+                Text(
+                  '种子地图 (chunkbase)',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
               ],
             ),
             const Divider(),
             ListTile(
               title: const Text('主世界'),
-              onTap: () => _launchURL('https://www.chunkbase.com/apps/biome-finder#seed=$_seed&platform=java_${_gameVersion.replaceAll('.', '_')}&dimension=overworld&x=$_spawnX&z=$_spawnZ&zoom=0.5'),
+              onTap: () => _launchURL(
+                'https://www.chunkbase.com/apps/biome-finder#seed=$_seed&platform=java_${_gameVersion.replaceAll('.', '_')}&dimension=overworld&x=$_spawnX&z=$_spawnZ&zoom=0.5',
+              ),
             ),
             ListTile(
               title: const Text('下界'),
-              onTap: () => _launchURL('https://www.chunkbase.com/apps/biome-finder#seed=$_seed&platform=java_${_gameVersion.replaceAll('.', '_')}&dimension=nether&x=$_spawnX&z=$_spawnZ&zoom=0.5'),
+              onTap: () => _launchURL(
+                'https://www.chunkbase.com/apps/biome-finder#seed=$_seed&platform=java_${_gameVersion.replaceAll('.', '_')}&dimension=nether&x=$_spawnX&z=$_spawnZ&zoom=0.5',
+              ),
             ),
             ListTile(
               title: const Text('末地'),
-              onTap: () => _launchURL('https://www.chunkbase.com/apps/biome-finder#seed=$_seed&platform=java_${_gameVersion.replaceAll('.', '_')}&dimension=end&x=$_spawnX&z=$_spawnZ&zoom=0.5'),
+              onTap: () => _launchURL(
+                'https://www.chunkbase.com/apps/biome-finder#seed=$_seed&platform=java_${_gameVersion.replaceAll('.', '_')}&dimension=end&x=$_spawnX&z=$_spawnZ&zoom=0.5',
+              ),
             ),
           ],
         ),

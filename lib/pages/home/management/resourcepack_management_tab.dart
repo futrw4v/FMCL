@@ -47,12 +47,12 @@ class ResourcepackManagementTabState extends State<ResourcepackManagementTab> {
   // 获取文件名
   String _getFileName(String path) {
     if (path
-          .split(Platform.pathSeparator)
-          .last
-          .substring(
-            path.split(Platform.pathSeparator).last.length - 4,
-            path.split(Platform.pathSeparator).last.length,
-          ) ==
+            .split(Platform.pathSeparator)
+            .last
+            .substring(
+              path.split(Platform.pathSeparator).last.length - 4,
+              path.split(Platform.pathSeparator).last.length,
+            ) ==
         '.fml') {
       return path
           .split(Platform.pathSeparator)
@@ -62,7 +62,6 @@ class ResourcepackManagementTabState extends State<ResourcepackManagementTab> {
       return path.split(Platform.pathSeparator).last;
     }
   }
-
 
   // 切换文件启用/禁用状态
   Future<void> _toggleFileStatus(FileSystemEntity file) async {
@@ -173,10 +172,7 @@ class ResourcepackManagementTabState extends State<ResourcepackManagementTab> {
     if (_isFileDisabled(file.path)) {
       try {
         final originalName = file.path.split(Platform.pathSeparator).last;
-        final newName = originalName.substring(
-          0,
-          originalName.length - 4,
-        );
+        final newName = originalName.substring(0, originalName.length - 4);
         final tempDir = Directory.systemTemp;
         sharePath = '${tempDir.path}${Platform.pathSeparator}$newName';
         tempFile = await File(file.path).copy(sharePath);
@@ -330,11 +326,11 @@ class ResourcepackManagementTabState extends State<ResourcepackManagementTab> {
 
   // 构建主内容
   Widget _buildContent() {
-  if (_resourcepackFiles.isEmpty) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+    if (_resourcepackFiles.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
             const Text('暂无资源包文件'),
             const SizedBox(height: 16),
             ElevatedButton.icon(

@@ -18,8 +18,7 @@ class DownloadModpackPageState extends State<DownloadModpackPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      ),
+      appBar: AppBar(),
       body: Center(
         child: Text('游戏名称: ${widget.gameName}, 下载地址: ${widget.downloadUrl}'),
       ),
