@@ -15,25 +15,53 @@ import 'package:window_manager/window_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await windowManager.ensureInitialized();
-  await initVersionInfo();
-  // 设置窗口标题
-  WindowOptions windowOptions = WindowOptions(
-    center: true,
-    title: "$kAppName v$gAppVersion ($gAppBuildNumber)",
-    minimumSize: const Size(600, 600),
-  );
 
-  windowManager.waitUntilReadyToShow(windowOptions, () async {
-    await windowManager.show();
-    await windowManager.focus();
-  });
+  await initVersionInfo();
+
+  await initWindow();
 
   await initLogs();
 
   JavaService.initFuture = JavaService.init();
 
   runApp(const FMLBaseApp());
+}
+
+// 初始化窗口
+Future<void> initWindow() async {
+  await windowManager.ensureInitialized();
+
+  double screenWidth = 1280.0;
+  double screenHeight = 720.0;
+
+  // 获取物理显示器信息
+  if (PlatformDispatcher.instance.displays.isNotEmpty) {
+    final display = PlatformDispatcher.instance.displays.first;
+    final double dpi = display.devicePixelRatio;
+
+    // 用显示器的物理尺寸除以缩放比例
+    screenWidth = display.size.width / dpi;
+    screenHeight = display.size.height / dpi;
+  }
+
+  // 动态计算窗口大小/最小尺寸，限制窗口的最大和最小边界
+  double minWidth = screenWidth < 800.0 ? (screenWidth * 0.9) : 800.0;
+  double minHeight = screenHeight < 450.0 ? (screenHeight * 0.9) : 450.0;
+  double windowWidth = (screenWidth * 0.67).clamp(minWidth, 1400.0);
+  double windowHeight = (screenHeight * 0.67).clamp(minHeight, 787.5);
+
+  // 设置窗口
+  WindowOptions windowOptions = WindowOptions(
+    size: Size(windowWidth, windowHeight),
+    minimumSize: Size(minWidth, minHeight),
+    center: true,
+    title: "$kAppName v$gAppVersion ($gAppBuildNumber)",
+  );
+
+  windowManager.waitUntilReadyToShow(windowOptions, () async {
+    await windowManager.show();
+    await windowManager.focus();
+  });
 }
 
 // 软件版本
