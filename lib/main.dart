@@ -139,38 +139,16 @@ class FMLBaseAppState extends State<FMLBaseApp> {
     setState(() {
       _themeColor = color;
     });
+
     final prefs = await SharedPreferences.getInstance();
+
     int colorValue =
         (((color.a * 255.0).round() & 0xFF) << 24) |
         (((color.r * 255.0).round() & 0xFF) << 16) |
         (((color.g * 255.0).round() & 0xFF) << 8) |
         ((color.b * 255.0).round() & 0xFF);
-    await prefs.setInt('themeColor', colorValue);
-  }
 
-  // 可变字体权重
-  TextTheme _withVariableWeights(TextTheme base) {
-    TextStyle setW(TextStyle? s, double w) => (s ?? const TextStyle()).copyWith(
-      fontFamily: 'NotoSans',
-      fontVariations: [FontVariation('wght', w)],
-    );
-    return base.copyWith(
-      bodySmall: setW(base.bodySmall, AppFontWeights.bodyWght),
-      bodyMedium: setW(base.bodyMedium, AppFontWeights.bodyWght),
-      bodyLarge: setW(base.bodyLarge, AppFontWeights.bodyWght),
-      labelSmall: setW(base.labelSmall, AppFontWeights.labelWght),
-      labelMedium: setW(base.labelMedium, AppFontWeights.labelWght),
-      labelLarge: setW(base.labelLarge, AppFontWeights.labelWght),
-      titleSmall: setW(base.titleSmall, AppFontWeights.titleWght),
-      titleMedium: setW(base.titleMedium, AppFontWeights.titleWght),
-      titleLarge: setW(base.titleLarge, AppFontWeights.titleWght),
-      headlineSmall: setW(base.headlineSmall, AppFontWeights.headlineWght),
-      headlineMedium: setW(base.headlineMedium, AppFontWeights.headlineWght),
-      headlineLarge: setW(base.headlineLarge, AppFontWeights.headlineWght),
-      displaySmall: setW(base.displaySmall, AppFontWeights.headlineWght),
-      displayMedium: setW(base.displayMedium, AppFontWeights.headlineWght),
-      displayLarge: setW(base.displayLarge, AppFontWeights.headlineWght),
-    );
+    await prefs.setInt('themeColor', colorValue);
   }
 
   ThemeData _buildTheme(Brightness brightness) {
@@ -178,26 +156,11 @@ class FMLBaseAppState extends State<FMLBaseApp> {
       seedColor: _themeColor,
       brightness: brightness,
     );
-    final baseTypography = Typography.material2021();
-    final raw = brightness == Brightness.dark
-        ? baseTypography.white
-        : baseTypography.black;
-    final textTheme = _withVariableWeights(raw);
+
     return ThemeData(
       useMaterial3: true,
       fontFamily: 'NotoSans',
       colorScheme: scheme,
-      textTheme: textTheme,
-      appBarTheme: AppBarTheme(
-        backgroundColor: scheme.surface,
-        foregroundColor: scheme.onSurface,
-        titleTextStyle: textTheme.titleLarge,
-        elevation: 0,
-      ),
-      navigationRailTheme: NavigationRailThemeData(
-        selectedLabelTextStyle: textTheme.labelLarge,
-        unselectedLabelTextStyle: textTheme.labelMedium,
-      ),
     );
   }
 
@@ -209,10 +172,12 @@ class FMLBaseAppState extends State<FMLBaseApp> {
       darkTheme: _buildTheme(Brightness.dark),
       themeMode: _themeMode,
       home: const MainStartPage(),
+
       onGenerateRoute: (settings) {
         if (settings.name == kOnlineOwnerRoute) {
           final int port = settings.arguments as int;
           final String etServer = settings.arguments as String;
+
           return SlidePageRoute(
             page: OwnerPage(port: port, etServer: etServer),
           );
