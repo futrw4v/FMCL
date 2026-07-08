@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fml/utils/dio_client.dart';
-import 'package:fml/utils/log.dart';
+import 'package:fml/utils/log_util.dart';
 import 'package:fml/utils/crypto_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

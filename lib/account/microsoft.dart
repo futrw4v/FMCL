@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:dio/dio.dart';
 
-import 'package:fml/utils/log.dart';
+import 'package:fml/utils/log_util.dart';
 import 'package:fml/utils/crypto_util.dart';
 import 'package:fml/utils/dio_client.dart';
 import 'package:fml/constants.dart';

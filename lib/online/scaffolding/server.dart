@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:convert';
-import 'package:fml/utils/log.dart';
+import 'package:fml/utils/log_util.dart';
 
 /// 联机协议TCP服务器
 class OnlineCenterServer {
@@ -80,7 +80,10 @@ class OnlineCenterServer {
             if (buffer.isEmpty) return;
             final typeLength = buffer[0];
             if (buffer.length < 1 + typeLength + 4) return;
-            final bodyLengthBytes = buffer.sublist(1 + typeLength, 5 + typeLength);
+            final bodyLengthBytes = buffer.sublist(
+              1 + typeLength,
+              5 + typeLength,
+            );
             final bodyLength = _bytesToUint32(bodyLengthBytes);
             expectedLength = 5 + typeLength + bodyLength;
             if (buffer.length < expectedLength!) return;
@@ -102,7 +105,10 @@ class OnlineCenterServer {
           if (error.osError?.errorCode == 54) {
             LogUtil.log('客户端主动断开连接: $clientAddress:$clientPort', level: 'INFO');
           } else {
-            LogUtil.log('客户端连接错误 [${error.osError?.errorCode}]: $error', level: 'WARNING');
+            LogUtil.log(
+              '客户端连接错误 [${error.osError?.errorCode}]: $error',
+              level: 'WARNING',
+            );
           }
         } else {
           LogUtil.log('客户端连接错误: $error', level: 'ERROR');
@@ -118,7 +124,11 @@ class OnlineCenterServer {
   }
 
   // 移除客户端
-  Future<void> _removeClient(Socket socket, [String? savedAddress, int? savedPort]) async {
+  Future<void> _removeClient(
+    Socket socket, [
+    String? savedAddress,
+    int? savedPort,
+  ]) async {
     if (!_clients.contains(socket)) {
       return;
     }
@@ -156,10 +166,16 @@ class OnlineCenterServer {
       final typeLength = requestBytes[0];
       final requestTypeBytes = requestBytes.sublist(1, 1 + typeLength);
       final requestType = utf8.decode(requestTypeBytes);
-      final bodyLengthBytes = requestBytes.sublist(1 + typeLength, 5 + typeLength);
+      final bodyLengthBytes = requestBytes.sublist(
+        1 + typeLength,
+        5 + typeLength,
+      );
       final bodyLength = _bytesToUint32(bodyLengthBytes);
       final body = bodyLength > 0
-          ? requestBytes.sublist(5 + typeLength, (5 + typeLength + bodyLength) as int?)
+          ? requestBytes.sublist(
+              5 + typeLength,
+              (5 + typeLength + bodyLength) as int?,
+            )
           : <int>[];
       LogUtil.log('收到请求: $requestType, 请求体长度: $bodyLength', level: 'INFO');
       if (!_clients.contains(socket)) {
@@ -184,7 +200,11 @@ class OnlineCenterServer {
           await _handlePlayerProfilesListRequest(body, socket);
           break;
         default:
-          await _sendErrorResponse(socket, 255, 'Unknown protocol: $requestType');
+          await _sendErrorResponse(
+            socket,
+            255,
+            'Unknown protocol: $requestType',
+          );
           break;
       }
     } catch (e, stack) {
@@ -222,7 +242,10 @@ class OnlineCenterServer {
       _sendErrorResponse(socket, 32, '');
       return;
     }
-    LogUtil.log('发送Minecraft服务器端口: $minecraftServerPort 到客户端: ${socket.remoteAddress.address}:${socket.remotePort}', level: 'INFO');
+    LogUtil.log(
+      '发送Minecraft服务器端口: $minecraftServerPort 到客户端: ${socket.remoteAddress.address}:${socket.remotePort}',
+      level: 'INFO',
+    );
     final portBytes = Uint8List(2);
     portBytes[0] = (minecraftServerPort >> 8) & 0xFF;
     portBytes[1] = minecraftServerPort & 0xFF;
@@ -239,7 +262,9 @@ class OnlineCenterServer {
       final easytierId = (data['easytier_id'] as String?) ?? '';
       final vendor = data['vendor'] as String;
       final socketId = '${socket.remoteAddress.address}:${socket.remotePort}';
-      final existingPlayerIndex = _players.indexWhere((p) => p.machineId == machineId);
+      final existingPlayerIndex = _players.indexWhere(
+        (p) => p.machineId == machineId,
+      );
       if (existingPlayerIndex >= 0) {
         _players[existingPlayerIndex].lastActivity = DateTime.now();
         _players[existingPlayerIndex].socketId = socketId;
@@ -247,14 +272,16 @@ class OnlineCenterServer {
           _players[existingPlayerIndex].easytierId = easytierId;
         }
       } else {
-        _players.add(PlayerProfile(
-          name: name,
-          machineId: machineId,
-          easytierId: easytierId,
-          vendor: vendor,
-          kind: 'GUEST',
-          socketId: socketId,
-        ));
+        _players.add(
+          PlayerProfile(
+            name: name,
+            machineId: machineId,
+            easytierId: easytierId,
+            vendor: vendor,
+            kind: 'GUEST',
+            socketId: socketId,
+          ),
+        );
       }
       _sendSuccessResponse(socket, []);
     } catch (e) {
@@ -264,7 +291,10 @@ class OnlineCenterServer {
   }
 
   // 处理 c:player_profiles_list 请求
-  Future<void> _handlePlayerProfilesListRequest(List<int> body, Socket socket) async {
+  Future<void> _handlePlayerProfilesListRequest(
+    List<int> body,
+    Socket socket,
+  ) async {
     // 清理超时玩家（30秒无心跳）
     final now = DateTime.now();
     _players.removeWhere((player) {
@@ -275,13 +305,17 @@ class OnlineCenterServer {
       }
       return isTimeout;
     });
-    final allPlayers = _players.map((p) => {
-      'name': p.name,
-      'machine_id': p.machineId,
-      'easytier_id': p.easytierId,
-      'vendor': p.vendor,
-      'kind': p.kind
-    }).toList();
+    final allPlayers = _players
+        .map(
+          (p) => {
+            'name': p.name,
+            'machine_id': p.machineId,
+            'easytier_id': p.easytierId,
+            'vendor': p.vendor,
+            'kind': p.kind,
+          },
+        )
+        .toList();
     final responseBody = utf8.encode(jsonEncode(allPlayers));
     _sendSuccessResponse(socket, responseBody);
   }
@@ -293,11 +327,16 @@ class OnlineCenterServer {
   }
 
   // 发送错误响应
-  Future<void> _sendErrorResponse(Socket socket, int status, String message) async{
+  Future<void> _sendErrorResponse(
+    Socket socket,
+    int status,
+    String message,
+  ) async {
     final body = message.isNotEmpty ? utf8.encode(message) : <int>[];
     final response = _buildResponse(status, body);
     _sendResponse(socket, response);
   }
+
   // 构建响应
   Uint8List _buildResponse(int status, List<int> body) {
     final bodyLength = body.length;
@@ -337,8 +376,14 @@ class OnlineCenterServer {
       });
     } on SocketException catch (e) {
       final errorCode = e.osError?.errorCode;
-      if (errorCode == 54 || errorCode == 32 || errorCode == 57 || errorCode == 104) {
-        LogUtil.log('发送响应失败,连接已断开 [错误码: $errorCode]: ${e.message}', level: 'INFO');
+      if (errorCode == 54 ||
+          errorCode == 32 ||
+          errorCode == 57 ||
+          errorCode == 104) {
+        LogUtil.log(
+          '发送响应失败,连接已断开 [错误码: $errorCode]: ${e.message}',
+          level: 'INFO',
+        );
         await _removeClient(socket);
       } else {
         LogUtil.log('发送响应时出现socket异常 [错误码: $errorCode]: $e', level: 'WARNING');
@@ -352,15 +397,20 @@ class OnlineCenterServer {
 
   // 生成并添加主机玩家
   Future<void> addHostPlayer(String machineId, String easytierId) async {
-    _players.add(PlayerProfile(
-      name: hostName,
-      machineId: machineId,
-      easytierId: easytierId,
-      vendor: hostVendor,
-      kind: 'HOST',
-      socketId: 'local-host',
-    ));
-    LogUtil.log('添加房主: $hostName ($hostVendor) easytierID: $easytierId, machineID: $machineId', level: 'INFO');
+    _players.add(
+      PlayerProfile(
+        name: hostName,
+        machineId: machineId,
+        easytierId: easytierId,
+        vendor: hostVendor,
+        kind: 'HOST',
+        socketId: 'local-host',
+      ),
+    );
+    LogUtil.log(
+      '添加房主: $hostName ($hostVendor) easytierID: $easytierId, machineID: $machineId',
+      level: 'INFO',
+    );
   }
 }
 

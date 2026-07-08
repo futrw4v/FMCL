@@ -6,7 +6,7 @@ import 'package:fml/models/java/java_info.dart';
 import 'package:fml/models/java/java_runtime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../utils/log.dart';
+import '../utils/log_util.dart';
 
 class JavaService {
   JavaService._();

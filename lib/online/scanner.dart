@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:fml/utils/log.dart';
+import 'package:fml/utils/log_util.dart';
 
 Future<int?> getPort() async {
   final completer = Completer<int?>();

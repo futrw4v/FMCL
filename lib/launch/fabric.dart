@@ -4,7 +4,7 @@ import 'package:fml/java/java_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:path/path.dart' as p;
-import 'package:fml/utils/log.dart';
+import 'package:fml/utils/log_util.dart';
 import 'package:fml/launch/login/microsoft_login.dart' as microsoft_login;
 import 'package:fml/launch/login/external_login.dart' as external_login;
 

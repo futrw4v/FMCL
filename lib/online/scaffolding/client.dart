@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:fml/utils/log.dart';
+import 'package:fml/utils/log_util.dart';
 
 /// Scaffolding协议TCP客户端
 class OnlineCenterClient {
@@ -18,9 +18,12 @@ class OnlineCenterClient {
   int? _minecraftServerPort;
   List<String> _supportedProtocols = [];
   final List<PlayerProfile> _players = [];
-  final StreamController<List<PlayerProfile>> _playersStreamController = StreamController<List<PlayerProfile>>.broadcast();
-  final StreamController<int?> _minecraftPortStreamController = StreamController<int?>.broadcast();
-  final StreamController<bool> _serverDisconnectedStreamController = StreamController<bool>.broadcast();
+  final StreamController<List<PlayerProfile>> _playersStreamController =
+      StreamController<List<PlayerProfile>>.broadcast();
+  final StreamController<int?> _minecraftPortStreamController =
+      StreamController<int?>.broadcast();
+  final StreamController<bool> _serverDisconnectedStreamController =
+      StreamController<bool>.broadcast();
   int _connectionAttempts = 0;
   final int _maxConnectionAttempts = 3;
   bool _isConnecting = false;
@@ -42,9 +45,11 @@ class OnlineCenterClient {
   List<PlayerProfile> get players => _players;
   bool get isConnected => _isConnected;
   int? get minecraftServerPort => _minecraftServerPort;
-  Stream<List<PlayerProfile>> get playersStream => _playersStreamController.stream;
+  Stream<List<PlayerProfile>> get playersStream =>
+      _playersStreamController.stream;
   Stream<int?> get minecraftPortStream => _minecraftPortStreamController.stream;
-  Stream<bool> get serverDisconnectedStream => _serverDisconnectedStreamController.stream;
+  Stream<bool> get serverDisconnectedStream =>
+      _serverDisconnectedStreamController.stream;
 
   // 连接到服务器并开始心跳
   Future<void> connect() async {
@@ -58,15 +63,21 @@ class OnlineCenterClient {
     try {
       String formattedHost = serverAddress;
       if (!useIP && !formattedHost.startsWith('scaffolding-mc-server-')) {
-        LogUtil.log('警告: 主机名 "$formattedHost" 不符合预期格式 "scaffolding-mc-server-$serverPort"', level: 'WARNING');
+        LogUtil.log(
+          '警告: 主机名 "$formattedHost" 不符合预期格式 "scaffolding-mc-server-$serverPort"',
+          level: 'WARNING',
+        );
       }
       String connectionType = useIP ? "IP" : "主机名";
-      LogUtil.log('正在连接到联机中心: $formattedHost:$serverPort (使用$connectionType, 尝试 $_connectionAttempts/$_maxConnectionAttempts)', level: 'INFO');
+      LogUtil.log(
+        '正在连接到联机中心: $formattedHost:$serverPort (使用$connectionType, 尝试 $_connectionAttempts/$_maxConnectionAttempts)',
+        level: 'INFO',
+      );
       _socket = await Socket.connect(formattedHost, serverPort).timeout(
         const Duration(seconds: 10),
         onTimeout: () {
           throw TimeoutException('连接超时');
-        }
+        },
       );
       _isConnected = true;
       _isConnecting = false;
@@ -209,8 +220,7 @@ class OnlineCenterClient {
         _handleProtocolsResponse(jsonString);
         return;
       }
-    } catch (_) {
-    }
+    } catch (_) {}
     if (body.length == 2) {
       _handleServerPortResponse(body);
       return;
@@ -225,9 +235,15 @@ class OnlineCenterClient {
       _supportedProtocols = protocols.where((p) => p.isNotEmpty).toList();
       LogUtil.log('服务端支持的协议: $_supportedProtocols', level: 'INFO');
       if (_supportedProtocols.contains('c:player_easytier_id')) {
-        LogUtil.log('服务端支持 c:player_easytier_id 协议,心跳将包含EasyTier ID', level: 'INFO');
+        LogUtil.log(
+          '服务端支持 c:player_easytier_id 协议,心跳将包含EasyTier ID',
+          level: 'INFO',
+        );
       } else {
-        LogUtil.log('服务端不支持 c:player_easytier_id 协议,心跳将使用旧格式', level: 'WARNING');
+        LogUtil.log(
+          '服务端不支持 c:player_easytier_id 协议,心跳将使用旧格式',
+          level: 'WARNING',
+        );
       }
     } catch (e) {
       LogUtil.log('解析协议列表失败: $e', level: 'ERROR');
@@ -250,13 +266,15 @@ class OnlineCenterClient {
       final List<dynamic> playersJson = jsonDecode(jsonString);
       _players.clear();
       for (var playerJson in playersJson) {
-        _players.add(PlayerProfile(
-          name: playerJson['name'],
-          machineId: playerJson['machine_id'],
-          easytierId: playerJson['easytier_id'] ?? '',
-          vendor: playerJson['vendor'],
-          kind: playerJson['kind'],
-        ));
+        _players.add(
+          PlayerProfile(
+            name: playerJson['name'],
+            machineId: playerJson['machine_id'],
+            easytierId: playerJson['easytier_id'] ?? '',
+            vendor: playerJson['vendor'],
+            kind: playerJson['kind'],
+          ),
+        );
       }
       _playersStreamController.add(_players);
       LogUtil.log('收到玩家列表, 共 ${_players.length} 名玩家', level: 'INFO');
@@ -277,12 +295,20 @@ class OnlineCenterClient {
         await _getPlayerProfilesList();
         final now = DateTime.now();
         if (_lastHeartbeatResponse != null) {
-          final timeSinceLastResponse = now.difference(_lastHeartbeatResponse!).inSeconds;
+          final timeSinceLastResponse = now
+              .difference(_lastHeartbeatResponse!)
+              .inSeconds;
           if (timeSinceLastResponse > 15) {
             _missedHeartbeats++;
-            LogUtil.log('心跳超时 (已连续$_missedHeartbeats次), 距上次响应: $timeSinceLastResponse秒', level: 'WARNING');
+            LogUtil.log(
+              '心跳超时 (已连续$_missedHeartbeats次), 距上次响应: $timeSinceLastResponse秒',
+              level: 'WARNING',
+            );
             if (_missedHeartbeats >= _maxMissedHeartbeats) {
-              LogUtil.log('连续$_maxMissedHeartbeats次心跳无响应,判定服务器已断开', level: 'ERROR');
+              LogUtil.log(
+                '连续$_maxMissedHeartbeats次心跳无响应,判定服务器已断开',
+                level: 'ERROR',
+              );
               _serverDisconnectedStreamController.add(true);
               await _handleDisconnect();
             }
@@ -292,7 +318,10 @@ class OnlineCenterClient {
         LogUtil.log('发送心跳失败: $e', level: 'ERROR');
         _missedHeartbeats++;
         if (_missedHeartbeats >= _maxMissedHeartbeats) {
-          LogUtil.log('连续$_maxMissedHeartbeats次心跳发送失败,判定服务器已断开', level: 'ERROR');
+          LogUtil.log(
+            '连续$_maxMissedHeartbeats次心跳发送失败,判定服务器已断开',
+            level: 'ERROR',
+          );
           _serverDisconnectedStreamController.add(true);
           await _handleDisconnect();
         }
@@ -322,7 +351,7 @@ class OnlineCenterClient {
     }
   }
 
-    // 发送玩家心跳
+  // 发送玩家心跳
   Future<void> _sendPlayerPing() async {
     if (!_isConnected) return;
     try {

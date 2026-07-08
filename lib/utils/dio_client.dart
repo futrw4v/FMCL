@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fml/utils/download.dart';
-import 'package:fml/utils/log.dart';
+import 'package:fml/utils/log_util.dart';
 
 import 'package:fml/constants.dart';
 
@@ -57,10 +57,7 @@ class DioClient {
         final uri = e.requestOptions.uri;
         final status = e.response?.statusCode;
         final msg = e.message ?? e.type.name;
-        LogUtil.log(
-          'HTTP请求失败 [$status] $uri - $msg',
-          level: 'ERROR',
-        );
+        LogUtil.log('HTTP请求失败 [$status] $uri - $msg', level: 'ERROR');
         return handler.next(e);
       },
     );

@@ -4,22 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:flutter/material.dart';
 import 'package:fml/constants.dart';
-import 'package:fml/utils/log.dart';
-
-/// 下载任务结果
-class DownloadResult {
-  final List<Map<String, String>> failedList;
-  final bool success;
-  final int totalCount;
-  final int completedCount;
-
-  DownloadResult({
-    required this.failedList,
-    required this.success,
-    required this.totalCount,
-    required this.completedCount,
-  });
-}
+import 'package:fml/models/download/download_result.dart';
+import 'package:fml/utils/log_util.dart';
 
 // 进度更新
 class _ProgressUpdater {

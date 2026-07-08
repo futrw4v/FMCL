@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fml/constants.dart';
-import 'package:fml/pages/download/download_resources.dart';
-import 'package:fml/pages/download/download_version.dart';
+import 'package:fml/pages/download/download_resources_page.dart';
+import 'package:fml/pages/download/download_version_page.dart';
 
 class DownloadPage extends StatefulWidget {
   const DownloadPage({super.key});
@@ -15,14 +15,8 @@ class DownloadPageState extends State<DownloadPage> {
   bool _resourcesPageInitialized = false;
 
   static const List<NavigationDrawerDestination> _destinations = [
-    NavigationDrawerDestination(
-      icon: Icon(Icons.code),
-      label: Text('游戏'),
-    ),
-    NavigationDrawerDestination(
-      icon: Icon(Icons.extension),
-      label: Text('资源'),
-    ),
+    NavigationDrawerDestination(icon: Icon(Icons.code), label: Text('游戏')),
+    NavigationDrawerDestination(icon: Icon(Icons.extension), label: Text('资源')),
   ];
 
   @override

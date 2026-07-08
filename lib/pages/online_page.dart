@@ -7,10 +7,10 @@ import 'package:system_info2/system_info2.dart';
 import 'package:archive/archive.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fml/utils/log.dart';
+import 'package:fml/utils/log_util.dart';
 import 'package:fml/utils/download.dart';
-import 'package:fml/pages/online/owner.dart';
-import 'package:fml/pages/online/member.dart';
+import 'package:fml/pages/online/owner_page.dart';
+import 'package:fml/pages/online/member_page.dart';
 
 class OnlinePage extends StatefulWidget {
   const OnlinePage({super.key});
