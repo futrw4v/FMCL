@@ -1,4 +1,4 @@
-import 'package:fml/function/log.dart';
+import 'package:fml/utils/log.dart';
 
 /// 从API解析出来的Minecraft版本
 /// 示例 :

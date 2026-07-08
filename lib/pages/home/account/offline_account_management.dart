@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fml/function/log.dart';
+import 'package:fml/utils/log.dart';
 
 class OfflineAccountManagementPage extends StatefulWidget {
   final String accountName;

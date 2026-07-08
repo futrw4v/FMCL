@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:fml/function/java/java_utils.dart';
-import 'package:fml/function/java/models/java_info.dart';
-import 'package:fml/function/java/models/java_runtime.dart';
+import 'package:fml/java/java_utils.dart';
+import 'package:fml/models/java/java_info.dart';
+import 'package:fml/models/java/java_runtime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../log.dart';
+import '../utils/log.dart';
 
 class JavaService {
   JavaService._();

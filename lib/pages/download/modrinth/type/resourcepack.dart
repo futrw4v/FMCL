@@ -5,10 +5,10 @@ import 'package:path/path.dart' as path;
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:fml/function/dio_client.dart';
+import 'package:fml/utils/dio_client.dart';
 import 'package:fml/constants.dart';
-import 'package:fml/function/log.dart';
-import 'package:fml/function/download.dart';
+import 'package:fml/utils/log.dart';
+import 'package:fml/utils/download.dart';
 
 class ResourcepackPage extends StatefulWidget {
   const ResourcepackPage({

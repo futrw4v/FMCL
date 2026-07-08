@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'package:fml/function/dio_client.dart';
+import 'package:fml/utils/dio_client.dart';
 import 'package:dio/dio.dart';
 import 'package:crypto/crypto.dart';
-import 'package:fml/function/log.dart';
-import 'package:fml/function/download.dart';
-import 'package:fml/function/crypto_util.dart';
+import 'package:fml/utils/log.dart';
+import 'package:fml/utils/download.dart';
+import 'package:fml/utils/crypto_util.dart';
 
 // 检查authlib-injector
 Future<bool> checkAuthlibInjector(String gamePath) async {

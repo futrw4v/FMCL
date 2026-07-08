@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fml/constants.dart';
-import 'package:fml/function/log.dart';
-import 'package:fml/function/slide_page_route.dart';
+import 'package:fml/utils/log.dart';
+import 'package:fml/utils/slide_page_route.dart';
 import 'package:fml/pages/setting/log_viewer/log_setting.dart';
 import 'package:intl/intl.dart';
 

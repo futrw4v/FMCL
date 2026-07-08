@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fml/function/log.dart';
+import 'package:fml/utils/log.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'package:url_launcher/url_launcher.dart';

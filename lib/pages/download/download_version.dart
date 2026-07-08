@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:fml/constants.dart';
-import 'package:fml/function/dio_client.dart';
-import 'package:fml/function/slide_page_route.dart';
-import 'package:fml/models/minecraft_version.dart';
+import 'package:fml/utils/dio_client.dart';
+import 'package:fml/utils/slide_page_route.dart';
+import 'package:fml/models/game/minecraft_version.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fml/pages/download/download_version/download_game.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:fml/function/log.dart';
+import 'package:fml/utils/log.dart';
 
 class DownloadVersionPage extends StatefulWidget {
   const DownloadVersionPage({super.key});

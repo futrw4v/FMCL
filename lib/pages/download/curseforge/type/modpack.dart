@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
-import 'package:fml/function/log.dart';
+import 'package:fml/utils/log.dart';
 import 'package:fml/constants.dart';
-import 'package:fml/function/dio_client.dart';
-import 'package:fml/function/slide_page_route.dart';
+import 'package:fml/utils/dio_client.dart';
+import 'package:fml/utils/slide_page_route.dart';
 import 'package:fml/pages/download/curseforge/type/download_modpack/download_info.dart';
 
 class CurseforgeModpackPage extends StatefulWidget {
-  const CurseforgeModpackPage({
-    required this.modId,
-    this.modName,
-    super.key,
-  });
+  const CurseforgeModpackPage({required this.modId, this.modName, super.key});
 
   final int modId;
   final String? modName;
@@ -49,10 +45,12 @@ class CurseforgeModpackPageState extends State<CurseforgeModpackPage> {
       final response = await DioClient().dio.get(
         'https://api.curseforge.com/v1/mods/${widget.modId}/files',
         queryParameters: {'pageSize': 50},
-        options: Options(headers: {
-          'x-api-key': kCurseforgeApiKey,
-          'User-Agent': gAppModrinthUserAgent
-        }),
+        options: Options(
+          headers: {
+            'x-api-key': kCurseforgeApiKey,
+            'User-Agent': gAppModrinthUserAgent,
+          },
+        ),
       );
       if (response.statusCode == 200) {
         final allFiles = response.data['data'] as List;

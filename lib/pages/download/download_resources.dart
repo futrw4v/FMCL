@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'package:fml/function/slide_page_route.dart';
-import 'package:fml/function/dio_client.dart';
+import 'package:fml/utils/slide_page_route.dart';
+import 'package:fml/utils/dio_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fml/function/log.dart';
+import 'package:fml/utils/log.dart';
 import 'package:fml/pages/download/modrinth/info.dart';
 import 'package:fml/pages/download/curseforge/info.dart';
 import 'package:fml/constants.dart';
@@ -98,7 +98,7 @@ class DownloadResourcesState extends State<DownloadResources> {
       LogUtil.log('开始请求Modrinth随机项目', level: 'INFO');
       final response = await DioClient().dio.get(
         'https://api.modrinth.com/v2/projects_random?count=50',
-        options: Options(headers: {'User-Agent': gAppModrinthUserAgent})
+        options: Options(headers: {'User-Agent': gAppModrinthUserAgent}),
       );
       if (response.statusCode == 200) {
         LogUtil.log('成功获取Modrinth项目', level: 'INFO');

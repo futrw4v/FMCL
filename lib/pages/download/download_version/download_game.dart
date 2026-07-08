@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fml/constants.dart';
-import 'package:fml/function/dio_client.dart';
-import 'package:fml/function/slide_page_route.dart';
-import 'package:fml/models/minecraft_version.dart';
+import 'package:fml/utils/dio_client.dart';
+import 'package:fml/utils/slide_page_route.dart';
+import 'package:fml/models/game/minecraft_version.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 
-import 'package:fml/function/log.dart';
+import 'package:fml/utils/log.dart';
 import 'package:fml/pages/download/download_version/loader/download_vanilla.dart';
 import 'package:fml/pages/download/download_version/loader/download_fabric.dart';
 import 'package:fml/pages/download/download_version/loader/download_neoforge.dart';

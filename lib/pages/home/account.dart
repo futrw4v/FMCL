@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fml/function/slide_page_route.dart';
+import 'package:fml/utils/slide_page_route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fml/function/log.dart';
+import 'package:fml/utils/log.dart';
 import 'package:fml/pages/home/account/new_account.dart';
 import 'package:fml/pages/home/account/offline_account_management.dart';
 

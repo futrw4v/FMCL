@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:fml/function/dio_client.dart';
-import 'package:fml/function/log.dart';
-import 'package:fml/function/crypto_util.dart';
+import 'package:fml/utils/dio_client.dart';
+import 'package:fml/utils/log.dart';
+import 'package:fml/utils/crypto_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // 登录模式

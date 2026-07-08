@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:fml/function/slide_page_route.dart';
+import 'package:fml/utils/slide_page_route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:fml/function/log.dart';
+import 'package:fml/utils/log.dart';
 import 'package:fml/pages/download/curseforge/type/download_modpack/loader/curseforge_fabric_modpack.dart';
 import 'package:fml/pages/download/curseforge/type/download_modpack/loader/curseforge_neoforge_modpack.dart';
 
 class CurseforgeDownloadInfoPage extends StatefulWidget {
-  const CurseforgeDownloadInfoPage(
-    this.file, {
-    super.key,
-  });
+  const CurseforgeDownloadInfoPage(this.file, {super.key});
 
   final Map<String, dynamic> file;
 

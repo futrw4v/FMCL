@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:flutter/material.dart';
 import 'package:fml/constants.dart';
-import 'package:fml/function/log.dart';
+import 'package:fml/utils/log.dart';
 
 /// 下载任务结果
 class DownloadResult {

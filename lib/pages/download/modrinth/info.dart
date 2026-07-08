@@ -4,10 +4,10 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:dio/dio.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fml/function/slide_page_route.dart';
-import 'package:fml/function/dio_client.dart';
+import 'package:fml/utils/slide_page_route.dart';
+import 'package:fml/utils/dio_client.dart';
 import 'package:fml/constants.dart';
-import 'package:fml/function/log.dart';
+import 'package:fml/utils/log.dart';
 import 'package:fml/pages/download/modrinth/type/mod.dart';
 import 'package:fml/pages/download/modrinth/type/modpack.dart';
 import 'package:fml/pages/download/modrinth/type/resourcepack.dart';
@@ -49,7 +49,7 @@ class InfoPageState extends State<InfoPage> {
   }
 
   // 获取翻译设置
-  Future<void> _getTranslateConfig() async{
+  Future<void> _getTranslateConfig() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     bool autoTranslate = prefs.getBool('autoTranslate') ?? true;
     bool enableGoogleTranslate = prefs.getBool('enableGoogleTranslate') ?? true;
@@ -87,9 +87,7 @@ class InfoPageState extends State<InfoPage> {
     if (url == null || url.isEmpty) return;
     final Uri uri = Uri.parse(url);
     try {
-      SharePlus.instance.share(
-        ShareParams(uri: uri, title: '分享 Modrinth 项目'),
-      );
+      SharePlus.instance.share(ShareParams(uri: uri, title: '分享 Modrinth 项目'));
     } catch (e) {
       ScaffoldMessenger.of(
         context,
@@ -113,8 +111,9 @@ class InfoPageState extends State<InfoPage> {
         options: Options(headers: {'User-Agent': gAppModrinthUserAgent}),
       );
       if (response.statusCode == 200) {
-        final Map<String, dynamic> details =
-            Map<String, dynamic>.from(response.data);
+        final Map<String, dynamic> details = Map<String, dynamic>.from(
+          response.data,
+        );
         LogUtil.log('成功获取模组详情', level: 'INFO');
         // 尝试获取翻译
         if (_autoTranslate) {
@@ -162,8 +161,7 @@ class InfoPageState extends State<InfoPage> {
       );
       if (transResponse.statusCode == 200 &&
           transResponse.data is Map<String, dynamic>) {
-        final transData =
-            transResponse.data as Map<String, dynamic>;
+        final transData = transResponse.data as Map<String, dynamic>;
         final translated = transData['translated']?.toString();
         if (translated != null && translated.isNotEmpty) {
           details['description'] = translated;
@@ -205,14 +203,19 @@ class InfoPageState extends State<InfoPage> {
         validateStatus: (status) => status != null,
       ),
     );
-    LogUtil.log('详细信息翻译响应状态: ${translated.statusCode}, 状态代码: ${translated.data['code'] ?? -1}', level: 'INFO');
-    if (translated.statusCode == 200 && translated.data is Map<String, dynamic> && translated.data['code'] == 0) {
+    LogUtil.log(
+      '详细信息翻译响应状态: ${translated.statusCode}, 状态代码: ${translated.data['code'] ?? -1}',
+      level: 'INFO',
+    );
+    if (translated.statusCode == 200 &&
+        translated.data is Map<String, dynamic> &&
+        translated.data['code'] == 0) {
       final transData = translated.data as Map<String, dynamic>;
       String translatedBody = transData['text']?.toString() ?? '';
       // 尽力修复被 Google 翻译破坏的 Markdown 格式 (´_ゝ`)
       translatedBody = translatedBody.replaceAllMapped(
         RegExp(r'\[\s*(.*?)\s*\]\s*\(\s*(.*?)\s*\)'),
-        (match) => '[${match[1]}](${match[2]})'
+        (match) => '[${match[1]}](${match[2]})',
       );
       setState(() {
         body = translatedBody;
@@ -558,7 +561,7 @@ class InfoPageState extends State<InfoPage> {
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (_enableGoogleTranslate) ... [
+          if (_enableGoogleTranslate) ...[
             FloatingActionButton(
               heroTag: 'translate',
               onPressed: () async {
@@ -627,8 +630,8 @@ class InfoPageState extends State<InfoPage> {
             },
             child: const Icon(Icons.download),
           ),
-        ]
-      )
+        ],
+      ),
     );
   }
 }

@@ -5,16 +5,16 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:system_info2/system_info2.dart';
 
-import 'package:fml/function/download.dart';
-import 'package:fml/function/extract_natives.dart';
-import 'package:fml/function/log.dart';
+import 'package:fml/utils/download.dart';
+import 'package:fml/utils/extract_natives.dart';
+import 'package:fml/utils/log.dart';
 
 class DownloadVanillaPage extends StatefulWidget {
   const DownloadVanillaPage({
     super.key,
     required this.version,
     required this.url,
-    required this.name
+    required this.name,
   });
 
   final String version;
@@ -26,7 +26,8 @@ class DownloadVanillaPage extends StatefulWidget {
 }
 
 class DownloadVanillaPageState extends State<DownloadVanillaPage> {
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
   double _progress = 0.0;
   bool _downloadJson = false;
   bool _parseGameJson = false;
@@ -53,12 +54,15 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
   // BMCLAPI 镜像
   String replaceWithMirror(String url) {
     return url
-      .replaceAll('piston-meta.mojang.com', 'bmclapi2.bangbang93.com')
-      .replaceAll('piston-data.mojang.com', 'bmclapi2.bangbang93.com')
-      .replaceAll('launcher.mojang.com', 'bmclapi2.bangbang93.com')
-      .replaceAll('launchermeta.mojang.com', 'bmclapi2.bangbang93.com')
-      .replaceAll('libraries.minecraft.net', 'bmclapi2.bangbang93.com/maven')
-      .replaceAll('resources.download.minecraft.net', 'bmclapi2.bangbang93.com/assets');
+        .replaceAll('piston-meta.mojang.com', 'bmclapi2.bangbang93.com')
+        .replaceAll('piston-data.mojang.com', 'bmclapi2.bangbang93.com')
+        .replaceAll('launcher.mojang.com', 'bmclapi2.bangbang93.com')
+        .replaceAll('launchermeta.mojang.com', 'bmclapi2.bangbang93.com')
+        .replaceAll('libraries.minecraft.net', 'bmclapi2.bangbang93.com/maven')
+        .replaceAll(
+          'resources.download.minecraft.net',
+          'bmclapi2.bangbang93.com/assets',
+        );
   }
 
   // 初始化通知
@@ -74,11 +78,12 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
             appUserModelId: 'lxdklp.fml',
             guid: '11451419-0721-0721-0721-114514191981',
           );
-      const InitializationSettings initializationSettings = InitializationSettings(
-        macOS: initializationSettingsDarwin,
-        linux: initializationSettingsLinux,
-        windows: initializationSettingsWindows,
-      );
+      const InitializationSettings initializationSettings =
+          InitializationSettings(
+            macOS: initializationSettingsDarwin,
+            linux: initializationSettingsLinux,
+            windows: initializationSettingsWindows,
+          );
       await flutterLocalNotificationsPlugin.initialize(
         settings: initializationSettings,
       );
@@ -88,7 +93,8 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
   // 弹出通知
   Future<void> _showNotification(String title, String body) async {
     if (Platform.isMacOS || Platform.isLinux || Platform.isWindows) {
-      const DarwinNotificationDetails darwinDetails = DarwinNotificationDetails();
+      const DarwinNotificationDetails darwinDetails =
+          DarwinNotificationDetails();
       const LinuxNotificationDetails linuxDetails = LinuxNotificationDetails();
       const NotificationDetails platformChannelSpecifics = NotificationDetails(
         macOS: darwinDetails,
@@ -108,10 +114,15 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
     final prefs = await SharedPreferences.getInstance();
     final selectedGamePath = prefs.getString('SelectedPath') ?? '';
     final gamePath = prefs.getString('Path_$selectedGamePath') ?? '';
-    final directory = Directory('$gamePath${Platform.pathSeparator}versions${Platform.pathSeparator}${widget.name}');
+    final directory = Directory(
+      '$gamePath${Platform.pathSeparator}versions${Platform.pathSeparator}${widget.name}',
+    );
     if (!await directory.exists()) {
       await directory.create(recursive: true);
-      await LogUtil.log('创建目录: $gamePath${Platform.pathSeparator}versions${Platform.pathSeparator}${widget.name}', level: 'INFO');
+      await LogUtil.log(
+        '创建目录: $gamePath${Platform.pathSeparator}versions${Platform.pathSeparator}${widget.name}',
+        level: 'INFO',
+      );
     }
   }
 
@@ -156,20 +167,23 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
             }
           }
         }
-        await LogUtil.log('找到 ${librariesPath.length} 个库文件路径,找到 ${librariesURL.length} 个库文件URL', level: 'INFO');
+        await LogUtil.log(
+          '找到 ${librariesPath.length} 个库文件路径,找到 ${librariesURL.length} 个库文件URL',
+          level: 'INFO',
+        );
       }
       setState(() {
         _parseGameJson = true;
       });
     } catch (e) {
-        await _showNotification('解析JSON失败', e.toString());
-        await LogUtil.log('解析JSON失败: $e', level: 'ERROR');
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('解析JSON失败: $e')),
-        );
-        setState(() {
-          _parseGameJson = false;
+      await _showNotification('解析JSON失败', e.toString());
+      await LogUtil.log('解析JSON失败: $e', level: 'ERROR');
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('解析JSON失败: $e')));
+      setState(() {
+        _parseGameJson = false;
       });
     }
   }
@@ -220,7 +234,8 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
     for (int i = 0; i < librariesURL.length; i++) {
       final url = librariesURL[i];
       final relativePath = librariesPath[i];
-      final fullPath = '$gamePath${Platform.pathSeparator}libraries${Platform.pathSeparator}$relativePath';
+      final fullPath =
+          '$gamePath${Platform.pathSeparator}libraries${Platform.pathSeparator}$relativePath';
       final file = File(fullPath);
       if (!file.existsSync()) {
         downloadTasks.add({'url': url, 'path': fullPath});
@@ -243,7 +258,10 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
       fileType: '库文件',
     );
     if (!result.success) {
-      await LogUtil.log('库文件下载完成,失败 ${result.failedList.length} 个', level: 'WARNING');
+      await LogUtil.log(
+        '库文件下载完成,失败 ${result.failedList.length} 个',
+        level: 'WARNING',
+      );
     }
     setState(() {
       _downloadLibrary = true;
@@ -260,7 +278,8 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
     for (int i = 0; i < _assetHash.length; i++) {
       final hash = _assetHash[i];
       final hashPrefix = hash.substring(0, 2);
-      final assetDir = '$gamePath${Platform.pathSeparator}assets${Platform.pathSeparator}objects${Platform.pathSeparator}$hashPrefix';
+      final assetDir =
+          '$gamePath${Platform.pathSeparator}assets${Platform.pathSeparator}objects${Platform.pathSeparator}$hashPrefix';
       final assetPath = '$assetDir${Platform.pathSeparator}$hash';
       final directory = Directory(assetDir);
       if (!directory.existsSync()) {
@@ -289,7 +308,10 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
       fileType: '资源文件',
     );
     if (!result.success) {
-      await LogUtil.log('资源文件下载完成,失败 ${result.failedList.length} 个', level: 'WARNING');
+      await LogUtil.log(
+        '资源文件下载完成,失败 ${result.failedList.length} 个',
+        level: 'WARNING',
+      );
     }
     setState(() {
       _downloadAsset = true;
@@ -297,7 +319,10 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
   }
 
   // 提取LWJGL本地库文件的名称和路径
-  Future<void> _extractLwjglNativeLibrariesPath(String jsonFilePath, String gamePath) async {
+  Future<void> _extractLwjglNativeLibrariesPath(
+    String jsonFilePath,
+    String gamePath,
+  ) async {
     final namesList = <String>[];
     final pathsList = <String>[];
     final file = File(jsonFilePath);
@@ -343,15 +368,21 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
       final fileName = path.split('/').last;
       // 检查是否为所需的LWJGL库
       if ((fileName.startsWith('lwjgl-') && fileName.contains('-natives-')) ||
-          (fileName.startsWith('lwjgl-freetype-') && fileName.contains('-natives-')) ||
-          (fileName.startsWith('lwjgl-glfw-') && fileName.contains('-natives-')) ||
-          (fileName.startsWith('lwjgl-jemalloc-') && fileName.contains('-natives-')) ||
-          (fileName.startsWith('lwjgl-openal-') && fileName.contains('-natives-')) ||
-          (fileName.startsWith('lwjgl-stb-') && fileName.contains('-natives-')) ||
+          (fileName.startsWith('lwjgl-freetype-') &&
+              fileName.contains('-natives-')) ||
+          (fileName.startsWith('lwjgl-glfw-') &&
+              fileName.contains('-natives-')) ||
+          (fileName.startsWith('lwjgl-jemalloc-') &&
+              fileName.contains('-natives-')) ||
+          (fileName.startsWith('lwjgl-openal-') &&
+              fileName.contains('-natives-')) ||
+          (fileName.startsWith('lwjgl-stb-') &&
+              fileName.contains('-natives-')) ||
           fileName.startsWith('lwjgl-tinyfd')) {
         namesList.add(fileName);
         String nativePath = path.replaceAll('/', Platform.pathSeparator);
-        final fullPath = ('$gamePath${Platform.pathSeparator}libraries${Platform.pathSeparator}$nativePath');
+        final fullPath =
+            ('$gamePath${Platform.pathSeparator}libraries${Platform.pathSeparator}$nativePath');
         pathsList.add(fullPath);
         await LogUtil.log('找到LWJGL库: $fileName, 路径: $fullPath', level: 'INFO');
       }
@@ -376,7 +407,8 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
     final prefs = await SharedPreferences.getInstance();
     final selectedGamePath = prefs.getString('SelectedPath') ?? '';
     final gamePath = prefs.getString('Path_$selectedGamePath') ?? '';
-    final nativesDir = '$gamePath${Platform.pathSeparator}versions${Platform.pathSeparator}${widget.name}${Platform.pathSeparator}natives';
+    final nativesDir =
+        '$gamePath${Platform.pathSeparator}versions${Platform.pathSeparator}${widget.name}${Platform.pathSeparator}natives';
     final nativesDirObj = Directory(nativesDir);
     if (!await nativesDirObj.exists()) {
       await nativesDirObj.create(recursive: true);
@@ -389,20 +421,32 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
       final fullPath = lwjglNativePaths[i];
       final fileName = lwjglNativeNames[i];
       try {
-        final jarDir = fullPath.substring(0, fullPath.lastIndexOf(Platform.pathSeparator));
-        await LogUtil.log('提取: $fileName 从 $jarDir 到 $nativesDir', level: 'INFO');
+        final jarDir = fullPath.substring(
+          0,
+          fullPath.lastIndexOf(Platform.pathSeparator),
+        );
+        await LogUtil.log(
+          '提取: $fileName 从 $jarDir 到 $nativesDir',
+          level: 'INFO',
+        );
         // 调用extractNatives函数提取本地库
         final extracted = await extractNatives(jarDir, fileName, nativesDir);
         if (extracted.isNotEmpty) {
           successCount++;
           extractedFiles.addAll(extracted);
-          await LogUtil.log('成功从 $fileName 提取了 ${extracted.length} 个文件', level: 'INFO');
+          await LogUtil.log(
+            '成功从 $fileName 提取了 ${extracted.length} 个文件',
+            level: 'INFO',
+          );
         }
       } catch (e) {
         await LogUtil.log('提取 $fileName 时出错: $e', level: 'ERROR');
       }
     }
-    await LogUtil.log('完成LWJGL本地库提取, 共处理 ${lwjglNativePaths.length} 个文件, 成功: $successCount', level: 'INFO');
+    await LogUtil.log(
+      '完成LWJGL本地库提取, 共处理 ${lwjglNativePaths.length} 个文件, 成功: $successCount',
+      level: 'INFO',
+    );
     await LogUtil.log('提取的文件: ${extractedFiles.join(', ')}', level: 'INFO');
     setState(() {
       _extractedLwjglNatives = true;
@@ -426,7 +470,7 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
         },
         onError: (error) async {
           await LogUtil.log('下载失败: $error, URL: $url', level: 'ERROR');
-        }
+        },
       );
       final file = File(path);
       if (await file.exists()) {
@@ -454,7 +498,7 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
     });
   }
 
-    // 游戏配置文件创建
+  // 游戏配置文件创建
   Future<void> _writeGameConfig() async {
     final prefs = await SharedPreferences.getInstance();
     _name = prefs.getString('SelectedPath') ?? '';
@@ -466,7 +510,7 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
       '854',
       '480',
       'Vanilla',
-      ''
+      '',
     ];
     final key = 'Config_${_name}_${widget.name}';
     await prefs.setStringList(key, defaultConfig);
@@ -488,87 +532,107 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
 
   // 下载逻辑
   Future<void> _startDownload() async {
-  final prefs = await SharedPreferences.getInstance();
-  final selectedGamePath = prefs.getString('SelectedPath') ?? '';
-  final gamePath = prefs.getString('Path_$selectedGamePath') ?? '';
-  final versionPath = '$gamePath${Platform.pathSeparator}versions${Platform.pathSeparator}${widget.name}';
-  final gameJsonURL = replaceWithMirror(widget.url);
-  try {
-    await LogUtil.log('开始下载 ${widget.name} 版本', level: 'INFO');
-    await _showNotification('开始下载', '正在下载 ${widget.name} 版本\n你可以将启动器置于后台,安装完成将有通知提醒');
-    // 创建文件夹
-    await _createGameDirectories();
-    // 下载版本json
+    final prefs = await SharedPreferences.getInstance();
+    final selectedGamePath = prefs.getString('SelectedPath') ?? '';
+    final gamePath = prefs.getString('Path_$selectedGamePath') ?? '';
+    final versionPath =
+        '$gamePath${Platform.pathSeparator}versions${Platform.pathSeparator}${widget.name}';
+    final gameJsonURL = replaceWithMirror(widget.url);
     try {
-      await _downloadFile('$versionPath${Platform.pathSeparator}${widget.name}.json', gameJsonURL);
-      setState(() {
-        _downloadJson = true;
-      });
-    } catch (e) {
-      await _showNotification('下载失败', '版本Json下载失败\n$e');
-      setState(() {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('下载版本Json失败: $e')),
-        );
-      });
-      return;
-    }
-    // 解析游戏Json
-    await parseGameJson('$versionPath${Platform.pathSeparator}${widget.name}.json');
-    // 下载资源索引文件
-    if (assetIndexURL != null) {
-      final assetIndexDir = '$gamePath${Platform.pathSeparator}assets${Platform.pathSeparator}indexes';
-      final assetIndexPath = '$assetIndexDir${Platform.pathSeparator}$assetIndexId.json';
-      try {
-        await _downloadFile('$gamePath${Platform.pathSeparator}assets${Platform.pathSeparator}indexes${Platform.pathSeparator}$assetIndexId.json', assetIndexURL!);
-        setState(() {
-          _downloadAssetJson = true;
-        });
-      } catch (e) {
-        setState(() {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('下载资产索引失败: $e')),
-          );
-        });
-        return;
-      }
-      // 解析资产索引
-      await parseAssetIndex(assetIndexPath);
-      // 下载客户端
-      try {
-        await _downloadFile('$versionPath${Platform.pathSeparator}${widget.name}.jar', clientURL);
-        setState(() {
-          _downloadClient = true;
-        });
-      } catch (e) {
-        setState(() {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('下载客户端失败: $e')),
-          );
-        });
-        return;
-      }
-      // 下载库文件
-      await _downloadLibraries();
-      // 下载游戏资源
-      await _downloadAssets();
-      // 提取LWJGL本地库路径
-      await _extractLwjglNativeLibrariesPath('$versionPath${Platform.pathSeparator}${widget.name}.json',gamePath);
-      // 提取LWJGL Natives
-      await _extractLwjglNatives();
-      // 写入游戏配置文件
-      await _writeGameConfig();
-      // 完成通知
-      await _showNotification('完成下载', '点击查看详细');
-    }
-  } catch (e) {
-    setState(() {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('发生错误: $e')),
+      await LogUtil.log('开始下载 ${widget.name} 版本', level: 'INFO');
+      await _showNotification(
+        '开始下载',
+        '正在下载 ${widget.name} 版本\n你可以将启动器置于后台,安装完成将有通知提醒',
       );
-    });
+      // 创建文件夹
+      await _createGameDirectories();
+      // 下载版本json
+      try {
+        await _downloadFile(
+          '$versionPath${Platform.pathSeparator}${widget.name}.json',
+          gameJsonURL,
+        );
+        setState(() {
+          _downloadJson = true;
+        });
+      } catch (e) {
+        await _showNotification('下载失败', '版本Json下载失败\n$e');
+        setState(() {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('下载版本Json失败: $e')));
+        });
+        return;
+      }
+      // 解析游戏Json
+      await parseGameJson(
+        '$versionPath${Platform.pathSeparator}${widget.name}.json',
+      );
+      // 下载资源索引文件
+      if (assetIndexURL != null) {
+        final assetIndexDir =
+            '$gamePath${Platform.pathSeparator}assets${Platform.pathSeparator}indexes';
+        final assetIndexPath =
+            '$assetIndexDir${Platform.pathSeparator}$assetIndexId.json';
+        try {
+          await _downloadFile(
+            '$gamePath${Platform.pathSeparator}assets${Platform.pathSeparator}indexes${Platform.pathSeparator}$assetIndexId.json',
+            assetIndexURL!,
+          );
+          setState(() {
+            _downloadAssetJson = true;
+          });
+        } catch (e) {
+          setState(() {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('下载资产索引失败: $e')));
+          });
+          return;
+        }
+        // 解析资产索引
+        await parseAssetIndex(assetIndexPath);
+        // 下载客户端
+        try {
+          await _downloadFile(
+            '$versionPath${Platform.pathSeparator}${widget.name}.jar',
+            clientURL,
+          );
+          setState(() {
+            _downloadClient = true;
+          });
+        } catch (e) {
+          setState(() {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('下载客户端失败: $e')));
+          });
+          return;
+        }
+        // 下载库文件
+        await _downloadLibraries();
+        // 下载游戏资源
+        await _downloadAssets();
+        // 提取LWJGL本地库路径
+        await _extractLwjglNativeLibrariesPath(
+          '$versionPath${Platform.pathSeparator}${widget.name}.json',
+          gamePath,
+        );
+        // 提取LWJGL Natives
+        await _extractLwjglNatives();
+        // 写入游戏配置文件
+        await _writeGameConfig();
+        // 完成通知
+        await _showNotification('完成下载', '点击查看详细');
+      }
+    } catch (e) {
+      setState(() {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('发生错误: $e')));
+      });
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -585,49 +649,57 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
               title: const Text('正在下载游戏Json'),
               subtitle: Text(_downloadJson ? '下载完成' : '下载中...'),
               trailing: _downloadJson
-                ? const Icon(Icons.check)
-                : const CircularProgressIndicator(),
+                  ? const Icon(Icons.check)
+                  : const CircularProgressIndicator(),
             ),
-          ),if (_downloadJson) ...[
+          ),
+          if (_downloadJson) ...[
             Card(
               child: ListTile(
                 title: const Text('正在解析游戏Json'),
                 subtitle: Text(_parseGameJson ? '解析完成' : '解析中...'),
                 trailing: _parseGameJson
-                  ? const Icon(Icons.check)
-                  : const CircularProgressIndicator(),
+                    ? const Icon(Icons.check)
+                    : const CircularProgressIndicator(),
               ),
-            ),if (_parseAssetJson) ...[
+            ),
+            if (_parseAssetJson) ...[
               Card(
                 child: ListTile(
                   title: const Text('正在下载资源Json'),
                   subtitle: Text(_downloadAssetJson ? '下载完成' : '下载中...'),
                   trailing: _downloadAssetJson
-                    ? const Icon(Icons.check)
-                    : const CircularProgressIndicator(),
+                      ? const Icon(Icons.check)
+                      : const CircularProgressIndicator(),
                 ),
               ),
-            ]
-          ],if (_downloadAssetJson) ...[
+            ],
+          ],
+          if (_downloadAssetJson) ...[
             Card(
               child: ListTile(
                 title: const Text('正在解析资源Json'),
                 subtitle: Text(_parseAssetJson ? '解析完成' : '解析中...'),
                 trailing: _parseAssetJson
-                  ? const Icon(Icons.check)
-                  : const CircularProgressIndicator(),
+                    ? const Icon(Icons.check)
+                    : const CircularProgressIndicator(),
               ),
             ),
-          ],if (_parseAssetJson) ...[
+          ],
+          if (_parseAssetJson) ...[
             Card(
               child: Column(
                 children: [
                   ListTile(
                     title: const Text('正在下载客户端'),
-                    subtitle: Text(_downloadClient ? '下载完成' : '下载中... 已下载${(_progress * 100).toStringAsFixed(2)}%'),
+                    subtitle: Text(
+                      _downloadClient
+                          ? '下载完成'
+                          : '下载中... 已下载${(_progress * 100).toStringAsFixed(2)}%',
+                    ),
                     trailing: _downloadClient
-                      ? const Icon(Icons.check)
-                      : const CircularProgressIndicator()
+                        ? const Icon(Icons.check)
+                        : const CircularProgressIndicator(),
                   ),
                   if (!_downloadClient)
                     Padding(
@@ -635,37 +707,47 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
                       child: LinearProgressIndicator(value: _progress),
                     ),
                 ],
-              )
+              ),
             ),
-          ],if (_downloadClient) ...[
+          ],
+          if (_downloadClient) ...[
             Card(
               child: Column(
                 children: [
                   ListTile(
                     title: const Text('正在下载游戏库'),
-                    subtitle: Text(_downloadLibrary ? '下载完成' : '下载中... 已下载${(_progress * 100).toStringAsFixed(2)}%'),
+                    subtitle: Text(
+                      _downloadLibrary
+                          ? '下载完成'
+                          : '下载中... 已下载${(_progress * 100).toStringAsFixed(2)}%',
+                    ),
                     trailing: _downloadLibrary
-                      ? const Icon(Icons.check)
-                  : const CircularProgressIndicator(),
+                        ? const Icon(Icons.check)
+                        : const CircularProgressIndicator(),
+                  ),
+                  if (!_downloadLibrary)
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: LinearProgressIndicator(value: _progress),
+                    ),
+                ],
               ),
-              if (!_downloadLibrary)
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: LinearProgressIndicator(value: _progress),
-                ),
-              ],
             ),
-            )
-          ],if (_downloadLibrary) ...[
+          ],
+          if (_downloadLibrary) ...[
             Card(
               child: Column(
                 children: [
                   ListTile(
                     title: const Text('正在下载游戏资源'),
-                    subtitle: Text(_downloadAsset ? '下载完成' : '下载中... 已下载${(_progress * 100).toStringAsFixed(2)}%'),
+                    subtitle: Text(
+                      _downloadAsset
+                          ? '下载完成'
+                          : '下载中... 已下载${(_progress * 100).toStringAsFixed(2)}%',
+                    ),
                     trailing: _downloadAsset
-                      ? const Icon(Icons.check)
-                      : const CircularProgressIndicator(),
+                        ? const Icon(Icons.check)
+                        : const CircularProgressIndicator(),
                   ),
                   if (!_downloadAsset)
                     Padding(
@@ -674,47 +756,51 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
                     ),
                 ],
               ),
-            )
-          ],if (_downloadAsset) ...[
+            ),
+          ],
+          if (_downloadAsset) ...[
             Card(
               child: ListTile(
                 title: const Text('正在提取LWJGL路径'),
                 subtitle: Text(_extractedLwjglNativesPath ? '提取完成' : '提取中...'),
                 trailing: _extractedLwjglNativesPath
-                  ? const Icon(Icons.check)
-                  : const CircularProgressIndicator(),
+                    ? const Icon(Icons.check)
+                    : const CircularProgressIndicator(),
               ),
-            )
-          ],if (_extractedLwjglNativesPath) ...[
+            ),
+          ],
+          if (_extractedLwjglNativesPath) ...[
             Card(
               child: ListTile(
                 title: const Text('正在提取LWJGL'),
                 subtitle: Text(_extractedLwjglNatives ? '提取完成' : '提取中...'),
                 trailing: _extractedLwjglNatives
-                  ? const Icon(Icons.check)
-                  : const CircularProgressIndicator(),
+                    ? const Icon(Icons.check)
+                    : const CircularProgressIndicator(),
               ),
-            )],if (_extractedLwjglNatives) ...[
+            ),
+          ],
+          if (_extractedLwjglNatives) ...[
             Card(
               child: ListTile(
                 title: const Text('正在写入配置文件'),
                 subtitle: Text(_writeConfig ? '写入完成' : '写入中...'),
                 trailing: _writeConfig
-                  ? const Icon(Icons.check)
-                  : const CircularProgressIndicator(),
+                    ? const Icon(Icons.check)
+                    : const CircularProgressIndicator(),
               ),
-            )
+            ),
           ],
         ],
       ),
       floatingActionButton: _writeConfig
-        ? FloatingActionButton(
-            onPressed: () {
-              Navigator.of(context).popUntil((route) => route.isFirst);
-            },
-            child: const Icon(Icons.check),
-          )
-        : null,
+          ? FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context).popUntil((route) => route.isFirst);
+              },
+              child: const Icon(Icons.check),
+            )
+          : null,
     );
   }
 }

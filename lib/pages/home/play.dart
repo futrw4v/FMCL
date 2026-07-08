@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:fml/function/log.dart';
-import 'package:fml/function/launcher/fabric.dart';
-import 'package:fml/function/launcher/vanilla.dart';
-import 'package:fml/function/launcher/neoforge.dart';
+import 'package:fml/utils/log.dart';
+import 'package:fml/launch/fabric.dart';
+import 'package:fml/launch/vanilla.dart';
+import 'package:fml/launch/neoforge.dart';
 
 class PlayPage extends StatefulWidget {
   const PlayPage({super.key});
@@ -23,7 +23,9 @@ class PlayPageState extends State<PlayPage> {
     final prefs = await SharedPreferences.getInstance();
     String? selectedPath = prefs.getString('SelectedPath');
     String? selectedGame = prefs.getString('SelectedGame');
-    List<String>? gameConfig = prefs.getStringList('Config_${selectedPath}_$selectedGame');
+    List<String>? gameConfig = prefs.getStringList(
+      'Config_${selectedPath}_$selectedGame',
+    );
     String account = prefs.getString('SelectedAccount') ?? '';
     accountInfo = prefs.getStringList('Account_$account');
     String? type = gameConfig != null ? gameConfig[4] : null;
@@ -32,9 +34,9 @@ class PlayPageState extends State<PlayPage> {
     setState(() {
       _gameType = type ?? '';
     });
-    if (type == 'Vanilla'){
+    if (type == 'Vanilla') {
       await vanillaLauncher(
-      onProgress: (String message) {
+        onProgress: (String message) {
           setState(() {
             _message = message;
           });
@@ -45,8 +47,7 @@ class PlayPageState extends State<PlayPage> {
           }
         },
         onError: (String error) {
-          setState(() {
-          });
+          setState(() {});
         },
       );
     }
@@ -63,8 +64,7 @@ class PlayPageState extends State<PlayPage> {
           }
         },
         onError: (String error) {
-          setState(() {
-          });
+          setState(() {});
         },
       );
     }
@@ -81,8 +81,7 @@ class PlayPageState extends State<PlayPage> {
           }
         },
         onError: (String error) {
-          setState(() {
-          });
+          setState(() {});
         },
       );
     }
@@ -103,13 +102,13 @@ class PlayPageState extends State<PlayPage> {
         ),
       ),
       floatingActionButton: _launching
-      ? FloatingActionButton(
-            onPressed: () {
-              Navigator.of(context).popUntil((route) => route.isFirst);
-            },
-            child: const Icon(Icons.check),
-          )
-        : null,
+          ? FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context).popUntil((route) => route.isFirst);
+              },
+              child: const Icon(Icons.check),
+            )
+          : null,
     );
   }
 

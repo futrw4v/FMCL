@@ -7,9 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_gbk2utf8/flutter_gbk2utf8.dart';
-import 'package:fml/function/log.dart';
-import 'package:fml/function/online/scaffolding/client.dart';
-import 'package:fml/function/online/fakeserver.dart';
+import 'package:fml/utils/log.dart';
+import 'package:fml/online/scaffolding/client.dart';
+import 'package:fml/online/fakeserver.dart';
 
 class EasyTierPeer {
   final String? ipv4;

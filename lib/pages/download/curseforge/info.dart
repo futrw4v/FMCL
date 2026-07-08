@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'package:fml/function/dio_client.dart';
-import 'package:fml/function/slide_page_route.dart';
+import 'package:fml/utils/dio_client.dart';
+import 'package:fml/utils/slide_page_route.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:html/parser.dart' as html_parser;
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fml/constants.dart';
-import 'package:fml/function/log.dart';
+import 'package:fml/utils/log.dart';
 import 'package:fml/pages/download/curseforge/type/mod.dart';
 import 'package:fml/pages/download/curseforge/type/modpack.dart';
 import 'package:fml/pages/download/curseforge/type/resourcepack.dart';
@@ -54,7 +54,7 @@ class CurseforgeInfoPageState extends State<CurseforgeInfoPage> {
   }
 
   // 获取翻译设置
-  Future<void> _getTranslateConfig() async{
+  Future<void> _getTranslateConfig() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     bool autoTranslate = prefs.getBool('autoTranslate') ?? true;
     bool enableGoogleTranslate = prefs.getBool('enableGoogleTranslate') ?? true;
@@ -217,8 +217,13 @@ class CurseforgeInfoPageState extends State<CurseforgeInfoPage> {
         validateStatus: (status) => status != null,
       ),
     );
-    LogUtil.log('详细信息翻译响应状态: ${translated.statusCode}, 状态代码: ${translated.data['code'] ?? -1}', level: 'INFO');
-    if (translated.statusCode == 200 && translated.data is Map<String, dynamic> && translated.data['code'] == 0) {
+    LogUtil.log(
+      '详细信息翻译响应状态: ${translated.statusCode}, 状态代码: ${translated.data['code'] ?? -1}',
+      level: 'INFO',
+    );
+    if (translated.statusCode == 200 &&
+        translated.data is Map<String, dynamic> &&
+        translated.data['code'] == 0) {
       final transData = translated.data as Map<String, dynamic>;
       String translatedBody = transData['text']?.toString() ?? '';
       setState(() {
@@ -566,7 +571,7 @@ class CurseforgeInfoPageState extends State<CurseforgeInfoPage> {
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (_enableGoogleTranslate) ... [
+          if (_enableGoogleTranslate) ...[
             FloatingActionButton(
               heroTag: 'translate',
               onPressed: () async {

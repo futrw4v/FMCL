@@ -9,10 +9,10 @@ import 'package:archive/archive.dart';
 import 'package:dio/dio.dart';
 import 'package:system_info2/system_info2.dart';
 
-import 'package:fml/function/dio_client.dart';
-import 'package:fml/function/download.dart';
-import 'package:fml/function/log.dart';
-import 'package:fml/function/extract_natives.dart';
+import 'package:fml/utils/dio_client.dart';
+import 'package:fml/utils/download.dart';
+import 'package:fml/utils/log.dart';
+import 'package:fml/utils/extract_natives.dart';
 
 class NeoForgeModpackPage extends StatefulWidget {
   const NeoForgeModpackPage({super.key, required this.name, required this.url});

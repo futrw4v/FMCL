@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fml/function/slide_page_route.dart';
+import 'package:fml/utils/slide_page_route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:fml/function/log.dart';
+import 'package:fml/utils/log.dart';
 import 'package:fml/pages/download/modrinth/type/download_modpack/loader/modrinth_fabric_modpack.dart';
 import 'package:fml/pages/download/modrinth/type/download_modpack/loader/modrinth_neoforge_modpack.dart';
 

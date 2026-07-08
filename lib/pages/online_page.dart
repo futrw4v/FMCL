@@ -1,14 +1,14 @@
 import 'dart:io';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:fml/function/slide_page_route.dart';
-import 'package:fml/function/dio_client.dart';
+import 'package:fml/utils/slide_page_route.dart';
+import 'package:fml/utils/dio_client.dart';
 import 'package:system_info2/system_info2.dart';
 import 'package:archive/archive.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fml/function/log.dart';
-import 'package:fml/function/download.dart';
+import 'package:fml/utils/log.dart';
+import 'package:fml/utils/download.dart';
 import 'package:fml/pages/online/owner.dart';
 import 'package:fml/pages/online/member.dart';
 

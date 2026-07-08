@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
-import 'package:fml/function/dio_client.dart';
+import 'package:fml/utils/dio_client.dart';
 import 'package:fml/constants.dart';
-import 'package:fml/function/log.dart';
-import 'package:fml/function/slide_page_route.dart';
+import 'package:fml/utils/log.dart';
+import 'package:fml/utils/slide_page_route.dart';
 import 'package:fml/pages/download/modrinth/type/download_modpack/donwnload_info.dart';
 
 class ModpackPage extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fml/function/log.dart';
-import 'package:fml/function/slide_page_route.dart';
+import 'package:fml/utils/log.dart';
+import 'package:fml/utils/slide_page_route.dart';
 import 'dart:io';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:fml/pages/home/management/saves_management/save.dart';

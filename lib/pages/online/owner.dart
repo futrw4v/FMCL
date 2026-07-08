@@ -8,9 +8,9 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_gbk2utf8/flutter_gbk2utf8.dart';
-import 'package:fml/function/log.dart';
-import 'package:fml/function/online/scaffolding/server.dart';
-import 'package:fml/function/online/scanner.dart';
+import 'package:fml/utils/log.dart';
+import 'package:fml/online/scaffolding/server.dart';
+import 'package:fml/online/scanner.dart';
 
 // EasyTier对等节点类
 class PlayerList {
@@ -143,12 +143,13 @@ class OwnerPageState extends State<OwnerPage> {
       final prefs = await SharedPreferences.getInstance();
       final name = prefs.getString('SelectedPath') ?? '';
       final path = prefs.getString('Path_$name') ?? '';
-      final String cli = ('$path${Platform.pathSeparator}easytier${Platform.pathSeparator}easytier-cli');
-      final proc = await Process.run(
-        cli,
-        ['--output', 'json', 'peer'],
-        stdoutEncoding: Platform.isWindows ? null : utf8,
-      );
+      final String cli =
+          ('$path${Platform.pathSeparator}easytier${Platform.pathSeparator}easytier-cli');
+      final proc = await Process.run(cli, [
+        '--output',
+        'json',
+        'peer',
+      ], stdoutEncoding: Platform.isWindows ? null : utf8);
       String output;
       if (Platform.isWindows) {
         try {
@@ -204,10 +205,40 @@ class OwnerPageState extends State<OwnerPage> {
 
   // 有效字符集
   static const List<String> _validChars = [
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K',
-    'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
-    'W', 'X', 'Y', 'Z'
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z',
   ];
 
   // 生成房间码
@@ -237,7 +268,8 @@ class OwnerPageState extends State<OwnerPage> {
     }
     final List<String> chars = charIndices.map((i) => _validChars[i]).toList();
     chars.add(_validChars[lastCharIndex]);
-    final code = 'U/${chars.sublist(0, 4).join()}-${chars.sublist(4, 8).join()}-${chars.sublist(8, 12).join()}-${chars.sublist(12, 16).join()}';
+    final code =
+        'U/${chars.sublist(0, 4).join()}-${chars.sublist(4, 8).join()}-${chars.sublist(8, 12).join()}-${chars.sublist(12, 16).join()}';
     final parts = code.substring(2).split('-');
     setState(() {
       _roomCode = code;
@@ -263,8 +295,9 @@ class OwnerPageState extends State<OwnerPage> {
 
   // 验证房间码
   Future<bool> _isValidCode(String code) async {
-    if (!RegExp(r'^U/[0-9A-HJ-NP-Z]{4}-[0-9A-HJ-NP-Z]{4}-[0-9A-HJ-NP-Z]{4}-[0-9A-HJ-NP-Z]{4}$')
-        .hasMatch(code)) {
+    if (!RegExp(
+      r'^U/[0-9A-HJ-NP-Z]{4}-[0-9A-HJ-NP-Z]{4}-[0-9A-HJ-NP-Z]{4}-[0-9A-HJ-NP-Z]{4}$',
+    ).hasMatch(code)) {
       return false;
     }
     final codeContent = code.substring(2).replaceAll('-', '');
@@ -315,7 +348,8 @@ class OwnerPageState extends State<OwnerPage> {
     final prefs = await SharedPreferences.getInstance();
     final name = prefs.getString('SelectedPath') ?? '';
     final path = prefs.getString('Path_$name') ?? '';
-    final String core = ('$path${Platform.pathSeparator}easytier${Platform.pathSeparator}easytier-core');
+    final String core =
+        ('$path${Platform.pathSeparator}easytier${Platform.pathSeparator}easytier-core');
     try {
       final ProcessResult proc = await Process.run(core, ['--version']);
       final String output = proc.stdout.toString().trim();
@@ -341,7 +375,11 @@ class OwnerPageState extends State<OwnerPage> {
       attempts++;
       int port = 1024 + _random.nextInt(65535 - 1024);
       try {
-        final socket = await ServerSocket.bind(InternetAddress.anyIPv4, port, shared: true);
+        final socket = await ServerSocket.bind(
+          InternetAddress.anyIPv4,
+          port,
+          shared: true,
+        );
         await socket.close();
         LogUtil.log('找到可用的随机端口: $port (尝试次数: $attempts)', level: 'INFO');
         return port;
@@ -368,7 +406,8 @@ class OwnerPageState extends State<OwnerPage> {
         final prefs = await SharedPreferences.getInstance();
         final name = prefs.getString('SelectedPath') ?? '';
         final path = prefs.getString('Path_$name') ?? '';
-        final String core = ('$path${Platform.pathSeparator}easytier${Platform.pathSeparator}easytier-core');
+        final String core =
+            ('$path${Platform.pathSeparator}easytier${Platform.pathSeparator}easytier-core');
         int scaffoldingPort = _tcpServerPort;
         int minecraftPort = _port;
         if (attempt > 0) {
@@ -379,7 +418,7 @@ class OwnerPageState extends State<OwnerPage> {
               hostName: _playerName,
               hostVendor: _tcpServer!.hostVendor,
               port: scaffoldingPort,
-              minecraftServerPort: minecraftPort
+              minecraftServerPort: minecraftPort,
             );
             OwnerPage._persistTcpServer = _tcpServer;
             OwnerPage._persistTcpServerPort = scaffoldingPort;
@@ -395,15 +434,25 @@ class OwnerPageState extends State<OwnerPage> {
         LogUtil.log('设置EasyTier主机名: $hostname', level: 'INFO');
         final args = [
           '--no-tun',
-          '--network-name', _networkName!,
-          '--network-secret', _networkKey!,
-          '--machine-id', _machineId!,
-          '--hostname', hostname,
-          '--listeners', 'udp:0',
-          '--ipv4', '10.144.144.1',
-          '-p', widget.etServer,
+          '--network-name',
+          _networkName!,
+          '--network-secret',
+          _networkKey!,
+          '--machine-id',
+          _machineId!,
+          '--hostname',
+          hostname,
+          '--listeners',
+          'udp:0',
+          '--ipv4',
+          '10.144.144.1',
+          '-p',
+          widget.etServer,
         ];
-        LogUtil.log('正在通过 ${widget.etServer} 节点启动 EasyTier ${attempt > 0 ? " (尝试 ${attempt+1}/$maxRetries)" : ""}: $core ${args.join(' ')}', level: 'INFO');
+        LogUtil.log(
+          '正在通过 ${widget.etServer} 节点启动 EasyTier ${attempt > 0 ? " (尝试 ${attempt + 1}/$maxRetries)" : ""}: $core ${args.join(' ')}',
+          level: 'INFO',
+        );
         _easyTierProcess = await Process.start(core, args);
         OwnerPage._easyTierProcess = _easyTierProcess;
         _easyTierProcess!.stdout.transform(utf8.decoder).listen((data) {
@@ -412,7 +461,8 @@ class OwnerPageState extends State<OwnerPage> {
         bool hasPortConflict = false;
         _easyTierProcess!.stderr.transform(utf8.decoder).listen((data) {
           LogUtil.log('EasyTier错误: $data', level: 'ERROR');
-          if (data.contains('Address already in use') || data.contains('error code 48')) {
+          if (data.contains('Address already in use') ||
+              data.contains('error code 48')) {
             hasPortConflict = true;
           }
         });
@@ -428,7 +478,10 @@ class OwnerPageState extends State<OwnerPage> {
           }
           if (exitCode != null) {
             if (hasPortConflict && attempt < maxRetries - 1) {
-              LogUtil.log('检测到端口冲突,将尝试使用不同的端口 (尝试 ${attempt+1}/$maxRetries)', level: 'WARNING');
+              LogUtil.log(
+                '检测到端口冲突,将尝试使用不同的端口 (尝试 ${attempt + 1}/$maxRetries)',
+                level: 'WARNING',
+              );
             } else if (exitCode != 0) {
               LogUtil.log('EasyTier启动失败,退出码: $exitCode', level: 'ERROR');
               return false;
@@ -454,7 +507,10 @@ class OwnerPageState extends State<OwnerPage> {
         _startPortForwarding();
         return true;
       } catch (e) {
-        LogUtil.log('启动EasyTier失败 (尝试 ${attempt+1}/$maxRetries): $e', level: 'ERROR');
+        LogUtil.log(
+          '启动EasyTier失败 (尝试 ${attempt + 1}/$maxRetries): $e',
+          level: 'ERROR',
+        );
         if (attempt < maxRetries - 1) {
           LogUtil.log('将使用不同端口重试...', level: 'INFO');
           if (_easyTierProcess != null) {
@@ -483,12 +539,23 @@ class OwnerPageState extends State<OwnerPage> {
       final prefs = await SharedPreferences.getInstance();
       final name = prefs.getString('SelectedPath') ?? '';
       final path = prefs.getString('Path_$name') ?? '';
-      final String cli = ('$path${Platform.pathSeparator}easytier${Platform.pathSeparator}easytier-cli');
+      final String cli =
+          ('$path${Platform.pathSeparator}easytier${Platform.pathSeparator}easytier-cli');
       LogUtil.log('正在请求EasyTier进行端口转发', level: 'INFO');
-      LogUtil.log('转发tcp服务器: 0.0.0.0:$_tcpServerPort 10.144.144.1:$_tcpServerPort', level: 'INFO');
-      await Process.start(cli, 'port-forward add tcp 0.0.0.0:$_tcpServerPort 10.144.144.1:$_tcpServerPort'.split(' '));
+      LogUtil.log(
+        '转发tcp服务器: 0.0.0.0:$_tcpServerPort 10.144.144.1:$_tcpServerPort',
+        level: 'INFO',
+      );
+      await Process.start(
+        cli,
+        'port-forward add tcp 0.0.0.0:$_tcpServerPort 10.144.144.1:$_tcpServerPort'
+            .split(' '),
+      );
       LogUtil.log('转发游戏服务器: 0.0.0.0:$_port 10.144.144.1:$_port', level: 'INFO');
-      await Process.start(cli, 'port-forward add tcp 0.0.0.0:$_port 10.144.144.1:$_port'.split(' '));
+      await Process.start(
+        cli,
+        'port-forward add tcp 0.0.0.0:$_port 10.144.144.1:$_port'.split(' '),
+      );
       LogUtil.log('端口转发请求已发送', level: 'INFO');
     } catch (e) {
       LogUtil.log('请求端口转发失败: $e', level: 'ERROR');
@@ -510,7 +577,7 @@ class OwnerPageState extends State<OwnerPage> {
           // 超时强制结束
           _easyTierProcess!.kill(ProcessSignal.sigkill);
           return -1;
-        }
+        },
       );
       setState(() {
         _isEasyTierRunning = false;
@@ -544,13 +611,16 @@ class OwnerPageState extends State<OwnerPage> {
         hostName: _playerName,
         hostVendor: 'FML $appVersion, EasyTier v$coreVersion',
         port: _tcpServerPort,
-        minecraftServerPort: _port
+        minecraftServerPort: _port,
       );
       await _tcpServer!.start();
       // 启动EasyTier网络
       final easyTierStarted = await _startEasyTier();
       await _getEasytierId();
-      await _tcpServer!.addHostPlayer(_machineId ?? 'unknown-machine-id', _easytierId ?? '');
+      await _tcpServer!.addHostPlayer(
+        _machineId ?? 'unknown-machine-id',
+        _easytierId ?? '',
+      );
       setState(() {
         _isServerRunning = true;
       });
@@ -563,14 +633,14 @@ class OwnerPageState extends State<OwnerPage> {
       if (!easyTierStarted) {
         message += ' (EasyTier启动失败)';
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message))
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(message)));
     } catch (e) {
       LogUtil.log('启动TCP服务器失败: $e', level: 'ERROR');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('启动联机服务器失败: $e'))
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('启动联机服务器失败: $e')));
       await _stopEasyTier();
     }
   }
@@ -588,9 +658,9 @@ class OwnerPageState extends State<OwnerPage> {
       OwnerPage._persistTcpServer = null;
       OwnerPage.persistIsServerRunning = false;
       LogUtil.log('TCP服务器已停止', level: 'INFO');
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('联机服务器已停止'))
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('联机服务器已停止')));
       Navigator.pop(context);
     } catch (e) {
       LogUtil.log('停止TCP服务器失败: $e', level: 'ERROR');
@@ -606,7 +676,9 @@ class OwnerPageState extends State<OwnerPage> {
       for (var peer in peerList) {
         if (peer['hostname']?.toString().startsWith('PublicServer') ?? false) {
           final serverData = PlayerList(
-            ipv4: peer['ipv4']?.toString().isEmpty ?? true ? null : peer['ipv4'].toString(),
+            ipv4: peer['ipv4']?.toString().isEmpty ?? true
+                ? null
+                : peer['ipv4'].toString(),
             name: peer['hostname']?.toString() ?? '-',
             cost: peer['cost']?.toString() ?? '-',
             latency: peer['lat_ms']?.toString() ?? '-',
@@ -646,7 +718,9 @@ class OwnerPageState extends State<OwnerPage> {
             playerKind = matchedPlayer.kind;
             boundPlayerIds.add(matchedPlayer.easytierId);
             final playerData = PlayerList(
-              ipv4: peer['ipv4']?.toString().isEmpty ?? true ? null : peer['ipv4'].toString(),
+              ipv4: peer['ipv4']?.toString().isEmpty ?? true
+                  ? null
+                  : peer['ipv4'].toString(),
               name: peer['hostname']?.toString() ?? '-',
               cost: peer['cost']?.toString() ?? '-',
               latency: peer['lat_ms']?.toString() ?? '-',
@@ -667,7 +741,8 @@ class OwnerPageState extends State<OwnerPage> {
       }
       if (_tcpServer != null) {
         for (var player in _tcpServer!.players) {
-          if (player.easytierId.isEmpty || !boundPlayerIds.contains(player.easytierId)) {
+          if (player.easytierId.isEmpty ||
+              !boundPlayerIds.contains(player.easytierId)) {
             final unboundPlayerData = PlayerList(
               ipv4: null,
               name: '-',
@@ -701,12 +776,13 @@ class OwnerPageState extends State<OwnerPage> {
       final prefs = await SharedPreferences.getInstance();
       final name = prefs.getString('SelectedPath') ?? '';
       final path = prefs.getString('Path_$name') ?? '';
-      final String cli = ('$path${Platform.pathSeparator}easytier${Platform.pathSeparator}easytier-cli');
-      final result = await Process.run(
-        cli,
-        ['--output', 'json', 'peer'],
-        stdoutEncoding: Platform.isWindows ? null : utf8,
-      );
+      final String cli =
+          ('$path${Platform.pathSeparator}easytier${Platform.pathSeparator}easytier-cli');
+      final result = await Process.run(cli, [
+        '--output',
+        'json',
+        'peer',
+      ], stdoutEncoding: Platform.isWindows ? null : utf8);
       if (result.exitCode == 0) {
         String output;
         if (Platform.isWindows) {
@@ -729,7 +805,10 @@ class OwnerPageState extends State<OwnerPage> {
           });
         }
       } else {
-        LogUtil.log('执行easytier-cli peer命令失败,退出码:${result.exitCode}', level: 'ERROR');
+        LogUtil.log(
+          '执行easytier-cli peer命令失败,退出码:${result.exitCode}',
+          level: 'ERROR',
+        );
         LogUtil.log('错误输出：${result.stderr}', level: 'ERROR');
       }
     } catch (e) {
@@ -740,9 +819,7 @@ class OwnerPageState extends State<OwnerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('创建房间'),
-      ),
+      appBar: AppBar(title: const Text('创建房间')),
       body: Center(
         child: (_port < 0 && !_isServerRunning)
             ? const Text('正在等待局域网游戏启动...\n请在单人游戏中打开局域网开放')
@@ -758,22 +835,29 @@ class OwnerPageState extends State<OwnerPage> {
                           if (_roomCode != null) ...[
                             Text(
                               '邀请码:',
-                              style: Theme.of(context).textTheme.titleLarge
+                              style: Theme.of(context).textTheme.titleLarge,
                             ),
                             const SizedBox(height: 8),
                             Row(
                               children: [
                                 Expanded(
-                                  child: Text(_roomCode!,
-                                    style: Theme.of(context).textTheme.headlineMedium
+                                  child: Text(
+                                    _roomCode!,
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.headlineMedium,
                                   ),
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.copy),
                                   onPressed: () {
-                                    Clipboard.setData(ClipboardData(text: _roomCode!));
+                                    Clipboard.setData(
+                                      ClipboardData(text: _roomCode!),
+                                    );
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text('房间码已复制到剪贴板'))
+                                      const SnackBar(
+                                        content: Text('房间码已复制到剪贴板'),
+                                      ),
                                     );
                                   },
                                 ),
@@ -784,19 +868,24 @@ class OwnerPageState extends State<OwnerPage> {
                               children: [
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
                                           Text(
                                             'Scaffolding 协议服务器: ',
-                                            style: TextStyle(fontWeight: FontWeight.bold),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                           Text(
                                             _isServerRunning ? "运行中" : "正在启动",
                                             style: TextStyle(
-                                              color: _isServerRunning ? Colors.green : Colors.orange,
-                                              fontWeight: FontWeight.bold
+                                              color: _isServerRunning
+                                                  ? Colors.green
+                                                  : Colors.orange,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ],
@@ -806,21 +895,27 @@ class OwnerPageState extends State<OwnerPage> {
                                         children: [
                                           Text(
                                             'EasyTier 网络: ',
-                                            style: TextStyle(fontWeight: FontWeight.bold),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                           Text(
                                             _isEasyTierRunning ? "已连接" : "正在连接",
                                             style: TextStyle(
-                                              color: _isEasyTierRunning ? Colors.green : Colors.orange,
-                                              fontWeight: FontWeight.bold
+                                              color: _isEasyTierRunning
+                                                  ? Colors.green
+                                                  : Colors.orange,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ],
                                       ),
                                       const SizedBox(height: 4),
                                       if (_isServerRunning)
-                                        Text('Scaffolding 协议端口: $_tcpServerPort'),
-                                        Text('Minecraft 服务器端口: $_port')
+                                        Text(
+                                          'Scaffolding 协议端口: $_tcpServerPort',
+                                        ),
+                                      Text('Minecraft 服务器端口: $_port'),
                                     ],
                                   ),
                                 ),
@@ -837,22 +932,22 @@ class OwnerPageState extends State<OwnerPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                            const Text('EasyTier网络信息:'),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text('网络名称: $_networkName'),
-                                      const SizedBox(height: 4),
-                                      Text('网络密钥: $_networkKey'),
-                                    ],
-                                  ),
+                          const Text('EasyTier网络信息:'),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('网络名称: $_networkName'),
+                                    const SizedBox(height: 4),
+                                    Text('网络密钥: $_networkKey'),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -866,7 +961,10 @@ class OwnerPageState extends State<OwnerPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text('玩家列表:', style: TextStyle(fontWeight: FontWeight.bold)),
+                              const Text(
+                                '玩家列表:',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                             ],
                           ),
                           const SizedBox(height: 8),
@@ -895,33 +993,46 @@ class OwnerPageState extends State<OwnerPage> {
                                   } else if (peer.playerKind == 'GUEST') {
                                     kindText = '房客';
                                   }
-                                  return DataRow(cells: [
-                                    DataCell(Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const SizedBox(width: 4),
-                                        Text(kindText),
-                                      ],
-                                    )),
-                                    DataCell(Text(peer.playerName ?? '-')),
-                                    DataCell(Text(peer.playerVendor ?? '-')),
-                                    DataCell(Text(peer.ipv4 ?? '-')),
-                                    DataCell(Text(peer.cost)),
-                                    DataCell(Text(peer.latency)),
-                                    DataCell(Text(peer.loss)),
-                                    DataCell(Text(peer.rx)),
-                                    DataCell(Text(peer.tx)),
-                                    DataCell(Text(peer.nat)),
-                                  ]);
+                                  return DataRow(
+                                    cells: [
+                                      DataCell(
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const SizedBox(width: 4),
+                                            Text(kindText),
+                                          ],
+                                        ),
+                                      ),
+                                      DataCell(Text(peer.playerName ?? '-')),
+                                      DataCell(Text(peer.playerVendor ?? '-')),
+                                      DataCell(Text(peer.ipv4 ?? '-')),
+                                      DataCell(Text(peer.cost)),
+                                      DataCell(Text(peer.latency)),
+                                      DataCell(Text(peer.loss)),
+                                      DataCell(Text(peer.rx)),
+                                      DataCell(Text(peer.tx)),
+                                      DataCell(Text(peer.nat)),
+                                    ],
+                                  );
                                 }).toList(),
                               ),
                             )
                           else
-                            const Text('暂无对等节点连接', style: TextStyle(fontStyle: FontStyle.italic)),
+                            const Text(
+                              '暂无对等节点连接',
+                              style: TextStyle(fontStyle: FontStyle.italic),
+                            ),
                           if (_isEasyTierRunning && _peers.isEmpty)
                             const Padding(
                               padding: EdgeInsets.only(top: 8.0),
-                              child: Text('正在获取节点数据...', style: TextStyle(fontStyle: FontStyle.italic, color: Colors.grey)),
+                              child: Text(
+                                '正在获取节点数据...',
+                                style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.grey,
+                                ),
+                              ),
                             ),
                         ],
                       ),
@@ -936,8 +1047,9 @@ class OwnerPageState extends State<OwnerPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text('当前使用的公共服务器,感谢各位服务器维护者:',
-                                style: TextStyle(fontWeight: FontWeight.bold)
+                              const Text(
+                                '当前使用的公共服务器,感谢各位服务器维护者:',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
@@ -959,25 +1071,36 @@ class OwnerPageState extends State<OwnerPage> {
                                   DataColumn(label: Text('NAT类型')),
                                 ],
                                 rows: _servers.map((server) {
-                                  return DataRow(cells: [
-                                    DataCell(Text(server.name)),
-                                    DataCell(Text(server.cost)),
-                                    DataCell(Text('${server.latency} ms')),
-                                    DataCell(Text(server.loss)),
-                                    DataCell(Text(server.rx)),
-                                    DataCell(Text(server.tx)),
-                                    DataCell(Text(server.tunnel)),
-                                    DataCell(Text(server.nat)),
-                                  ]);
+                                  return DataRow(
+                                    cells: [
+                                      DataCell(Text(server.name)),
+                                      DataCell(Text(server.cost)),
+                                      DataCell(Text('${server.latency} ms')),
+                                      DataCell(Text(server.loss)),
+                                      DataCell(Text(server.rx)),
+                                      DataCell(Text(server.tx)),
+                                      DataCell(Text(server.tunnel)),
+                                      DataCell(Text(server.nat)),
+                                    ],
+                                  );
                                 }).toList(),
                               ),
                             )
                           else
-                            const Text('暂无公共服务器连接', style: TextStyle(fontStyle: FontStyle.italic)),
+                            const Text(
+                              '暂无公共服务器连接',
+                              style: TextStyle(fontStyle: FontStyle.italic),
+                            ),
                           if (_isEasyTierRunning && _servers.isEmpty)
                             const Padding(
                               padding: EdgeInsets.only(top: 8.0),
-                              child: Text('正在获取服务器数据...', style: TextStyle(fontStyle: FontStyle.italic, color: Colors.grey)),
+                              child: Text(
+                                '正在获取服务器数据...',
+                                style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.grey,
+                                ),
+                              ),
                             ),
                         ],
                       ),
@@ -987,10 +1110,12 @@ class OwnerPageState extends State<OwnerPage> {
                 ],
               ),
       ),
-      floatingActionButton: _isServerRunning ? FloatingActionButton(
-        onPressed:  _stopTcpServer,
-        child: const Icon(Icons.stop),
-      ) : null,
+      floatingActionButton: _isServerRunning
+          ? FloatingActionButton(
+              onPressed: _stopTcpServer,
+              child: const Icon(Icons.stop),
+            )
+          : null,
     );
   }
 }

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:convert';
-import 'package:fml/function/log.dart';
+import 'package:fml/utils/log.dart';
 
 /// 联机协议TCP服务器
 class OnlineCenterServer {

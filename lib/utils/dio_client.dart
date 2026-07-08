@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:fml/function/download.dart';
-import 'package:fml/function/log.dart';
+import 'package:fml/utils/download.dart';
+import 'package:fml/utils/log.dart';
 
 import 'package:fml/constants.dart';
 

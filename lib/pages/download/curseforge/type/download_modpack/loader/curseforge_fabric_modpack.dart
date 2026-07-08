@@ -8,11 +8,11 @@ import 'package:archive/archive.dart';
 import 'package:dio/dio.dart';
 import 'package:system_info2/system_info2.dart';
 
-import 'package:fml/function/dio_client.dart';
-import 'package:fml/function/download.dart';
+import 'package:fml/utils/dio_client.dart';
+import 'package:fml/utils/download.dart';
 import 'package:fml/constants.dart';
-import 'package:fml/function/log.dart';
-import 'package:fml/function/extract_natives.dart';
+import 'package:fml/utils/log.dart';
+import 'package:fml/utils/extract_natives.dart';
 
 class CurseforgeFabricModpackPage extends StatefulWidget {
   const CurseforgeFabricModpackPage({
@@ -266,7 +266,7 @@ class CurseforgeFabricModpackPageState
     try {
       final response = await DioClient().dio.get(
         'https://api.curseforge.com/v1/mods/$projectId/files/$fileId/download-url',
-        options: _getRequestOptions()
+        options: _getRequestOptions(),
       );
       if (response.statusCode == 200 && response.data['data'] != null) {
         return response.data['data'];
@@ -288,7 +288,7 @@ class CurseforgeFabricModpackPageState
     try {
       final response = await DioClient().dio.get(
         'https://api.curseforge.com/v1/mods/$projectId/files/$fileId',
-        options: _getRequestOptions()
+        options: _getRequestOptions(),
       );
       if (response.statusCode == 200 && response.data['data'] != null) {
         return response.data['data'];

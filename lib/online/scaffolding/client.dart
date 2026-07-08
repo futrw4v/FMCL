@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:fml/function/log.dart';
+import 'package:fml/utils/log.dart';
 
 /// Scaffolding协议TCP客户端
 class OnlineCenterClient {
