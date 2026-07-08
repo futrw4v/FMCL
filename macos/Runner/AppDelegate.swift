@@ -13,7 +13,7 @@ class AppDelegate: FlutterAppDelegate {
 
   override func applicationDidFinishLaunching(_ notification: Notification) {
     if let controller = mainFlutterWindow?.contentViewController as? FlutterViewController {
-      let channel = FlutterMethodChannel(name: "lxdklp/fml_native", binaryMessenger: controller.engine.binaryMessenger)
+      let channel = FlutterMethodChannel(name: "futrw4v/fmcl_native", binaryMessenger: controller.engine.binaryMessenger)
       channel.setMethodCallHandler { (call: FlutterMethodCall, result: @escaping FlutterResult) in
         if call.method == "showAboutPanel" {
           NSApp.orderFrontStandardAboutPanel(nil)
