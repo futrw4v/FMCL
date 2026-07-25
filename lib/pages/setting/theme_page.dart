@@ -12,37 +12,29 @@ class ThemePage extends StatefulWidget {
 }
 
 class ThemePageState extends State<ThemePage> {
-  // 每个设置间的间距
-  static const _itemsPadding = Padding(
-    padding: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
-  );
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+      padding: const EdgeInsets.symmetric(
+        horizontal: kDefaultPadding * 2,
+        vertical: kDefaultPadding,
+      ),
 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
 
+        spacing: kDefaultPadding,
+
         children: [
           // 大标题
-          Padding(
-            padding: const EdgeInsets.only(
-              left: kDefaultPadding / 2,
-              top: kDefaultPadding,
-              bottom: kDefaultPadding,
-            ),
-            child: Text(
-              '主题',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ),
+          Text('主题', style: Theme.of(context).textTheme.headlineMedium),
 
-          _itemsPadding,
+          // 为统一间距在标题下添加SizedBox
+          SizedBox(height: kDefaultPadding / 2),
 
           SizedBox(
             width: double.infinity,
+
             child: SegmentedButton<ThemeMode>(
               segments: const [
                 ButtonSegment(
@@ -70,8 +62,6 @@ class ThemePageState extends State<ThemePage> {
               },
             ),
           ),
-
-          _itemsPadding,
 
           AppCard(
             child: ListTile(

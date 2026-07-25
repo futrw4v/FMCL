@@ -32,7 +32,11 @@ class LogViewerPageState extends State<LogViewerPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+      padding: const EdgeInsets.symmetric(
+        horizontal: kDefaultPadding * 2,
+        vertical: kDefaultPadding,
+      ),
+
       child: Row(
         children: [
           Expanded(
@@ -78,6 +82,8 @@ class LogViewerPageState extends State<LogViewerPage> {
                 } else {
                   // 否则将content定义日志ListView
                   content = ListView.builder(
+                    padding: EdgeInsets.only(top: kDefaultPadding / 2),
+
                     itemCount: logs.length,
 
                     itemBuilder: (context, index) {
@@ -91,6 +97,11 @@ class LogViewerPageState extends State<LogViewerPage> {
                       final formattedTime = _kDateFormat.format(dateTime);
 
                       return AppCard(
+                        margin: EdgeInsets.only(
+                          top: kDefaultPadding / 4,
+                          bottom: kDefaultPadding / 2,
+                        ),
+
                         child: ListTile(
                           leading: Icon(
                             _getLevelIcon(level),
@@ -284,15 +295,7 @@ class LogViewerPageState extends State<LogViewerPage> {
   Widget _buildTitleAndButtons(List<Map<String, dynamic>> logs) {
     return Row(
       children: [
-        // 大标题
-        Padding(
-          padding: const EdgeInsets.only(
-            left: kDefaultPadding / 2,
-            top: kDefaultPadding,
-            bottom: kDefaultPadding,
-          ),
-          child: Text('日志', style: Theme.of(context).textTheme.headlineMedium),
-        ),
+        Text('日志', style: Theme.of(context).textTheme.headlineMedium),
 
         // 将按钮推到右边
         const Spacer(),

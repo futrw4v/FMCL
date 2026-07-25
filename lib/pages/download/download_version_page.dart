@@ -132,6 +132,13 @@ class DownloadVersionPageState extends State<DownloadVersionPage> {
 
   @override
   Widget build(BuildContext context) {
+    const kPadding = EdgeInsets.fromLTRB(
+      kDefaultPadding,
+      kDefaultPadding / 2,
+      kDefaultPadding,
+      kDefaultPadding / 4,
+    );
+
     return Scaffold(
       body: Center(
         child: FutureBuilder(
@@ -211,6 +218,7 @@ class DownloadVersionPageState extends State<DownloadVersionPage> {
                   // BMCL广告
                   SliverToBoxAdapter(
                     child: AppCard(
+                      margin: kPadding,
                       child: ListTile(
                         title: const Text('下载由 BMCLAPI 提供'),
                         subtitle: const Text('赞助 BMCLAPI 喵~ 赞助 BMCLAPI 谢谢喵~ '),
@@ -226,6 +234,8 @@ class DownloadVersionPageState extends State<DownloadVersionPage> {
                     delegate: SliverChildBuilderDelegate((context, index) {
                       final version = filteredVersions[index];
                       return AppCard(
+                        margin: kPadding,
+
                         child: ListTile(
                           title: Text(
                             version.id,

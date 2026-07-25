@@ -48,9 +48,16 @@ class LogSettingPageState extends State<LogSettingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('日志设置')),
+
       body: Padding(
-        padding: const EdgeInsets.all(kDefaultPadding),
+        padding: const EdgeInsets.symmetric(
+          horizontal: kDefaultPadding * 2,
+          vertical: kDefaultPadding,
+        ),
+
         child: Column(
+          spacing: kDefaultPadding,
+
           children: [
             AppCard(
               child: Padding(
@@ -58,35 +65,46 @@ class LogSettingPageState extends State<LogSettingPage> {
                   horizontal: kDefaultPadding,
                   vertical: kDefaultPadding / 2,
                 ),
+
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
+
                   children: [
                     Text('日志等级', style: Theme.of(context).textTheme.bodyLarge),
 
                     const Spacer(),
 
-                    DropdownButton<int>(
-                      hint: const Text('日志等级'),
-                      value: _logLevel,
-                      underline: SizedBox.shrink(),
-                      items: [
-                        DropdownMenuItem(value: 0, child: const Text('INFO')),
+                    SizedBox(
+                      width: 120,
+                      child: DropdownButton<int>(
+                        hint: const Text('日志等级'),
+                        value: _logLevel,
 
-                        DropdownMenuItem(
-                          value: 1,
-                          child: const Text('WARNING'),
-                        ),
+                        elevation: 0,
+                        underline: const SizedBox.shrink(),
 
-                        DropdownMenuItem(value: 2, child: const Text('ERROR')),
-                      ],
+                        items: [
+                          DropdownMenuItem(value: 0, child: const Text('INFO')),
 
-                      onChanged: (int? value) {
-                        setState(() {
-                          _logLevel = value!;
-                        });
+                          DropdownMenuItem(
+                            value: 1,
+                            child: const Text('WARNING'),
+                          ),
 
-                        _saveLogLevel();
-                      },
+                          DropdownMenuItem(
+                            value: 2,
+                            child: const Text('ERROR'),
+                          ),
+                        ],
+
+                        onChanged: (int? value) {
+                          setState(() {
+                            _logLevel = value!;
+                          });
+
+                          _saveLogLevel();
+                        },
+                      ),
                     ),
                   ],
                 ),

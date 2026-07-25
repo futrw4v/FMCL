@@ -53,25 +53,26 @@ class TranslatePageState extends State<TranslatePage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+      padding: const EdgeInsets.symmetric(
+        horizontal: kDefaultPadding * 2,
+        vertical: kDefaultPadding,
+      ),
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+
+        spacing: kDefaultPadding,
+
         children: [
-          Padding(
-            padding: const EdgeInsets.all(kDefaultPadding),
-            child: Text(
-              '翻译',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ),
+          Text('翻译', style: Theme.of(context).textTheme.headlineMedium),
 
           AppCard(
-            margin: EdgeInsets.only(bottom: kDefaultPadding),
-
+            margin: EdgeInsets.only(top: kDefaultPadding),
             child: SwitchListTile(
               title: const Text('自动翻译资源简介'),
               subtitle: const Text('关闭可以提高资源页加载速度,翻译内容由 mcmod-info-mirror 提供'),
               value: _autoTranslate,
+
               onChanged: (bool value) {
                 setState(() {
                   _autoTranslate = value;
@@ -82,8 +83,6 @@ class TranslatePageState extends State<TranslatePage> {
           ),
 
           AppCard(
-            margin: EdgeInsets.only(bottom: kDefaultPadding),
-
             child: SwitchListTile(
               title: const Text('使用 Google 翻译进行翻译资源详细信息'),
               subtitle: const Text('Google 翻译服务使用 Cloudflare 进行代理'),
@@ -99,12 +98,12 @@ class TranslatePageState extends State<TranslatePage> {
 
           if (_enableGoogleTranslate) ...[
             AppCard(
-              margin: EdgeInsets.only(bottom: kDefaultPadding),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: kDefaultPadding,
                   vertical: kDefaultPadding / 2,
                 ),
+
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [

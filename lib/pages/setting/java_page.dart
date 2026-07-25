@@ -19,36 +19,28 @@ class JavaPage extends StatefulWidget {
 }
 
 class JavaPageState extends State<JavaPage> {
-  // 每个设置间的间距
-  static const _itemsPadding = Padding(
-    padding: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
-  );
-
   bool _isRefreshing = false;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+      padding: const EdgeInsets.symmetric(
+        horizontal: kDefaultPadding * 2,
+        vertical: kDefaultPadding,
+      ),
 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+
+        spacing: kDefaultPadding,
 
         children: [
           // 大标题
           Row(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: kDefaultPadding / 2,
-                  top: kDefaultPadding,
-                  bottom: kDefaultPadding,
-                ),
-
-                child: Text(
-                  '设备上的Java列表',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
+              Text(
+                '设备上的Java列表',
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
 
               Spacer(),
@@ -117,14 +109,15 @@ class JavaPageState extends State<JavaPage> {
             ],
           ),
 
-          _itemsPadding,
-
           // 确保ListView占满剩余空间
           Expanded(
             child: _isRefreshing
                 ? Center(child: CircularProgressIndicator())
                 : ListView.builder(
+                    padding: EdgeInsets.only(top: kDefaultPadding / 2),
+
                     itemCount: JavaService.javaRuntimes.length,
+
                     itemBuilder: (context, index) {
                       // 构建Java的卡片
                       final javaRuntime = JavaService.javaRuntimes[index];
@@ -461,6 +454,11 @@ class JavaPageState extends State<JavaPage> {
     required VoidCallback onLongPress,
   }) {
     return AppCard(
+      margin: EdgeInsets.only(
+        top: kDefaultPadding / 4,
+        bottom: kDefaultPadding / 2,
+      ),
+
       // 为当前Java时高亮
       color: isCurrent
           ? Theme.of(context).colorScheme.secondaryContainer
