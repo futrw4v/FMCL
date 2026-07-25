@@ -14,8 +14,13 @@ class MainStartPage extends StatefulWidget {
   MainStartPageState createState() => MainStartPageState();
 }
 
-class MainStartPageState extends State<MainStartPage> {
+class MainStartPageState extends State<MainStartPage>
+    with SingleTickerProviderStateMixin {
   int _selectedIndex = 0;
+
+  late final AnimationController _animationController;
+  late final Animation<double> _fadeAnimation;
+  late final Animation<Offset> _slideAnimation;
 
   // 使页面仅被初始化一次
   final List<Widget> _mainPages = const [
@@ -24,6 +29,39 @@ class MainStartPageState extends State<MainStartPage> {
     DownloadPage(),
     SettingPage(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    // 初始化 AnimationController
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 250),
+    );
+
+    // 渐变
+    _fadeAnimation = Tween<double>(begin: 0.3, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOutCubic),
+    );
+
+    // 划入动画
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0.0, 0.03), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: _animationController,
+            curve: Curves.easeOutCubic,
+          ),
+        );
+
+    // 开始动画
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +106,13 @@ class MainStartPageState extends State<MainStartPage> {
               NavigationRail(
                 selectedIndex: _selectedIndex,
                 onDestinationSelected: (int index) {
-                  setState(() => _selectedIndex = index);
+                  // 确保只在切换页面时更新
+                  if (index != _selectedIndex) {
+                    setState(() => _selectedIndex = index);
+
+                    // 切换页面时更新动画
+                    _animationController.forward(from: 0.0);
+                  }
                 },
                 labelType: NavigationRailLabelType.all,
                 destinations: const [
@@ -90,34 +134,14 @@ class MainStartPageState extends State<MainStartPage> {
                   ),
                 ],
               ),
+
               // 显示当前页面
               Expanded(
-                // 页面切换动画
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 250),
-
-                  switchInCurve: Curves.easeOutCubic,
-                  switchOutCurve: Curves.easeInCubic,
-
-                  transitionBuilder:
-                      (Widget child, Animation<double> animation) {
-                        // 透明度淡入淡出动画
-                        return FadeTransition(
-                          opacity: animation,
-                          // 5% 垂直平移动画
-                          child: SlideTransition(
-                            position: Tween<Offset>(
-                              begin: const Offset(0.0, 0.05),
-                              end: Offset.zero,
-                            ).animate(animation),
-                            child: child,
-                          ),
-                        );
-                      },
-
-                  // 给 KeyedSubtree 传入当前的 ValueKey（_selectedIndex），触发 AnimatedSwitcher 检测 Key 变更
-                  child: KeyedSubtree(
-                    key: ValueKey<int>(_selectedIndex),
+                // 叠加动画
+                child: FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: SlideTransition(
+                    position: _slideAnimation,
                     child: LazyLoadIndexedStack(
                       index: _selectedIndex,
                       children: _mainPages,
