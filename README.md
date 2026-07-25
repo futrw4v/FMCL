@@ -1,22 +1,40 @@
-<p align="center"><img src="./assets/img/icon/logo_transparent.png"  width="20%" /><img src="./assets/img/logo/flutter.png"  width="25%" /></p>
-<p align="center"> <img src=https://img.shields.io/badge/Windows%20%7C%20macOS%20%7C%20Linux-1?style=for-the-badge&label=Platform> <img src=https://img.shields.io/badge/GPLv3-1?style=for-the-badge&label=License> </p>
-<p align="center"> <img src=https://img.shields.io/badge/3.41.6-1?logo=flutter&logoColor=white&style=for-the-badge&label=Flutter> <img src=https://img.shields.io/badge/Dart-1?logo=dart&logoColor=white&style=for-the-badge&label=language> </p>
-<p align="center"><img src=https://img.shields.io/github/v/release/lxdklp/FML?style=for-the-badge> <img  src=https://img.shields.io/github/stars/lxdklp/FML?style=for-the-badge></p>
+<p align="center">
+  <img src="./assets/img/icon/logo_transparent.png" width="20%" alt="FMCL Logo" />
+  <img src="./assets/img/logo/flutter.png" width="25%" alt="Flutter Logo" />
+</p>
 
-# Flutter Minecraft Launcher
+<p align="center"> 
+  <img src="https://img.shields.io/badge/Windows%20%7C%20macOS%20%7C%20Linux-1?style=for-the-badge&label=Platform"> 
+  <img src="https://img.shields.io/badge/GPLv3-1?style=for-the-badge&label=License"> 
+</p>
 
-一个由Flutter编写的Material Design 3风格的使用GPL3.0协议开源跨平台Vanilla/Fabric/NeoForge Minecraft Java启动器,支持Windows、macOS、Linux
+<p align="center"> 
+  <img src="https://img.shields.io/badge/3.41.6-1?logo=flutter&logoColor=white&style=for-the-badge&label=Flutter"> 
+  <img src="https://img.shields.io/badge/Dart-1?logo=dart&logoColor=white&style=for-the-badge&label=language"> 
+</p>
 
-# 截屏
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-In__Development-orange?style=for-the-badge"> 
+  <img src="https://img.shields.io/github/stars/futrw4v/FMCL?style=for-the-badge">
+</p>
 
-<img src="./assets/img/screenshots/1.png" width="50%" />
+# FMCL (Flutter Minecraft Launcher)
 
-# 安装
+一款使用 Flutter 开发的Material Design 3风格的跨平台Minecraft Java版启动器，支持Windows、macOS、Linux
 
-[GitHub Releases](https://github.com/lxdklp/FML/releases/latest)
+---
 
-# 贡献
+## 下载
+
+[GitHub Releases](https://github.com/futrw4v/FMCL/releases/latest)
+
+## 贡献
 
 详见 [CONTRIBUTING.md](CONTRIBUTING.md)
 
-###### Flutter logo : [Sawaratsuki](https://github.com/SAWARATSUKI)
+---
+
+## 鸣谢&声明
+
+* 本项目基于 [lxdklp/FML](https://github.com/lxdklp/FML/) 开发，感谢原作者奠定的基础
+* Flutter logo来源: [Sawaratsuki](https://github.com/SAWARATSUKI) 
