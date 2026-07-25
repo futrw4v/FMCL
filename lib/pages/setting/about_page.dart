@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide LicensePage;
 import 'package:fmcl/constants.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatefulWidget {
@@ -10,30 +11,12 @@ class AboutPage extends StatefulWidget {
 }
 
 class AboutPageState extends State<AboutPage> {
-  static const kPadding = EdgeInsets.symmetric(
-    horizontal: kDefaultPadding,
-    vertical: kDefaultPadding / 4,
-  );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
         children: [
-          Card(
-            clipBehavior: Clip.antiAlias,
-
-            elevation: 0,
-
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: Theme.of(context).colorScheme.outlineVariant,
-              ),
-              borderRadius: BorderRadius.circular(12),
-            ),
-
-            margin: kPadding,
-
+          AppCard(
             child: Column(
               children: [
                 Row(
@@ -97,19 +80,7 @@ class AboutPageState extends State<AboutPage> {
             onTap: () => showLicensePage(context: context),
           ),
 
-          Card(
-            margin: kPadding,
-            clipBehavior: Clip.antiAlias,
-
-            elevation: 0,
-
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: Theme.of(context).colorScheme.outlineVariant,
-              ),
-              borderRadius: BorderRadius.circular(12),
-            ),
-
+          AppCard(
             child: Column(
               children: [
                 const ListTile(title: Text('鸣谢'), subtitle: Text('排名不分先后顺序')),
@@ -282,23 +253,12 @@ class AboutPageState extends State<AboutPage> {
     );
   }
 
-  Card _buildCardWithListTile({
+  Widget _buildCardWithListTile({
     required String title,
     required String subtitle,
     required VoidCallback onTap,
   }) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-
-      elevation: 0,
-
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
-        borderRadius: BorderRadius.circular(12),
-      ),
-
-      margin: kPadding,
-
+    return AppCard(
       child: ListTile(
         title: Text(title),
         subtitle: Text(subtitle),

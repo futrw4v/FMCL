@@ -8,6 +8,7 @@ import 'package:fmcl/java/java_service.dart';
 import 'package:fmcl/java/java_utils.dart';
 import 'package:fmcl/models/java/java_info.dart';
 import 'package:fmcl/models/java/java_runtime.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:open_filex/open_filex.dart';
 
 class JavaPage extends StatefulWidget {
@@ -136,7 +137,7 @@ class JavaPageState extends State<JavaPage> {
                           javaRuntime.executable ==
                           JavaService.systemDefaultJavaInfo?.path;
 
-                      return _buildJavaCard(
+                      return _buildJavaAppCard(
                         javaInfo: javaRuntime.info,
 
                         typeChipLabel: javaRuntime.isJdk ? 'JDK' : 'JRE',
@@ -450,7 +451,7 @@ class JavaPageState extends State<JavaPage> {
     );
   }
 
-  Widget _buildJavaCard({
+  Widget _buildJavaAppCard({
     required JavaInfo javaInfo,
     required String typeChipLabel,
     String? vendor,
@@ -459,17 +460,7 @@ class JavaPageState extends State<JavaPage> {
     required VoidCallback onTap,
     required VoidCallback onLongPress,
   }) {
-    return Card(
-      // 裁剪掉ListTile超出圆角的部分
-      clipBehavior: Clip.antiAlias,
-
-      elevation: 0,
-
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
-        borderRadius: BorderRadius.circular(12),
-      ),
-
+    return AppCard(
       // 为当前Java时高亮
       color: isCurrent
           ? Theme.of(context).colorScheme.secondaryContainer

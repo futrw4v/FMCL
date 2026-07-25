@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fmcl/constants.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:archive/archive.dart';
@@ -1192,7 +1193,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          Card(
+          AppCard(
             child: ListTile(
               title: const Text('正在下载整合包信息'),
               subtitle: Text(_downloadMrpack ? '下载完成' : '下载中...'),
@@ -1202,7 +1203,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
             ),
           ),
           if (_downloadMrpack) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在解压整合包信息'),
                 subtitle: Text(_unzipMrpack ? '解压完成' : '解压中...'),
@@ -1213,7 +1214,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
             ),
           ],
           if (_unzipMrpack) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在解析整合包信息'),
                 subtitle: Text(_parseMrpack ? '解析完成' : '解析中...'),
@@ -1224,7 +1225,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
             ),
           ],
           if (_unzipMrpack) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在解析整合包信息'),
                 subtitle: Text(_parseMrpack ? '解析完成' : '解析中...'),
@@ -1235,7 +1236,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
             ),
           ],
           if (_parseMrpack) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -1259,7 +1260,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
             ),
           ],
           if (_downloadModsStatus) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -1274,7 +1275,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
             ),
           ],
           if (_downloadMinecraftJson) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -1289,7 +1290,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
             ),
           ],
           if (_parseGameJsonStatus) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -1304,7 +1305,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
             ),
           ],
           if (_downloadAssetJson) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -1319,7 +1320,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
             ),
           ],
           if (_parseAssetJson) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -1343,7 +1344,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
             ),
           ],
           if (_downloadClient) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -1367,7 +1368,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
             ),
           ],
           if (_downloadLibrary) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -1391,7 +1392,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
             ),
           ],
           if (_downloadAsset) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在提取LWJGL路径'),
                 subtitle: Text(_extractedLwjglNativesPath ? '提取完成' : '提取中...'),
@@ -1402,7 +1403,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
             ),
           ],
           if (_extractedLwjglNativesPath) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在提取LWJGL'),
                 subtitle: Text(_extractedLwjglNatives ? '提取完成' : '提取中...'),
@@ -1413,7 +1414,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
             ),
           ],
           if (_extractedLwjglNatives) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在获取Fabric Json'),
                 subtitle: Text(_saveFabricJsonStatus ? '获取完成' : '获取中...'),
@@ -1424,7 +1425,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
             ),
           ],
           if (_saveFabricJsonStatus) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在解析Fabric Json'),
                 subtitle: Text(_parseFabricJson ? '解析完成' : '解析中...'),
@@ -1435,7 +1436,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
             ),
           ],
           if (_extractedLwjglNatives) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -1459,7 +1460,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
             ),
           ],
           if (_downloadFabric) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在复制整合包文件'),
                 subtitle: Text(_copyOverrides ? '复制完成' : '复制中...'),
@@ -1470,7 +1471,7 @@ class FabricModpackPageState extends State<FabricModpackPage> {
             ),
           ],
           if (_copyOverrides) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在写入配置文件'),
                 subtitle: Text(_writeConfig ? '写入完成' : '写入中...'),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'dart:io';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
@@ -238,7 +239,7 @@ class SaveBackupsTabState extends State<SaveBackupsTab> {
             itemBuilder: (context, index) {
               final file = _backupFiles[index];
               final fileName = _getFileName(file.path);
-              return Card(
+              return AppCard(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                 child: ListTile(
                   title: Text(fileName),

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:path/path.dart' as path;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -337,7 +338,7 @@ class CurseforgeResourcepackPageState
             )
           : Column(
               children: [
-                Card(
+                AppCard(
                   margin: const EdgeInsets.all(8.0),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -380,7 +381,7 @@ class CurseforgeResourcepackPageState
                       final file = _filteredFilesList[index];
                       final isSelected = _selectedFile == file;
                       final releaseType = file['releaseType'] as int?;
-                      return Card(
+                      return AppCard(
                         margin: const EdgeInsets.symmetric(
                           horizontal: 8.0,
                           vertical: 4.0,
@@ -438,7 +439,7 @@ class CurseforgeResourcepackPageState
                     },
                   ),
                 ),
-                Card(
+                AppCard(
                   margin: const EdgeInsets.all(8.0),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

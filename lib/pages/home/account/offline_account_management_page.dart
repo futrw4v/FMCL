@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fmcl/utils/log_util.dart';
 
@@ -123,7 +124,7 @@ class OfflineAccountManagementPageState
       padding: const EdgeInsets.symmetric(vertical: 8),
       children: [
         // 基础信息
-        Card(
+        AppCard(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: ListTile(
             leading: const Icon(Icons.account_circle),
@@ -132,7 +133,7 @@ class OfflineAccountManagementPageState
           ),
         ),
         // 自定义 UUID
-        Card(
+        AppCard(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Padding(
             padding: const EdgeInsets.only(bottom: 12),

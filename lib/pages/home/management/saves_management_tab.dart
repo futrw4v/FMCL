@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fmcl/utils/log_util.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'dart:io';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:fmcl/pages/home/management/saves_management/save_page.dart';
@@ -149,7 +150,7 @@ class SavesManagementTabState extends State<SavesManagementTab> {
               itemCount: _saveFiles.length,
               itemBuilder: (context, index) {
                 final save = _saveFiles[index];
-                return Card(
+                return AppCard(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 4,

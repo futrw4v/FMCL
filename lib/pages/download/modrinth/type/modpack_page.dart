@@ -6,6 +6,7 @@ import 'package:fmcl/constants.dart';
 import 'package:fmcl/utils/log_util.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
 import 'package:fmcl/pages/download/modrinth/type/download_modpack/download_info_page.dart';
+import 'package:fmcl/widgets/app_card.dart';
 
 class ModpackPage extends StatefulWidget {
   const ModpackPage({required this.projectId, this.projectName, super.key});
@@ -180,7 +181,7 @@ class ModpackPageState extends State<ModpackPage> {
           : Column(
               children: [
                 // 筛选器
-                Card(
+                AppCard(
                   margin: const EdgeInsets.all(8.0),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -261,7 +262,7 @@ class ModpackPageState extends State<ModpackPage> {
                       final version = filteredVersionsList[index];
                       final isSelected = selectedVersion == version;
                       final versionType = version['version_type'] as String?;
-                      return Card(
+                      return AppCard(
                         margin: const EdgeInsets.symmetric(
                           horizontal: 8.0,
                           vertical: 4.0,
@@ -332,7 +333,7 @@ class ModpackPageState extends State<ModpackPage> {
                   ),
                 ),
                 // 下载区域
-                Card(
+                AppCard(
                   margin: const EdgeInsets.all(8.0),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

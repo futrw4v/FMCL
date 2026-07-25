@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fmcl/account/offline.dart' as offline_lib;
 import 'package:fmcl/account/microsoft.dart' as online_lib;
 import 'package:fmcl/account/external.dart' as external_lib;
+import 'package:fmcl/widgets/app_card.dart';
 
 class NewAccountPage extends StatefulWidget {
   const NewAccountPage({super.key});
@@ -93,7 +94,7 @@ class NewAccountPageState extends State<NewAccountPage> {
       body: Center(
         child: ListView(
           children: [
-            Card(
+            AppCard(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -134,7 +135,7 @@ class NewAccountPageState extends State<NewAccountPage> {
             ),
             if (_loginMode == 'online')
               if (_onlineStatus == 0)
-                Card(
+                AppCard(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 8,
@@ -145,7 +146,7 @@ class NewAccountPageState extends State<NewAccountPage> {
                   ),
                 ),
             if (_onlineStatus == 1)
-              Card(
+              AppCard(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: const Padding(
                   padding: EdgeInsets.all(16.0),
@@ -156,7 +157,7 @@ class NewAccountPageState extends State<NewAccountPage> {
                 ),
               ),
             if (_onlineStatus == 2)
-              Card(
+              AppCard(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: const Padding(
                   padding: EdgeInsets.all(16.0),
@@ -167,7 +168,7 @@ class NewAccountPageState extends State<NewAccountPage> {
                 ),
               ),
             if (_onlineStatus == 3)
-              Card(
+              AppCard(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: const Padding(
                   padding: EdgeInsets.all(16.0),
@@ -178,7 +179,7 @@ class NewAccountPageState extends State<NewAccountPage> {
                 ),
               ),
             if (_onlineStatus == 4)
-              Card(
+              AppCard(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: const Padding(
                   padding: EdgeInsets.all(16.0),
@@ -190,7 +191,7 @@ class NewAccountPageState extends State<NewAccountPage> {
                 ),
               ),
             if (_loginMode == 'offline')
-              Card(
+              AppCard(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: TextField(
                   controller: _nameController,
@@ -202,7 +203,7 @@ class NewAccountPageState extends State<NewAccountPage> {
                 ),
               ),
             if (_loginMode == 'authlibInjector')
-              Card(
+              AppCard(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),

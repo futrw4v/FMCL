@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:fmcl/pages/home/account_page.dart';
@@ -65,7 +66,7 @@ class HomePageState extends State<HomePage> {
       body: Center(
         child: ListView(
           children: [
-            Card(
+            AppCard(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: ListTile(
                 title: Text('\n当前账号'),
@@ -81,7 +82,7 @@ class HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            Card(
+            AppCard(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: ListTile(
                 title: Text('\n当前版本'),
@@ -95,7 +96,7 @@ class HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            Card(
+            AppCard(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: ListTile(
                 title: Text('\n 版本设置 \n'),

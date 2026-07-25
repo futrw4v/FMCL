@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
 import 'package:fmcl/utils/dio_client.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fmcl/utils/log_util.dart';
 import 'package:fmcl/pages/download/modrinth/info_page.dart';
@@ -439,7 +440,7 @@ class DownloadResourcesState extends State<DownloadResources> {
 
   // 搜索框
   Widget _buildSearchBar() {
-    return Card(
+    return AppCard(
       margin: const EdgeInsets.all(8.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       child: Padding(
@@ -564,8 +565,8 @@ class DownloadResourcesState extends State<DownloadResources> {
   }
 
   // Modrinth 项目卡片
-  Widget _buildModrinthProjectCard(dynamic project) {
-    return Card(
+  Widget _buildModrinthProjectAppCard(dynamic project) {
+    return AppCard(
       margin: const EdgeInsets.all(8.0),
       child: ListTile(
         leading: project['icon_url'] != null
@@ -630,12 +631,12 @@ class DownloadResourcesState extends State<DownloadResources> {
   }
 
   // CurseForge 项目卡片
-  Widget _buildCurseforgeProjectCard(dynamic project) {
+  Widget _buildCurseforgeProjectAppCard(dynamic project) {
     final logo = project['logo'];
     final classId = project['classId'] as int?;
     final categories = project['categories'] as List?;
 
-    return Card(
+    return AppCard(
       margin: const EdgeInsets.all(8.0),
       child: ListTile(
         leading: logo != null && logo['url'] != null
@@ -707,11 +708,11 @@ class DownloadResourcesState extends State<DownloadResources> {
   }
 
   // 项目卡片（根据数据源选择）
-  Widget _buildProjectCard(dynamic project) {
+  Widget _buildProjectAppCard(dynamic project) {
     if (_dataSource == 'modrinth') {
-      return _buildModrinthProjectCard(project);
+      return _buildModrinthProjectAppCard(project);
     } else {
-      return _buildCurseforgeProjectCard(project);
+      return _buildCurseforgeProjectAppCard(project);
     }
   }
 
@@ -760,7 +761,7 @@ class DownloadResourcesState extends State<DownloadResources> {
               return _buildSearchBar();
             }
             final project = _projectsList[index - 1];
-            return _buildProjectCard(project);
+            return _buildProjectAppCard(project);
           },
         ),
       );

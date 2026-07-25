@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:fmcl/utils/log_util.dart';
@@ -69,7 +70,7 @@ class DownloadInfoPageState extends State<DownloadInfoPage> {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          Card(
+          AppCard(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -100,9 +101,7 @@ class DownloadInfoPageState extends State<DownloadInfoPage> {
                       const SizedBox(height: 4),
                       Container(
                         padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
+
                         child: Text(widget.version['changelog'].toString()),
                       ),
                     ],
@@ -111,7 +110,7 @@ class DownloadInfoPageState extends State<DownloadInfoPage> {
               ),
             ),
           ),
-          Card(
+          AppCard(
             child: TextField(
               controller: _gameNameController,
               decoration: InputDecoration(

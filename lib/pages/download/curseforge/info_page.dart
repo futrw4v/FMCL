@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:fmcl/utils/dio_client.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:html/parser.dart' as html_parser;
 import 'package:share_plus/share_plus.dart';
@@ -270,7 +271,7 @@ class CurseforgeInfoPageState extends State<CurseforgeInfoPage> {
       child: Row(
         children: [
           Expanded(
-            child: Card(
+            child: AppCard(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -286,7 +287,7 @@ class CurseforgeInfoPageState extends State<CurseforgeInfoPage> {
             ),
           ),
           Expanded(
-            child: Card(
+            child: AppCard(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -328,7 +329,7 @@ class CurseforgeInfoPageState extends State<CurseforgeInfoPage> {
         .toSet()
         .toList();
     gameVersions.sort((a, b) => b!.compareTo(a!));
-    return Card(
+    return AppCard(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -363,7 +364,7 @@ class CurseforgeInfoPageState extends State<CurseforgeInfoPage> {
   // 分类
   Widget _buildCategories() {
     final categories = projectDetails['categories'] as List<dynamic>? ?? [];
-    return Card(
+    return AppCard(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -393,7 +394,7 @@ class CurseforgeInfoPageState extends State<CurseforgeInfoPage> {
   Widget _buildAuthors() {
     final authors = projectDetails['authors'] as List<dynamic>? ?? [];
     if (authors.isEmpty) return const SizedBox.shrink();
-    return Card(
+    return AppCard(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -422,7 +423,7 @@ class CurseforgeInfoPageState extends State<CurseforgeInfoPage> {
   // 相关链接
   Widget _buildLinks() {
     final links = projectDetails['links'] as Map<String, dynamic>? ?? {};
-    return Card(
+    return AppCard(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -545,7 +546,7 @@ class CurseforgeInfoPageState extends State<CurseforgeInfoPage> {
                     _buildLinks(),
                     const SizedBox(height: 16),
                     if (projectDocument.isNotEmpty)
-                      Card(
+                      AppCard(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(

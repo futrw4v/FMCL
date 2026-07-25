@@ -6,6 +6,7 @@ import 'package:fmcl/constants.dart';
 import 'package:fmcl/utils/log_util.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
 import 'package:fmcl/pages/setting/log_viewer/log_setting_page.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:intl/intl.dart';
 
 class LogViewerPage extends StatefulWidget {
@@ -89,18 +90,7 @@ class LogViewerPageState extends State<LogViewerPage> {
                       final dateTime = DateTime.parse(timestamp);
                       final formattedTime = _kDateFormat.format(dateTime);
 
-                      return Card(
-                        clipBehavior: Clip.antiAlias,
-
-                        elevation: 0,
-
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            color: Theme.of(context).colorScheme.outlineVariant,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-
+                      return AppCard(
                         child: ListTile(
                           leading: Icon(
                             _getLevelIcon(level),
@@ -122,13 +112,6 @@ class LogViewerPageState extends State<LogViewerPage> {
 
                           trailing: Container(
                             padding: const EdgeInsets.all(kDefaultPadding / 4),
-
-                            decoration: BoxDecoration(
-                              color: _getLevelColor(
-                                level,
-                              ).withValues(alpha: 0.1),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
 
                             child: Text(
                               level,

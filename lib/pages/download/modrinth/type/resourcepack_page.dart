@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:path/path.dart' as path;
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -353,7 +354,7 @@ class ResourcepackPageState extends State<ResourcepackPage> {
           : Column(
               children: [
                 // 筛选器
-                Card(
+                AppCard(
                   margin: const EdgeInsets.all(8.0),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -406,7 +407,7 @@ class ResourcepackPageState extends State<ResourcepackPage> {
                       final version = filteredVersionsList[index];
                       final isSelected = selectedVersion == version;
                       final versionType = version['version_type'] as String?;
-                      return Card(
+                      return AppCard(
                         margin: const EdgeInsets.symmetric(
                           horizontal: 8.0,
                           vertical: 4.0,
@@ -468,7 +469,7 @@ class ResourcepackPageState extends State<ResourcepackPage> {
                   ),
                 ),
                 // 下载区域
-                Card(
+                AppCard(
                   margin: const EdgeInsets.all(8.0),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

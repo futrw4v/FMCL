@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'dart:io';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
@@ -371,7 +372,7 @@ class ModManagementTabState extends State<ModManagementTab> {
               final file = _modFiles[index];
               final fileName = _getFileName(file.path);
               final isDisabled = _isFileDisabled(file.path);
-              return Card(
+              return AppCard(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                 child: ListTile(
                   leading: Icon(isDisabled ? Icons.block : Icons.check_circle),

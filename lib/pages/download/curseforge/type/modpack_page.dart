@@ -6,6 +6,7 @@ import 'package:fmcl/constants.dart';
 import 'package:fmcl/utils/dio_client.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
 import 'package:fmcl/pages/download/curseforge/type/download_modpack/download_info_page.dart';
+import 'package:fmcl/widgets/app_card.dart';
 
 class CurseforgeModpackPage extends StatefulWidget {
   const CurseforgeModpackPage({required this.modId, this.modName, super.key});
@@ -165,7 +166,7 @@ class CurseforgeModpackPageState extends State<CurseforgeModpackPage> {
           : Column(
               children: [
                 // 筛选器
-                Card(
+                AppCard(
                   margin: const EdgeInsets.all(8.0),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -244,7 +245,7 @@ class CurseforgeModpackPageState extends State<CurseforgeModpackPage> {
                       final file = _filteredFilesList[index];
                       final isSelected = _selectedFile == file;
                       final releaseType = file['releaseType'] as int?;
-                      return Card(
+                      return AppCard(
                         margin: const EdgeInsets.symmetric(
                           horizontal: 8.0,
                           vertical: 4.0,
@@ -298,7 +299,7 @@ class CurseforgeModpackPageState extends State<CurseforgeModpackPage> {
                   ),
                 ),
                 // 下载区域
-                Card(
+                AppCard(
                   margin: const EdgeInsets.all(8.0),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

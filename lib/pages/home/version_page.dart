@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:fmcl/pages/home/version/add_path_page.dart';
@@ -62,7 +63,7 @@ class VersionPageState extends State<VersionPage> {
           : ListView.builder(
               itemCount: _pathList.length,
               itemBuilder: (context, index) {
-                return Card(
+                return AppCard(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 8,

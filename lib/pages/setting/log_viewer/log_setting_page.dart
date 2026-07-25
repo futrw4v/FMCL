@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fmcl/constants.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LogSettingPage extends StatefulWidget {
@@ -51,18 +52,7 @@ class LogSettingPageState extends State<LogSettingPage> {
         padding: const EdgeInsets.all(kDefaultPadding),
         child: Column(
           children: [
-            Card(
-              clipBehavior: Clip.antiAlias,
-
-              elevation: 0,
-
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: Theme.of(context).colorScheme.outlineVariant,
-                ),
-                borderRadius: BorderRadius.circular(12),
-              ),
-
+            AppCard(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: kDefaultPadding,
@@ -103,18 +93,7 @@ class LogSettingPageState extends State<LogSettingPage> {
               ),
             ),
 
-            Card(
-              clipBehavior: Clip.antiAlias,
-
-              elevation: 0,
-
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: Theme.of(context).colorScheme.outlineVariant,
-                ),
-                borderRadius: BorderRadius.circular(12),
-              ),
-
+            AppCard(
               child: SwitchListTile(
                 title: const Text('打开 APP 时自动清理日志'),
                 subtitle: const Text('当遇到 APP 崩溃时,请关闭此选项尝试抓取日志'),

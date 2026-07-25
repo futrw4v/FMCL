@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fmcl/utils/log_util.dart';
 import 'package:fmcl/pages/home/account/new_account_page.dart';
@@ -183,7 +184,7 @@ class AccountPageState extends State<AccountPage> {
             builder: (context, snapshot) {
               if (!snapshot.hasData ||
                   snapshot.data?.containsKey('error') == true) {
-                return Card(
+                return AppCard(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 8,
@@ -205,7 +206,7 @@ class AccountPageState extends State<AccountPage> {
                 } else {
                   subtitle += '\nUUID: $uuid';
                 }
-                return Card(
+                return AppCard(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 8,
@@ -248,7 +249,7 @@ class AccountPageState extends State<AccountPage> {
                 subtitle += '\n用户名: ${data['username'] ?? '错误'}';
                 subtitle += '\n服务器URL: ${data['serverUrl'] ?? '错误'}';
               }
-              return Card(
+              return AppCard(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: ListTile(
                   title: Text(name),

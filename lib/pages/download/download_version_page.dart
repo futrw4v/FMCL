@@ -4,6 +4,7 @@ import 'package:fmcl/constants.dart';
 import 'package:fmcl/utils/dio_client.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
 import 'package:fmcl/models/game/minecraft_version.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -209,22 +210,22 @@ class DownloadVersionPageState extends State<DownloadVersionPage> {
                   ),
                   // BMCL广告
                   SliverToBoxAdapter(
-                    child: _buildTappableCard(
+                    child: AppCard(
                       child: ListTile(
                         title: const Text('下载由 BMCLAPI 提供'),
                         subtitle: const Text('赞助 BMCLAPI 喵~ 赞助 BMCLAPI 谢谢喵~ '),
                         leading: const Icon(Icons.info),
                         trailing: const Icon(Icons.open_in_new),
+                        onTap: () =>
+                            _launchURL('https://bmclapi2.bangbang93.com/'),
                       ),
-                      onTap: () =>
-                          _launchURL('https://bmclapi2.bangbang93.com/'),
                     ),
                   ),
                   // 版本列表
                   SliverList(
                     delegate: SliverChildBuilderDelegate((context, index) {
                       final version = filteredVersions[index];
-                      return _buildTappableCard(
+                      return AppCard(
                         child: ListTile(
                           title: Text(
                             version.id,
@@ -267,29 +268,6 @@ class DownloadVersionPageState extends State<DownloadVersionPage> {
             return const CircularProgressIndicator();
           },
         ),
-      ),
-    );
-  }
-
-  ///
-  /// 构建一个带有InkWell的Card
-  ///
-  /// 带有默认的内边距，圆角，点击时触发[onTap]回调
-  ///
-  Card _buildTappableCard({
-    required Widget child,
-    required VoidCallback onTap,
-  }) {
-    return Card(
-      margin: const EdgeInsets.symmetric(
-        vertical: kDefaultPadding / 2,
-        horizontal: kDefaultPadding / 2,
-      ),
-      child: InkWell(
-        onTap: onTap,
-        // 圆角
-        borderRadius: BorderRadius.circular(12.0),
-        child: child,
       ),
     );
   }

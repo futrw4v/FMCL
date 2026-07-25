@@ -3,6 +3,7 @@ import 'package:fmcl/constants.dart';
 import 'package:fmcl/utils/dio_client.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
 import 'package:fmcl/models/game/minecraft_version.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 
@@ -183,7 +184,7 @@ class DownloadGamePageState extends State<DownloadGamePage> {
                         _fabricStableList[_fabricVersionList.indexOf(version)],
                   )
                   .map(
-                    (version) => Card(
+                    (version) => AppCard(
                       child: ListTile(
                         title: Text(version),
                         subtitle:
@@ -229,7 +230,7 @@ class DownloadGamePageState extends State<DownloadGamePage> {
                 ),
 
               ..._neoForgeStableVersions.map(
-                (version) => Card(
+                (version) => AppCard(
                   child: ListTile(
                     title: Text(version),
                     subtitle: Text('稳定版'),
@@ -246,7 +247,7 @@ class DownloadGamePageState extends State<DownloadGamePage> {
               ),
               if (_showNeoForgeUnstable) ...[
                 ..._neoforgeBetaVersions.map(
-                  (version) => Card(
+                  (version) => AppCard(
                     child: ListTile(
                       title: Text(version),
                       subtitle: Text('测试版'),

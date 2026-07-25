@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'package:url_launcher/url_launcher.dart';
@@ -228,7 +229,7 @@ class GameSettingsTabState extends State<GameSettingsTab> {
               ListView(
                 padding: const EdgeInsets.only(bottom: 140),
                 children: [
-                  Card(
+                  AppCard(
                     margin: const EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 8,
@@ -255,7 +256,7 @@ class GameSettingsTabState extends State<GameSettingsTab> {
                       ],
                     ),
                   ),
-                  Card(
+                  AppCard(
                     margin: const EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 8,
@@ -310,7 +311,7 @@ class GameSettingsTabState extends State<GameSettingsTab> {
                       ],
                     ),
                   ),
-                  Card(
+                  AppCard(
                     margin: const EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 8,
@@ -323,7 +324,7 @@ class GameSettingsTabState extends State<GameSettingsTab> {
                     ),
                   ),
                   if (widget.hasScreenshots)
-                    Card(
+                    AppCard(
                       margin: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 8,
@@ -336,7 +337,7 @@ class GameSettingsTabState extends State<GameSettingsTab> {
                       ),
                     ),
                   if (widget.hasLogs)
-                    Card(
+                    AppCard(
                       margin: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 8,

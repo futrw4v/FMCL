@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
 import 'package:fmcl/utils/dio_client.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:system_info2/system_info2.dart';
 import 'package:archive/archive.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -393,7 +394,7 @@ class OnlinePageState extends State<OnlinePage> {
       body: Center(
         child: ListView(
           children: [
-            Card(
+            AppCard(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: ListTile(
                 title: const Text('支持与 FCML、HMCL、PCL2-CE、FCL 客户端联机'),
@@ -401,7 +402,7 @@ class OnlinePageState extends State<OnlinePage> {
                 leading: const Icon(Icons.info),
               ),
             ),
-            Card(
+            AppCard(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: ListTile(
                 title: const Text('关于EasyTier'),
@@ -412,7 +413,7 @@ class OnlinePageState extends State<OnlinePage> {
               ),
             ),
             if (_coreExists) ...[
-              Card(
+              AppCard(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: ListTile(
                   title: const Text('EasyTier 已安装'),
@@ -432,7 +433,7 @@ class OnlinePageState extends State<OnlinePage> {
                       : null,
                 ),
               ),
-              Card(
+              AppCard(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -452,7 +453,7 @@ class OnlinePageState extends State<OnlinePage> {
                   ),
                 ),
               ),
-              Card(
+              AppCard(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: ListTile(
                   title: const Text('创建房间'),
@@ -484,7 +485,7 @@ class OnlinePageState extends State<OnlinePage> {
                   },
                 ),
               ),
-              Card(
+              AppCard(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: ListTile(
                   title: const Text('加入房间'),
@@ -514,7 +515,7 @@ class OnlinePageState extends State<OnlinePage> {
               ),
             ] else ...[
               if (_coredownloading) ...[
-                Card(
+                AppCard(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 8,
@@ -541,7 +542,7 @@ class OnlinePageState extends State<OnlinePage> {
                   ),
                 ),
                 if (_coreExtracting) ...[
-                  Card(
+                  AppCard(
                     margin: const EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 8,
@@ -554,7 +555,7 @@ class OnlinePageState extends State<OnlinePage> {
                   ),
                 ],
               ] else ...[
-                Card(
+                AppCard(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 8,

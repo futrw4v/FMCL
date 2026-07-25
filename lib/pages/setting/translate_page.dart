@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fmcl/constants.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TranslatePage extends StatefulWidget {
@@ -57,25 +58,16 @@ class TranslatePageState extends State<TranslatePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(
-              left: kDefaultPadding / 2,
-              top: kDefaultPadding,
-              bottom: kDefaultPadding,
-            ),
+            padding: const EdgeInsets.all(kDefaultPadding),
             child: Text(
               '翻译',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),
-          Card(
-            clipBehavior: Clip.antiAlias,
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: Theme.of(context).colorScheme.outlineVariant,
-              ),
-              borderRadius: BorderRadius.circular(12),
-            ),
+
+          AppCard(
+            margin: EdgeInsets.only(bottom: kDefaultPadding),
+
             child: SwitchListTile(
               title: const Text('自动翻译资源简介'),
               subtitle: const Text('关闭可以提高资源页加载速度,翻译内容由 mcmod-info-mirror 提供'),
@@ -88,15 +80,10 @@ class TranslatePageState extends State<TranslatePage> {
               },
             ),
           ),
-          Card(
-            clipBehavior: Clip.antiAlias,
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: Theme.of(context).colorScheme.outlineVariant,
-              ),
-              borderRadius: BorderRadius.circular(12),
-            ),
+
+          AppCard(
+            margin: EdgeInsets.only(bottom: kDefaultPadding),
+
             child: SwitchListTile(
               title: const Text('使用 Google 翻译进行翻译资源详细信息'),
               subtitle: const Text('Google 翻译服务使用 Cloudflare 进行代理'),
@@ -109,16 +96,10 @@ class TranslatePageState extends State<TranslatePage> {
               },
             ),
           ),
+
           if (_enableGoogleTranslate) ...[
-            Card(
-              clipBehavior: Clip.antiAlias,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: Theme.of(context).colorScheme.outlineVariant,
-                ),
-                borderRadius: BorderRadius.circular(12),
-              ),
+            AppCard(
+              margin: EdgeInsets.only(bottom: kDefaultPadding),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: kDefaultPadding,

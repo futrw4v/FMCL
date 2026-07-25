@@ -39,12 +39,6 @@ class DownloadPageState extends State<DownloadPage> {
               // const VerticalDivider(),
               // 添加VerticalDivider会导致一个意外的间距，所以这里使用了一个Container
               Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    left: BorderSide(color: theme.dividerColor.withAlpha(100)),
-                  ),
-                ),
-
                 // 用SizedBox包裹NavigationDrawer避免宽度过大
                 child: SizedBox(
                   width: sidebarWidth,

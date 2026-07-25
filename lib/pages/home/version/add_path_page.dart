@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fmcl/utils/log_util.dart';
 
@@ -108,7 +109,7 @@ class AddPathPageState extends State<AddPathPage> {
       body: Center(
         child: ListView(
           children: [
-            Card(
+            AppCard(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: TextField(
                 decoration: InputDecoration(
@@ -123,7 +124,7 @@ class AddPathPageState extends State<AddPathPage> {
                 },
               ),
             ),
-            Card(
+            AppCard(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: ListTile(
                 title: const Text('点击选择路径'),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fmcl/constants.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:async';
@@ -883,7 +884,7 @@ class DownloadNeoForgePageState extends State<DownloadNeoForgePage> {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          Card(
+          AppCard(
             child: ListTile(
               title: const Text('正在下载游戏Json'),
               subtitle: Text(_downloadJson ? '下载完成' : '下载中...'),
@@ -893,7 +894,7 @@ class DownloadNeoForgePageState extends State<DownloadNeoForgePage> {
             ),
           ),
           if (_downloadJson) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在解析游戏Json'),
                 subtitle: Text(_parseGameJson ? '解析完成' : '解析中...'),
@@ -903,7 +904,7 @@ class DownloadNeoForgePageState extends State<DownloadNeoForgePage> {
               ),
             ),
             if (_parseGameJson) ...[
-              Card(
+              AppCard(
                 child: ListTile(
                   title: const Text('正在下载资源Json'),
                   subtitle: Text(_downloadAssetJson ? '下载完成' : '下载中...'),
@@ -915,7 +916,7 @@ class DownloadNeoForgePageState extends State<DownloadNeoForgePage> {
             ],
           ],
           if (_downloadAssetJson) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在解析资源Json'),
                 subtitle: Text(_parseAssetJson ? '解析完成' : '解析中...'),
@@ -926,7 +927,7 @@ class DownloadNeoForgePageState extends State<DownloadNeoForgePage> {
             ),
           ],
           if (_parseAssetJson) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -950,7 +951,7 @@ class DownloadNeoForgePageState extends State<DownloadNeoForgePage> {
             ),
           ],
           if (_downloadClient) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -974,7 +975,7 @@ class DownloadNeoForgePageState extends State<DownloadNeoForgePage> {
             ),
           ],
           if (_downloadLibrary) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -998,7 +999,7 @@ class DownloadNeoForgePageState extends State<DownloadNeoForgePage> {
             ),
           ],
           if (_downloadAsset) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在提取LWJGL路径'),
                 subtitle: Text(_extractedLwjglNativesPath ? '提取完成' : '提取中...'),
@@ -1009,7 +1010,7 @@ class DownloadNeoForgePageState extends State<DownloadNeoForgePage> {
             ),
           ],
           if (_extractedLwjglNativesPath) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在提取LWJGL'),
                 subtitle: Text(_extractedLwjglNatives ? '提取完成' : '提取中...'),
@@ -1020,7 +1021,7 @@ class DownloadNeoForgePageState extends State<DownloadNeoForgePage> {
             ),
           ],
           if (_extractedLwjglNatives) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在下载NeoForge'),
                 subtitle: Text(_downloadNeoForge ? '下载完成' : '下载中...'),
@@ -1031,7 +1032,7 @@ class DownloadNeoForgePageState extends State<DownloadNeoForgePage> {
             ),
           ],
           if (_downloadNeoForge) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在解压NeoForge安装列表'),
                 subtitle: Text(
@@ -1044,7 +1045,7 @@ class DownloadNeoForgePageState extends State<DownloadNeoForgePage> {
             ),
           ],
           if (_extractNeoForgeInstallerStatus) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在解析NeoForge Json'),
                 subtitle: Text(
@@ -1057,7 +1058,7 @@ class DownloadNeoForgePageState extends State<DownloadNeoForgePage> {
             ),
           ],
           if (_parseNeoForgeInstallerJsonStatus) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -1081,7 +1082,7 @@ class DownloadNeoForgePageState extends State<DownloadNeoForgePage> {
             ),
           ],
           if (_downloadNeoForgeLibrary) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在安装NeoForge'),
                 subtitle: Text(_neoForgeInstalled ? '安装完成' : '安装中...'),
@@ -1092,7 +1093,7 @@ class DownloadNeoForgePageState extends State<DownloadNeoForgePage> {
             ),
           ],
           if (_neoForgeInstalled) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在写入配置文件'),
                 subtitle: Text(_neoForgeInstalled ? '写入完成' : '写入中...'),

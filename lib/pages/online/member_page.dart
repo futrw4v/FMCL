@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fmcl/constants.dart';
 import 'package:fmcl/models/online/easy_tier_peer.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_gbk2utf8/flutter_gbk2utf8.dart';
@@ -888,7 +889,7 @@ class MemberPageState extends State<MemberPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Card(
+        AppCard(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -913,7 +914,7 @@ class MemberPageState extends State<MemberPage> {
           ),
         ),
         const SizedBox(height: 8),
-        Card(
+        AppCard(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -933,7 +934,7 @@ class MemberPageState extends State<MemberPage> {
   Widget _buildConnectedView() {
     return ListView(
       children: [
-        Card(
+        AppCard(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -952,7 +953,7 @@ class MemberPageState extends State<MemberPage> {
             ),
           ),
         ),
-        Card(
+        AppCard(
           child: ListTile(
             title: Text('Minecraft服务器备用地址'),
             subtitle: Text('127.0.0.1:$mcPort'),
@@ -966,7 +967,7 @@ class MemberPageState extends State<MemberPage> {
             },
           ),
         ),
-        Card(
+        AppCard(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -1052,7 +1053,7 @@ class MemberPageState extends State<MemberPage> {
             ),
           ),
         ),
-        Card(
+        AppCard(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fmcl/constants.dart';
 import 'package:fmcl/models/online/player_list.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_gbk2utf8/flutter_gbk2utf8.dart';
@@ -793,7 +794,7 @@ class OwnerPageState extends State<OwnerPage> {
             : ListView(
                 padding: const EdgeInsets.all(16.0),
                 children: [
-                  Card(
+                  AppCard(
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
@@ -893,7 +894,7 @@ class OwnerPageState extends State<OwnerPage> {
                       ),
                     ),
                   ),
-                  Card(
+                  AppCard(
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
@@ -919,7 +920,7 @@ class OwnerPageState extends State<OwnerPage> {
                       ),
                     ),
                   ),
-                  Card(
+                  AppCard(
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
@@ -1005,7 +1006,7 @@ class OwnerPageState extends State<OwnerPage> {
                       ),
                     ),
                   ),
-                  Card(
+                  AppCard(
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(

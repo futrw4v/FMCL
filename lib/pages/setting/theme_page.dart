@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart' show BlockPicker;
 import 'package:fmcl/constants.dart';
 import 'package:fmcl/main.dart';
+import 'package:fmcl/widgets/app_card.dart';
 
 class ThemePage extends StatefulWidget {
   const ThemePage({super.key});
@@ -72,19 +73,7 @@ class ThemePageState extends State<ThemePage> {
 
           _itemsPadding,
 
-          Card(
-            // 裁剪掉ListTile超出圆角的部分
-            clipBehavior: Clip.antiAlias,
-
-            elevation: 0,
-
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: Theme.of(context).colorScheme.outlineVariant,
-              ),
-              borderRadius: BorderRadius.circular(12),
-            ),
-
+          AppCard(
             child: ListTile(
               leading: const Icon(Icons.color_lens_outlined),
               title: const Text('主题色'),

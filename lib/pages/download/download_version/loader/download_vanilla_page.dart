@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fmcl/constants.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:io';
@@ -645,7 +646,7 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          Card(
+          AppCard(
             child: ListTile(
               title: const Text('正在下载游戏Json'),
               subtitle: Text(_downloadJson ? '下载完成' : '下载中...'),
@@ -655,7 +656,7 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
             ),
           ),
           if (_downloadJson) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在解析游戏Json'),
                 subtitle: Text(_parseGameJson ? '解析完成' : '解析中...'),
@@ -665,7 +666,7 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
               ),
             ),
             if (_parseAssetJson) ...[
-              Card(
+              AppCard(
                 child: ListTile(
                   title: const Text('正在下载资源Json'),
                   subtitle: Text(_downloadAssetJson ? '下载完成' : '下载中...'),
@@ -677,7 +678,7 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
             ],
           ],
           if (_downloadAssetJson) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在解析资源Json'),
                 subtitle: Text(_parseAssetJson ? '解析完成' : '解析中...'),
@@ -688,7 +689,7 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
             ),
           ],
           if (_parseAssetJson) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -712,7 +713,7 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
             ),
           ],
           if (_downloadClient) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -736,7 +737,7 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
             ),
           ],
           if (_downloadLibrary) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -760,7 +761,7 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
             ),
           ],
           if (_downloadAsset) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在提取LWJGL路径'),
                 subtitle: Text(_extractedLwjglNativesPath ? '提取完成' : '提取中...'),
@@ -771,7 +772,7 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
             ),
           ],
           if (_extractedLwjglNativesPath) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在提取LWJGL'),
                 subtitle: Text(_extractedLwjglNatives ? '提取完成' : '提取中...'),
@@ -782,7 +783,7 @@ class DownloadVanillaPageState extends State<DownloadVanillaPage> {
             ),
           ],
           if (_extractedLwjglNatives) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在写入配置文件'),
                 subtitle: Text(_writeConfig ? '写入完成' : '写入中...'),

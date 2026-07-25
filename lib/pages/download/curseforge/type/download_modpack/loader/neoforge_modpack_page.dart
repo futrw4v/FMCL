@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:archive/archive.dart';
@@ -1273,7 +1274,7 @@ class CurseforgeNeoForgeModpackPageState
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          Card(
+          AppCard(
             child: ListTile(
               title: const Text('正在下载整合包'),
               subtitle: Text(_downloadZip ? '下载完成' : '下载中...'),
@@ -1283,7 +1284,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ),
           if (_downloadZip) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在解压整合包'),
                 subtitle: Text(_unzipPack ? '解压完成' : '解压中...'),
@@ -1294,7 +1295,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ],
           if (_unzipPack) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在解析manifest.json'),
                 subtitle: Text(_parseManifest ? '解析完成' : '解析中...'),
@@ -1305,7 +1306,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ],
           if (_parseManifest) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -1329,7 +1330,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ],
           if (_downloadModsStatus) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在获取游戏Json'),
                 subtitle: Text(_downloadMinecraftJson ? '获取完成' : '获取中...'),
@@ -1340,7 +1341,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ],
           if (_downloadMinecraftJson) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在解析游戏Json'),
                 subtitle: Text(_parseGameJsonStatus ? '解析完成' : '解析中...'),
@@ -1351,7 +1352,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ],
           if (_parseGameJsonStatus) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在获取资源Json'),
                 subtitle: Text(_downloadAssetJson ? '获取完成' : '获取中...'),
@@ -1362,7 +1363,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ],
           if (_downloadAssetJson) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在解析资源Json'),
                 subtitle: Text(_parseAssetJson ? '解析完成' : '解析中...'),
@@ -1373,7 +1374,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ],
           if (_parseAssetJson) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -1397,7 +1398,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ],
           if (_downloadClient) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -1421,7 +1422,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ],
           if (_downloadLibrary) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -1445,7 +1446,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ],
           if (_downloadAsset) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在提取LWJGL路径'),
                 subtitle: Text(_extractedLwjglNativesPath ? '提取完成' : '提取中...'),
@@ -1456,7 +1457,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ],
           if (_extractedLwjglNativesPath) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在提取LWJGL'),
                 subtitle: Text(_extractedLwjglNatives ? '提取完成' : '提取中...'),
@@ -1467,7 +1468,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ],
           if (_extractedLwjglNatives) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -1491,7 +1492,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ],
           if (_downloadNeoForge) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在提取NeoForge安装器'),
                 subtitle: Text(
@@ -1504,7 +1505,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ],
           if (_extractNeoForgeInstallerStatus) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在解析NeoForge安装配置'),
                 subtitle: Text(
@@ -1517,7 +1518,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ],
           if (_parseNeoForgeInstallerJsonStatus) ...[
-            Card(
+            AppCard(
               child: Column(
                 children: [
                   ListTile(
@@ -1541,7 +1542,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ],
           if (_downloadNeoForgeLibrary) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在安装NeoForge'),
                 subtitle: Text(_neoForgeInstalled ? '安装完成' : '安装中...'),
@@ -1552,7 +1553,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ],
           if (_neoForgeInstalled) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在复制整合包文件'),
                 subtitle: Text(_copyOverrides ? '复制完成' : '复制中...'),
@@ -1563,7 +1564,7 @@ class CurseforgeNeoForgeModpackPageState
             ),
           ],
           if (_copyOverrides) ...[
-            Card(
+            AppCard(
               child: ListTile(
                 title: const Text('正在写入配置文件'),
                 subtitle: Text(_writeConfig ? '写入完成' : '写入中...'),

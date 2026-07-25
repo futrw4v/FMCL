@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:dio/dio.dart';
 import 'package:share_plus/share_plus.dart';
@@ -252,7 +253,7 @@ class InfoPageState extends State<InfoPage> {
       child: Row(
         children: [
           Expanded(
-            child: Card(
+            child: AppCard(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -268,7 +269,7 @@ class InfoPageState extends State<InfoPage> {
             ),
           ),
           Expanded(
-            child: Card(
+            child: AppCard(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -292,7 +293,7 @@ class InfoPageState extends State<InfoPage> {
   Widget _buildGameVersions() {
     final gameVersions =
         projectDetails['game_versions'] as List<dynamic>? ?? [];
-    return Card(
+    return AppCard(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -327,7 +328,7 @@ class InfoPageState extends State<InfoPage> {
   Widget _buildCategories() {
     final categories = projectDetails['categories'] as List<dynamic>? ?? [];
     final loaders = projectDetails['loaders'] as List<dynamic>? ?? [];
-    return Card(
+    return AppCard(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -377,7 +378,7 @@ class InfoPageState extends State<InfoPage> {
       child: Row(
         children: [
           Expanded(
-            child: Card(
+            child: AppCard(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -393,7 +394,7 @@ class InfoPageState extends State<InfoPage> {
             ),
           ),
           Expanded(
-            child: Card(
+            child: AppCard(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -415,7 +416,7 @@ class InfoPageState extends State<InfoPage> {
 
   // 相关链接
   Widget _buildLinks() {
-    return Card(
+    return AppCard(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -530,7 +531,7 @@ class InfoPageState extends State<InfoPage> {
                     const SizedBox(height: 16),
                     if (projectDetails['body'] != null &&
                         projectDetails['body'].toString().isNotEmpty)
-                      Card(
+                      AppCard(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:fmcl/utils/log_util.dart';
@@ -89,7 +90,7 @@ class CurseforgeDownloadInfoPageState
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          Card(
+          AppCard(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -112,7 +113,7 @@ class CurseforgeDownloadInfoPageState
             ),
           ),
           const SizedBox(height: 16),
-          Card(
+          AppCard(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
@@ -129,7 +130,7 @@ class CurseforgeDownloadInfoPageState
           ),
           const SizedBox(height: 16),
           if (_downloadUrl == null || _downloadUrl!.isEmpty)
-            Card(
+            AppCard(
               color: Colors.orange.shade100,
               child: const Padding(
                 padding: EdgeInsets.all(16.0),

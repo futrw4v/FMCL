@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:dart_nbt/dart_nbt.dart';
 import 'package:flutter/services.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SaveInfoTab extends StatefulWidget {
@@ -301,19 +302,19 @@ class _SaveInfoTabState extends State<SaveInfoTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildBasicInfoCard(),
+          _buildBasicInfoAppCard(),
           const SizedBox(height: 16),
-          _buildPlayerDataCard(),
+          _buildPlayerDataAppCard(),
           const SizedBox(height: 16),
-          _buildMapCard(),
+          _buildMapAppCard(),
         ],
       ),
     );
   }
 
   // 世界信息卡片
-  Widget _buildBasicInfoCard() {
-    return Card(
+  Widget _buildBasicInfoAppCard() {
+    return AppCard(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -408,8 +409,8 @@ class _SaveInfoTabState extends State<SaveInfoTab> {
   }
 
   // 玩家数据卡片
-  Widget _buildPlayerDataCard() {
-    return Card(
+  Widget _buildPlayerDataAppCard() {
+    return AppCard(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -576,8 +577,8 @@ class _SaveInfoTabState extends State<SaveInfoTab> {
   }
 
   // 地图卡片
-  Widget _buildMapCard() {
-    return Card(
+  Widget _buildMapAppCard() {
+    return AppCard(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

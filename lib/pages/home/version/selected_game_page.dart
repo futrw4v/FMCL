@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fmcl/utils/log_util.dart';
 
@@ -128,7 +129,7 @@ class SelectedGamePageState extends State<SelectedGamePage> {
           : ListView.builder(
               itemCount: _gameList.length,
               itemBuilder: (context, index) {
-                return Card(
+                return AppCard(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 8,
