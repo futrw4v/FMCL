@@ -2,17 +2,18 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gbk2utf8/flutter_gbk2utf8.dart';
 import 'package:fmcl/constants.dart';
 import 'package:fmcl/models/online/easy_tier_peer.dart';
+import 'package:fmcl/online/fakeserver.dart';
+import 'package:fmcl/online/scaffolding/client.dart';
+import 'package:fmcl/utils/log_util.dart';
 import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
-import 'package:flutter_gbk2utf8/flutter_gbk2utf8.dart';
-import 'package:fmcl/utils/log_util.dart';
-import 'package:fmcl/online/scaffolding/client.dart';
-import 'package:fmcl/online/fakeserver.dart';
 
 class MemberPage extends StatefulWidget {
   final String etServer;
@@ -603,13 +604,6 @@ class MemberPageState extends State<MemberPage> {
     }
   }
 
-  // 读取App版本
-  Future<String> _loadAppVersion() async {
-    final prefs = await SharedPreferences.getInstance();
-    final version = prefs.getString('version') ?? "1.0.0";
-    return version;
-  }
-
   // 检测核心版本
   Future<String> _checkCoreVersion() async {
     final prefs = await SharedPreferences.getInstance();
@@ -651,7 +645,6 @@ class MemberPageState extends State<MemberPage> {
           _isConnecting = true;
         });
       }
-      final appVersion = await _loadAppVersion();
       final coreVersion = await _checkCoreVersion();
       final myEasytierId = await _getMyEasyTierId();
       _client = OnlineCenterClient(
@@ -660,7 +653,7 @@ class MemberPageState extends State<MemberPage> {
         playerName: _playerName ?? 'Guest',
         machineId: _machineId ?? const Uuid().v4(),
         easytierId: myEasytierId,
-        vendor: '$kAppNameAbb $appVersion, EasyTier v$coreVersion',
+        vendor: '$kAppNameAbb $gAppVersion, EasyTier v$coreVersion',
         useIP: true,
       );
       await _client!.connect();

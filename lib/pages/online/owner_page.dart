@@ -1,19 +1,20 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 import 'dart:io';
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gbk2utf8/flutter_gbk2utf8.dart';
 import 'package:fmcl/constants.dart';
 import 'package:fmcl/models/online/player_list.dart';
+import 'package:fmcl/online/scaffolding/server.dart';
+import 'package:fmcl/online/scanner.dart';
+import 'package:fmcl/utils/log_util.dart';
 import 'package:fmcl/widgets/app_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
-import 'package:flutter_gbk2utf8/flutter_gbk2utf8.dart';
-import 'package:fmcl/utils/log_util.dart';
-import 'package:fmcl/online/scaffolding/server.dart';
-import 'package:fmcl/online/scanner.dart';
 
 class OwnerPage extends StatefulWidget {
   final int port;
@@ -304,13 +305,6 @@ class OwnerPageState extends State<OwnerPage> {
     }
   }
 
-  // 读取App版本
-  Future<String> _loadAppVersion() async {
-    final prefs = await SharedPreferences.getInstance();
-    final version = prefs.getString('version') ?? "1.0.0";
-    return version;
-  }
-
   // 检测核心版本
   Future<String> _checkCoreVersion() async {
     final prefs = await SharedPreferences.getInstance();
@@ -572,12 +566,11 @@ class OwnerPageState extends State<OwnerPage> {
       return;
     }
     try {
-      final appVersion = await _loadAppVersion();
       final coreVersion = await _checkCoreVersion();
       _tcpServerPort = await _findAvailablePort();
       _tcpServer = OnlineCenterServer(
         hostName: _playerName,
-        hostVendor: '$kAppNameAbb $appVersion, EasyTier v$coreVersion',
+        hostVendor: '$kAppNameAbb $gAppVersion, EasyTier v$coreVersion',
         port: _tcpServerPort,
         minecraftServerPort: _port,
       );

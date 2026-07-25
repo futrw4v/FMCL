@@ -1,13 +1,14 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
+
 import 'package:fmcl/constants.dart';
 import 'package:fmcl/java/java_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-import 'package:path/path.dart' as p;
-import 'dart:async';
-import 'package:fmcl/utils/log_util.dart';
-import 'package:fmcl/launch/login/microsoft_login.dart' as microsoft_login;
 import 'package:fmcl/launch/login/external_login.dart' as external_login;
+import 'package:fmcl/launch/login/microsoft_login.dart' as microsoft_login;
+import 'package:fmcl/utils/log_util.dart';
+import 'package:path/path.dart' as p;
+import 'package:shared_preferences/shared_preferences.dart';
 
 typedef ProgressCallback = void Function(String message);
 typedef ErrorCallback = void Function(String error);
@@ -188,7 +189,6 @@ Future<void> neoforgeLauncher({
   final game = prefs.getString('SelectedGame') ?? '';
   final nativesPath =
       '$gamePath${Platform.pathSeparator}versions${Platform.pathSeparator}$game${Platform.pathSeparator}natives';
-  final version = prefs.getString('version') ?? '';
   final cfg = prefs.getStringList('Config_${selectedPath}_$game') ?? [];
   final jsonPath =
       '$gamePath${Platform.pathSeparator}versions${Platform.pathSeparator}$game${Platform.pathSeparator}$game.json';
@@ -350,7 +350,7 @@ Future<void> neoforgeLauncher({
     if (accountInfo[0] == '2') '--clientId',
     token,
     '--versionType',
-    '"$kAppNameAbb $version"',
+    '"$kAppNameAbb $gAppVersion"',
     '--width',
     cfg[2],
     '--height',

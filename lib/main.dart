@@ -2,15 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fmcl/constants.dart';
 import 'package:fmcl/java/java_service.dart';
 import 'package:fmcl/pages/home/main_start_page.dart';
+import 'package:fmcl/pages/online/owner_page.dart';
+import 'package:fmcl/utils/log_util.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:fmcl/constants.dart';
-import 'package:fmcl/utils/log_util.dart';
-import 'package:fmcl/pages/online/owner_page.dart';
 import 'package:window_manager/window_manager.dart';
 
 void main() async {
@@ -73,10 +72,6 @@ Future<void> initVersionInfo() async {
   gAppDefaultUserAgent = '$kAppNameAbb/$gAppVersion';
   gAppModrinthUserAgent =
       'futrw4v/$kAppNameAbb/$gAppVersion (${AppUrls.githubProject})';
-
-  final prefs = await SharedPreferences.getInstance();
-  await prefs.setString('version', gAppVersion);
-  await prefs.setInt('build', gAppBuildNumber);
 }
 
 // 日志

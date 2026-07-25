@@ -76,8 +76,6 @@ $env:FLUTTER_STORAGE_BASE_URL="https://storage.flutter-io.cn"
 ### 1. 全局及软件配置
 | 键 | 值 | 类型 |
 | -- | -- |-- |
-| version | 软件版本(即将抛弃) | string |
-| build | 软件构建号(即将抛弃) | int |
 | themeColor | 自定义主题颜色 | int |
 | themeMode | 是否跟随深色 | string |
 | autoClearLog | 是否自动清理日志 | bool |
