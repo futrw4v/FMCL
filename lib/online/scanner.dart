@@ -32,6 +32,7 @@ Future<int?> getPort() async {
     try {
       final socket = await RawDatagramSocket.bind(bindAddr, 4445);
       sockets.add(socket);
+
       try {
         if (isIpv4) {
           socket.joinMulticast(InternetAddress('224.0.2.60'));
@@ -41,6 +42,7 @@ Future<int?> getPort() async {
       } catch (e) {
         LogUtil.log('加入多播组失败 ($bindAddr): $e', level: 'WARNING');
       }
+
       final sub = socket.listen((event) {
         if (event != RawSocketEvent.read) return;
         final dg = socket.receive();
@@ -54,11 +56,18 @@ Future<int?> getPort() async {
         }
         final adBegin = data.indexOf('[AD]');
         final adEnd = data.indexOf('[/AD]');
-        if (adBegin == -1 || adEnd == -1 || adEnd <= adBegin + '[AD]'.length)
+
+        if (adBegin == -1 || adEnd == -1 || adEnd <= adBegin + '[AD]'.length) {
           return;
+        }
+
         final portStr = data.substring(adBegin + '[AD]'.length, adEnd).trim();
         final port = int.tryParse(portStr);
-        if (port == null) return;
+
+        if (port == null) {
+          return;
+        }
+
         closeAll(port);
       });
       subs.add(sub);
@@ -70,5 +79,6 @@ Future<int?> getPort() async {
   // 尝试绑定 IPv4/IPv6
   await tryBindAndListen(InternetAddress.anyIPv4, true);
   await tryBindAndListen(InternetAddress.anyIPv6, false);
+
   return completer.future;
 }
