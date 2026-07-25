@@ -92,9 +92,37 @@ class MainStartPageState extends State<MainStartPage> {
               ),
               // 显示当前页面
               Expanded(
-                child: LazyLoadIndexedStack(
-                  index: _selectedIndex,
-                  children: _mainPages,
+                // 页面切换动画
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 250),
+
+                  switchInCurve: Curves.easeOutCubic,
+                  switchOutCurve: Curves.easeInCubic,
+
+                  transitionBuilder:
+                      (Widget child, Animation<double> animation) {
+                        // 透明度淡入淡出动画
+                        return FadeTransition(
+                          opacity: animation,
+                          // 5% 垂直平移动画
+                          child: SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(0.0, 0.05),
+                              end: Offset.zero,
+                            ).animate(animation),
+                            child: child,
+                          ),
+                        );
+                      },
+
+                  // 给 KeyedSubtree 传入当前的 ValueKey（_selectedIndex），触发 AnimatedSwitcher 检测 Key 变更
+                  child: KeyedSubtree(
+                    key: ValueKey<int>(_selectedIndex),
+                    child: LazyLoadIndexedStack(
+                      index: _selectedIndex,
+                      children: _mainPages,
+                    ),
+                  ),
                 ),
               ),
             ],
