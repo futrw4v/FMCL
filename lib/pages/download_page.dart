@@ -38,42 +38,37 @@ class DownloadPageState extends State<DownloadPage> {
             children: [
               // const VerticalDivider(),
               // 添加VerticalDivider会导致一个意外的间距，所以这里使用了一个Container
-              Container(
-                // 用SizedBox包裹NavigationDrawer避免宽度过大
-                child: SizedBox(
-                  width: sidebarWidth,
-                  child: NavigationDrawer(
-                    selectedIndex: _selectedIndex,
-                    onDestinationSelected: (index) {
-                      if (_selectedIndex == index) return;
-                      // 移除当前上下文中的所有焦点，避免视觉残留
-                      FocusScope.of(context).unfocus();
-                      setState(() {
-                        _selectedIndex = index;
-                        // 首次切换到资源页时才初始化，避免启动时提前发起网络请求
-                        if (index == 1) _resourcesPageInitialized = true;
-                      });
-                    },
+              // 用SizedBox包裹NavigationDrawer避免宽度过大
+              SizedBox(
+                width: sidebarWidth,
+                child: NavigationDrawer(
+                  selectedIndex: _selectedIndex,
+                  onDestinationSelected: (index) {
+                    if (_selectedIndex == index) return;
+                    // 移除当前上下文中的所有焦点，避免视觉残留
+                    FocusScope.of(context).unfocus();
+                    setState(() {
+                      _selectedIndex = index;
+                      // 首次切换到资源页时才初始化，避免启动时提前发起网络请求
+                      if (index == 1) _resourcesPageInitialized = true;
+                    });
+                  },
 
-                    children: [
-                      Padding(
-                        // 将文字与Destination对齐
-                        padding: const EdgeInsets.fromLTRB(
-                          kDefaultPadding * 1.5,
-                          kDefaultPadding,
-                          kDefaultPadding,
-                          kDefaultPadding,
-                        ),
-                        child: Text(
-                          '下载',
-                          style: theme.textTheme.headlineMedium,
-                        ),
+                  children: [
+                    Padding(
+                      // 将文字与Destination对齐
+                      padding: const EdgeInsets.fromLTRB(
+                        kDefaultPadding * 1.5,
+                        kDefaultPadding,
+                        kDefaultPadding,
+                        kDefaultPadding,
                       ),
+                      child: Text('下载', style: theme.textTheme.headlineMedium),
+                    ),
 
-                      // Destinations
-                      for (var dest in _destinations) dest,
-                    ],
-                  ),
+                    // Destinations
+                    for (var dest in _destinations) dest,
+                  ],
                 ),
               ),
 
