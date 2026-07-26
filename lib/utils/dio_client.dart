@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:fmcl/constants.dart';
 import 'package:fmcl/utils/download.dart';
 import 'package:fmcl/utils/log_util.dart';
-
-import 'package:fmcl/constants.dart';
 
 ///
 /// 一个自带默认配置的Dio单例
@@ -72,7 +71,7 @@ class DioClient {
         final existingUserAgent = options.headers['User-Agent'];
         if (existingUserAgent == null ||
             (existingUserAgent is String && existingUserAgent.isEmpty)) {
-          final userAgent = gAppDefaultUserAgent;
+          final userAgent = gAppUserAgent;
           options.headers['User-Agent'] = userAgent;
         }
         return handler.next(options);

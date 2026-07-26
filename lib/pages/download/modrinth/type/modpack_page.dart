@@ -46,7 +46,7 @@ class ModpackPageState extends State<ModpackPage> {
       });
       final response = await DioClient().dio.get(
         'https://api.modrinth.com/v2/project/${widget.projectId}/version',
-        options: Options(headers: {'User-Agent': gAppModrinthUserAgent}),
+        options: Options(headers: {'User-Agent': gAppUserAgent}),
       );
       if (response.statusCode == 200) {
         final allVersions = response.data as List;

@@ -110,7 +110,7 @@ class InfoPageState extends State<InfoPage> {
       LogUtil.log('正在获取模组详情: ${widget.slug}', level: 'INFO');
       final response = await DioClient().dio.get(
         'https://api.modrinth.com/v2/project/${widget.slug}',
-        options: Options(headers: {'User-Agent': gAppModrinthUserAgent}),
+        options: Options(headers: {'User-Agent': gAppUserAgent}),
       );
       if (response.statusCode == 200) {
         final Map<String, dynamic> details = Map<String, dynamic>.from(
@@ -157,7 +157,7 @@ class InfoPageState extends State<InfoPage> {
       final transResponse = await DioClient().dio.get(
         'https://mod.mcimirror.top/translate/modrinth/$projectId',
         options: Options(
-          headers: {'User-Agent': gAppModrinthUserAgent},
+          headers: {'User-Agent': gAppUserAgent},
           validateStatus: (status) => status != null,
         ),
       );
@@ -201,7 +201,7 @@ class InfoPageState extends State<InfoPage> {
       },
       options: Options(
         contentType: Headers.formUrlEncodedContentType,
-        headers: {'User-Agent': gAppModrinthUserAgent},
+        headers: {'User-Agent': gAppUserAgent},
         validateStatus: (status) => status != null,
       ),
     );

@@ -69,9 +69,7 @@ Future<void> initVersionInfo() async {
 
   gAppVersion = packageInfo.version;
   gAppBuildNumber = int.tryParse(packageInfo.buildNumber) ?? 0;
-  gAppDefaultUserAgent = '$kAppNameAbb/$gAppVersion';
-  gAppModrinthUserAgent =
-      'futrw4v/$kAppNameAbb/$gAppVersion (${AppUrls.githubProject})';
+  gAppUserAgent = '$kAppNameAbb/$gAppVersion';
 }
 
 // 日志

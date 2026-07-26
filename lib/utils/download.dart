@@ -1,5 +1,6 @@
-import 'dart:io';
 import 'dart:async';
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:flutter/material.dart';
@@ -82,15 +83,6 @@ class DownloadUtils {
     return _sharedDio!;
   }
 
-  /// 获取对应 URL 的 User-Agent
-  static String _getUserAgent(String url) {
-    if (url.contains('bmclapi2.bangbang93.com')) {
-      return gAppDefaultUserAgent;
-    } else {
-      return gAppModrinthUserAgent;
-    }
-  }
-
   /// 下载单个文件
   /// [url] 下载地址
   /// [savePath] 保存路径
@@ -108,7 +100,6 @@ class DownloadUtils {
   }) async {
     final dio = await _getSharedDio();
     final CancelToken cancelToken = CancelToken();
-    final userAgent = _getUserAgent(url);
     const int maxRetries = 5;
     for (int retry = 0; retry <= maxRetries; retry++) {
       try {
@@ -119,7 +110,7 @@ class DownloadUtils {
           directory.createSync(recursive: true);
         }
         final options = Options(
-          headers: {'User-Agent': userAgent},
+          headers: {'User-Agent': gAppUserAgent},
           responseType: ResponseType.stream,
         );
         await dio.download(
