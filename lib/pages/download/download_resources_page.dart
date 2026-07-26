@@ -83,7 +83,7 @@ class DownloadResourcesState extends State<DownloadResources> {
           children: [
             const Text('未找到相关项目'),
             const SizedBox(height: 20),
-            ElevatedButton(onPressed: _clearSearch, child: const Text('清除搜索')),
+            FilledButton(onPressed: _clearSearch, child: const Text('清除搜索')),
           ],
         ),
       );
@@ -92,24 +92,41 @@ class DownloadResourcesState extends State<DownloadResources> {
         onRefresh: () => _isSearching
             ? _searchProjects(_searchController.text)
             : _fetchProjects(),
-        child: ListView.builder(
+
+        child: ListView.separated(
+          separatorBuilder: (context, index) {
+            return SizedBox(height: kDefaultPadding);
+          },
+
           controller: _scrollController,
           itemCount: _projectsList.length + 1,
+
           itemBuilder: (context, index) {
             if (index == 0) {
               return _buildSearchBar();
             }
+
             final project = _projectsList[index - 1];
-            return _buildProjectAppCard(project);
+            return _buildProjectAppCard(context, project);
           },
         ),
       );
     }
 
     return Scaffold(
-      body: body,
+      body: Padding(
+        padding: const EdgeInsets.only(
+          left: kDefaultPadding * 2,
+          right: kDefaultPadding * 2,
+          bottom: kDefaultPadding,
+        ),
+
+        child: body,
+      ),
+
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
+
         children: [
           if (_showScrollToTop)
             Padding(
@@ -120,11 +137,13 @@ class DownloadResourcesState extends State<DownloadResources> {
                 child: const Icon(Icons.arrow_upward),
               ),
             ),
-          FloatingActionButton(
-            heroTag: 'refreshButton',
-            onPressed: _clearSearch,
-            child: const Icon(Icons.refresh),
-          ),
+
+          if (!_isLoading)
+            FloatingActionButton(
+              heroTag: 'refreshButton',
+              onPressed: _clearSearch,
+              child: const Icon(Icons.refresh),
+            ),
         ],
       ),
     );
@@ -146,11 +165,13 @@ class DownloadResourcesState extends State<DownloadResources> {
         _isLoading = true;
         _error = null;
       });
+
       LogUtil.log('开始请求随机项目', level: 'INFO');
       final response = await DioClient().dio.get(
         'https://api.modrinth.com/v2/projects_random?count=50',
         options: Options(headers: {'User-Agent': gAppUserAgent}),
       );
+
       if (response.statusCode == 200) {
         LogUtil.log('成功获取项目', level: 'INFO');
         _projectsList = response.data;
@@ -168,6 +189,7 @@ class DownloadResourcesState extends State<DownloadResources> {
       }
     } catch (e) {
       LogUtil.log('请求出错: $e', level: 'ERROR');
+
       if (mounted) {
         setState(() {
           _error = '网络请求失败: $e';
@@ -184,11 +206,6 @@ class DownloadResourcesState extends State<DownloadResources> {
       return;
     }
 
-    await _search(query);
-  }
-
-  // Modrinth 搜索
-  Future<void> _search(String query) async {
     try {
       setState(() {
         _isLoading = true;
@@ -246,11 +263,6 @@ class DownloadResourcesState extends State<DownloadResources> {
     bool autoTranslate = prefs.getBool('autoTranslate') ?? true;
     if (!autoTranslate) return;
 
-    await _applyModrinthTranslations();
-  }
-
-  // 批量翻译
-  Future<void> _applyModrinthTranslations() async {
     if (_projectsList.isEmpty) return;
 
     try {
@@ -258,8 +270,11 @@ class DownloadResourcesState extends State<DownloadResources> {
           .map((p) => (p['id'] ?? p['project_id'])?.toString())
           .where((id) => id != null)
           .toList();
+
       if (ids.isEmpty) return;
+
       LogUtil.log('正在批量获取翻译', level: 'INFO');
+
       final transResponse = await DioClient().dio.post(
         'https://mod.mcimirror.top/translate/modrinth',
         data: {'project_ids': ids},
@@ -268,20 +283,25 @@ class DownloadResourcesState extends State<DownloadResources> {
           validateStatus: (status) => status != null,
         ),
       );
+
       if (transResponse.statusCode == 200 && transResponse.data is List) {
         final Map<String, String> transMap = {};
+
         for (final t in transResponse.data as List) {
           if (t['project_id'] != null && t['translated'] != null) {
             transMap[t['project_id'].toString()] = t['translated'].toString();
           }
         }
+
         if (transMap.isEmpty) return;
+
         for (final project in _projectsList) {
           final id = (project['id'] ?? project['project_id'])?.toString();
           if (id != null && transMap.containsKey(id)) {
             project['description'] = transMap[id];
           }
         }
+
         LogUtil.log('Modrinth批量翻译应用成功', level: 'INFO');
       }
     } catch (e) {
@@ -300,167 +320,367 @@ class DownloadResourcesState extends State<DownloadResources> {
   }
 
   // 类型标签
-  Widget _buildTypeChip(String? type) {
-    String? displayName;
-    displayName = modrinthProjectTypes[type];
+  Widget _buildTypeChip(String type) {
+    // 使用Container代替Chip来自定义内边距
+    return Container(
+      padding: const EdgeInsets.only(left: 6, right: 6, top: 3, bottom: 5),
 
-    if (displayName == null) {
-      return const SizedBox.shrink();
-    }
-    return Chip(
-      label: Text(displayName),
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      labelStyle: const TextStyle(fontSize: 10),
-      padding: EdgeInsets.zero,
-      visualDensity: VisualDensity.compact,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(4),
+      ),
+
+      // 文本
+      child: Text(
+        modrinthProjectTypes[type] ?? "未知类型",
+        style: TextStyle(
+          fontSize: 12,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
+      ),
     );
   }
 
   // 搜索框
   Widget _buildSearchBar() {
     return AppCard(
-      margin: const EdgeInsets.all(8.0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 数据源选择
-            Row(
-              children: [
-                const Text(
-                  '数据源',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                ),
-              ],
+      padding: const EdgeInsets.all(kDefaultPadding),
+
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+
+        spacing: kDefaultPadding,
+
+        children: [
+          // 搜索框
+          TextField(
+            controller: _searchController,
+            decoration: InputDecoration(
+              hintText: '在Modrinth中搜索',
+              prefixIcon: const Icon(Icons.search),
+
+              suffixIcon: _searchController.text.isNotEmpty
+                  ? IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: _clearSearch,
+                    )
+                  : null,
             ),
 
-            const SizedBox(height: 12.0),
+            onSubmitted: (value) => _searchProjects(value),
+            textInputAction: TextInputAction.search,
+          ),
 
-            // 搜索框
-            TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: '在Modrinth搜索',
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: _searchController.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: _clearSearch,
-                      )
-                    : null,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 12.0,
-                  horizontal: 16.0,
+          // 项目类型选择
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+
+            children: [
+              Text('类型', style: Theme.of(context).textTheme.bodyLarge),
+
+              const Spacer(),
+
+              SizedBox(
+                width: 160,
+                child: DropdownButtonFormField<String>(
+                  hint: const Text('选择项目类型'),
+                  initialValue: _modrinthProjectType,
+
+                  decoration: InputDecoration(border: OutlineInputBorder()),
+
+                  items: [
+                    const DropdownMenuItem<String>(
+                      value: null,
+                      child: Text('全部类型'),
+                    ),
+                    ...modrinthProjectTypes.entries.map(
+                      (entry) => DropdownMenuItem<String>(
+                        value: entry.key,
+                        child: Text(entry.value),
+                      ),
+                    ),
+                  ],
+
+                  onChanged: (String? newValue) {
+                    if (newValue == _modrinthProjectType) return;
+
+                    setState(() {
+                      _modrinthProjectType = newValue;
+                    });
+
+                    _searchProjects(_searchController.text);
+                  },
                 ),
               ),
-              onSubmitted: (value) => _searchProjects(value),
-              textInputAction: TextInputAction.search,
-            ),
-            const SizedBox(height: 12.0),
-            // 项目类型选择
-            const Text(
-              '项目类型',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-            ),
-            const SizedBox(height: 4.0),
-            DropdownButton<String>(
-              isExpanded: true,
-              hint: const Text('选择项目类型'),
-              value: _modrinthProjectType,
-              underline: Container(height: 1),
-              items: [
-                const DropdownMenuItem<String>(
-                  value: null,
-                  child: Text('全部类型'),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  // 项目卡片
+  Widget _buildProjectAppCard(BuildContext context, dynamic project) {
+    final iconUrl = project['icon_url'];
+    final type = project['project_type'];
+    final title = project['title'];
+    final description = project['description'];
+    final categories = project['categories'];
+    final slug = project['slug'];
+
+    final loaders = project['loaders'];
+    final downloads = project['downloads'];
+    final dateModified = project['date_modified'];
+    final gameVersions = project['game_versions'];
+    final timeUpdated = project['updated'];
+
+    final theme = Theme.of(context);
+
+    return AppCard(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12.0),
+
+        onTap: () => Navigator.push(
+          context,
+          SlidePageRoute(
+            page: InfoPage(slug: slug ?? '', projectInfo: project),
+          ),
+        ),
+
+        child: Padding(
+          padding: const EdgeInsets.all(kDefaultPadding),
+
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+
+            spacing: kDefaultPadding,
+
+            children: [
+              _buildProjectIcon(context, iconUrl),
+
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+
+                  children: [
+                    // 标题与标签
+                    Row(
+                      children: [
+                        if (type != null)
+                          Padding(
+                            // Type右侧间距
+                            padding: const EdgeInsets.only(right: 6.0),
+                            child: _buildTypeChip(type),
+                          ),
+
+                        Expanded(
+                          child: Text(
+                            title ?? 'Unknown Title',
+                            style: theme.textTheme.titleMedium,
+                            maxLines: 1,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 4.0),
+
+                    // 简介描述
+                    Text(
+                      description ?? 'No description available',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+
+                      style: TextStyle(),
+                    ),
+
+                    const SizedBox(height: 2),
+
+                    // 分类标签
+                    if (categories != null &&
+                        (categories as List).isNotEmpty) ...[
+                      const SizedBox(height: 6.0),
+
+                      Wrap(
+                        spacing: 6,
+                        runSpacing: 4,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          if (loaders != null && (loaders as List).isNotEmpty)
+                            _buildMetaBadge(
+                              context,
+                              icon: Icons.construction,
+                              // 合并多个loaders
+                              text: (loaders)
+                                  .take(2)
+                                  .map((loader) {
+                                    final str = loader.toString();
+                                    if (str.isEmpty) return '';
+                                    // 首字母大写
+                                    return '${str[0].toUpperCase()}${str.substring(1)}';
+                                  })
+                                  .join(' / '),
+                            ),
+
+                          // 游戏版本（取最新版）
+                          if (gameVersions != null &&
+                              (gameVersions as List).isNotEmpty)
+                            _buildMetaBadge(
+                              context,
+                              icon: Icons.sports_esports_outlined,
+                              text: (gameVersions).last.toString(),
+                            ),
+
+                          // 下载量
+                          if (downloads != null)
+                            _buildMetaBadge(
+                              context,
+                              icon: Icons.file_download_outlined,
+                              text: _formatDownloads(downloads),
+                            ),
+
+                          // 更新日期
+                          if (dateModified ?? timeUpdated != null)
+                            _buildMetaBadge(
+                              context,
+                              icon: Icons.schedule_outlined,
+                              text: _formatDate(dateModified ?? timeUpdated),
+                            ),
+                        ],
+                      ),
+                    ],
+                  ],
                 ),
-                ...modrinthProjectTypes.entries.map(
-                  (entry) => DropdownMenuItem<String>(
-                    value: entry.key,
-                    child: Text(entry.value),
-                  ),
-                ),
-              ],
-              onChanged: (String? newValue) {
-                setState(() {
-                  _modrinthProjectType = newValue;
-                });
-                _searchProjects(_searchController.text);
-              },
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  // Modrinth 项目卡片
-  Widget _buildProjectAppCard(dynamic project) {
-    return AppCard(
-      margin: const EdgeInsets.all(8.0),
-      child: ListTile(
-        leading: project['icon_url'] != null
-            ? Image.network(
-                project['icon_url'],
-                width: 50,
-                height: 50,
-                errorBuilder: (context, error, stackTrace) =>
-                    const Icon(Icons.extension, size: 50),
-              )
-            : const Icon(Icons.extension, size: 50),
-        title: Row(
-          children: [
-            if (project['project_type'] != null)
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: _buildTypeChip(project['project_type']),
-              ),
-            Expanded(
-              child: Text(
-                project['title'] ?? 'Unknown Title',
-                style: const TextStyle(fontWeight: FontWeight.bold),
-                overflow: TextOverflow.ellipsis,
-              ),
+  Widget _buildMetaBadge(
+    BuildContext context, {
+    IconData? icon,
+    required String text,
+    Color? color,
+  }) {
+    final theme = Theme.of(context);
+
+    return Container(
+      padding: const EdgeInsets.only(left: 4, right: 5, top: 2, bottom: 4),
+      decoration: BoxDecoration(
+        color: color != null
+            ? color.withValues(alpha: 0.12)
+            : theme.colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(4),
+      ),
+
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+
+        children: [
+          if (icon != null) ...[
+            // 往下移动 1px
+            Transform.translate(
+              offset: Offset(0, 1),
+              child: Icon(icon, size: 15),
             ),
+
+            // 图标右侧空隙
+            const SizedBox(width: 4),
           ],
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              project['description'] ?? 'No description available',
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+
+          Text(
+            text,
+            style: TextStyle(
+              color: theme.colorScheme.onSurfaceVariant,
+              fontSize: 13,
+              height: 1.0,
+              leadingDistribution: TextLeadingDistribution.even,
             ),
-            const SizedBox(height: 4),
-            Wrap(
-              spacing: 4,
-              children: [
-                ...?project['categories']?.map<Widget>(
-                  (category) => Chip(
-                    label: Text(category),
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    labelStyle: const TextStyle(fontSize: 10),
-                    padding: EdgeInsets.zero,
-                    visualDensity: VisualDensity.compact,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        isThreeLine: true,
-        onTap: () => Navigator.push(
-          context,
-          SlidePageRoute(
-            page: InfoPage(slug: project['slug'] ?? '', projectInfo: project),
           ),
-        ),
+        ],
       ),
     );
+  }
+
+  // 构建项目图标
+  Widget _buildProjectIcon(BuildContext context, String? iconUrl) {
+    const double iconSize = 80.0;
+
+    // 添加圆角
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+
+      child: SizedBox(
+        width: iconSize,
+        height: iconSize,
+
+        child: iconUrl != null && iconUrl.isNotEmpty
+            ? Image.network(
+                iconUrl,
+                fit: BoxFit.cover,
+
+                // 透明渐入
+                frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                  if (wasSynchronouslyLoaded) return child;
+
+                  return AnimatedOpacity(
+                    opacity: frame == null ? 0 : 1,
+                    duration: const Duration(milliseconds: 250),
+                    curve: Curves.easeIn,
+                    child: child,
+                  );
+                },
+
+                // 加载时转圈
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+
+                  return Center(
+                    child: SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  );
+                },
+
+                // 异常时返回占位符
+                errorBuilder: (context, error, stackTrace) => Container(
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                  child: const Icon(Icons.extension, size: 28),
+                ),
+              )
+            : Container(
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                child: const Icon(Icons.extension, size: 28),
+              ),
+      ),
+    );
+  }
+
+  String _formatDownloads(dynamic downloads) {
+    final num? count = num.tryParse(downloads.toString());
+    if (count == null) return '0';
+
+    if (count >= 1000000) {
+      return '${(count / 1000000).toStringAsFixed(1)}M';
+    } else if (count >= 1000) {
+      return '${(count / 1000).toStringAsFixed(1)}k';
+    }
+    return '$count';
+  }
+
+  String _formatDate(dynamic isoString) {
+    if (isoString == null) return '';
+    try {
+      final dt = DateTime.parse(isoString.toString());
+      return '${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}';
+    } catch (_) {
+      return '';
+    }
   }
 }
