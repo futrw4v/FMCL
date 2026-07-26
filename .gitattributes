@@ -4,3 +4,6 @@
 windows/** linguist-generated
 linux/** linguist-generated
 macos/** linguist-generated
+
+*.freezed.dart linguist-generated=true
+*.g.dart linguist-generated=true
