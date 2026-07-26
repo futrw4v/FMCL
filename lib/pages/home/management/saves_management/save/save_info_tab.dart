@@ -1,8 +1,10 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
+
 import 'package:dart_nbt/dart_nbt.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fmcl/widgets/app_card.dart';
+import 'package:fmcl/widgets/error_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SaveInfoTab extends StatefulWidget {
@@ -284,18 +286,7 @@ class _SaveInfoTabState extends State<SaveInfoTab> {
       return const Center(child: CircularProgressIndicator());
     }
     if (_error != null) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.error_outline, size: 64, color: Colors.red[300]),
-            const SizedBox(height: 16),
-            Text(_error!, style: const TextStyle(color: Colors.red)),
-            const SizedBox(height: 16),
-            ElevatedButton(onPressed: _loadLevelData, child: const Text('重试')),
-          ],
-        ),
-      );
+      return ErrorView(body: _error!, onRetry: _loadLevelData);
     }
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 80.0),

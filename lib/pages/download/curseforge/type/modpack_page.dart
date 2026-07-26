@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-
-import 'package:fmcl/utils/log_util.dart';
+import 'package:flutter/material.dart';
 import 'package:fmcl/constants.dart';
-import 'package:fmcl/utils/dio_client.dart';
-import 'package:fmcl/utils/slide_page_route.dart';
 import 'package:fmcl/pages/download/curseforge/type/download_modpack/download_info_page.dart';
+import 'package:fmcl/utils/dio_client.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/utils/slide_page_route.dart';
 import 'package:fmcl/widgets/app_card.dart';
+import 'package:fmcl/widgets/error_view.dart';
 
 class CurseforgeModpackPage extends StatefulWidget {
   const CurseforgeModpackPage({required this.modId, this.modName, super.key});
@@ -150,19 +150,7 @@ class CurseforgeModpackPageState extends State<CurseforgeModpackPage> {
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _error != null
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(_error!),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _fetchFiles,
-                    child: const Text('重试'),
-                  ),
-                ],
-              ),
-            )
+          ? ErrorView(body: _error!, onRetry: _fetchFiles)
           : Column(
               children: [
                 // 筛选器

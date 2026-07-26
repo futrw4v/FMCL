@@ -1,15 +1,16 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:fmcl/widgets/app_card.dart';
-import 'package:path/path.dart' as path;
-import 'dart:io';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:fmcl/utils/dio_client.dart';
+import 'package:flutter/material.dart';
 import 'package:fmcl/constants.dart';
-import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/utils/dio_client.dart';
 import 'package:fmcl/utils/download.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/widgets/app_card.dart';
+import 'package:fmcl/widgets/error_view.dart';
+import 'package:path/path.dart' as path;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ResourcepackPage extends StatefulWidget {
   const ResourcepackPage({
@@ -336,19 +337,7 @@ class ResourcepackPageState extends State<ResourcepackPage> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : error != null
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(error!),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: _fetchVersions,
-                    child: const Text('重试'),
-                  ),
-                ],
-              ),
-            )
+          ? ErrorView(body: error!, onRetry: _fetchVersions)
           : versionsList.isEmpty
           ? const Center(child: Text('没有可用版本'))
           : Column(

@@ -1,18 +1,19 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
-import 'package:fmcl/widgets/app_card.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:dio/dio.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fmcl/utils/slide_page_route.dart';
-import 'package:fmcl/utils/dio_client.dart';
 import 'package:fmcl/constants.dart';
-import 'package:fmcl/utils/log_util.dart';
 import 'package:fmcl/pages/download/modrinth/type/mod_page.dart';
 import 'package:fmcl/pages/download/modrinth/type/modpack_page.dart';
 import 'package:fmcl/pages/download/modrinth/type/resourcepack_page.dart';
 import 'package:fmcl/pages/download/modrinth/type/shader_page.dart';
+import 'package:fmcl/utils/dio_client.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/utils/slide_page_route.dart';
+import 'package:fmcl/widgets/app_card.dart';
+import 'package:fmcl/widgets/error_view.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InfoPage extends StatefulWidget {
   final String slug;
@@ -461,19 +462,7 @@ class InfoPageState extends State<InfoPage> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : error != null
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(error!),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _fetchProjectDetails,
-                    child: const Text('重试'),
-                  ),
-                ],
-              ),
-            )
+          ? ErrorView(body: error!, onRetry: _fetchProjectDetails)
           : SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),

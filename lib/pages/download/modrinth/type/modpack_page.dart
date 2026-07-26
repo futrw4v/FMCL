@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-
-import 'package:fmcl/utils/dio_client.dart';
+import 'package:flutter/material.dart';
 import 'package:fmcl/constants.dart';
+import 'package:fmcl/pages/download/modrinth/type/download_modpack/download_info_page.dart';
+import 'package:fmcl/utils/dio_client.dart';
 import 'package:fmcl/utils/log_util.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
-import 'package:fmcl/pages/download/modrinth/type/download_modpack/download_info_page.dart';
 import 'package:fmcl/widgets/app_card.dart';
+import 'package:fmcl/widgets/error_view.dart';
 
 class ModpackPage extends StatefulWidget {
   const ModpackPage({required this.projectId, this.projectName, super.key});
@@ -163,19 +163,7 @@ class ModpackPageState extends State<ModpackPage> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : error != null
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(error!),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: _fetchVersions,
-                    child: const Text('重试'),
-                  ),
-                ],
-              ),
-            )
+          ? ErrorView(body: error!, onRetry: _fetchVersions)
           : versionsList.isEmpty
           ? const Center(child: Text('没有可用的 NeoForge 或 Fabric 版本'))
           : Column(

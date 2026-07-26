@@ -1,13 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'package:fmcl/utils/slide_page_route.dart';
-import 'package:fmcl/utils/dio_client.dart';
-import 'package:fmcl/widgets/app_card.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fmcl/utils/log_util.dart';
-import 'package:fmcl/pages/download/modrinth/info_page.dart';
-import 'package:fmcl/pages/download/curseforge/info_page.dart';
+import 'package:flutter/material.dart';
 import 'package:fmcl/constants.dart';
+import 'package:fmcl/pages/download/curseforge/info_page.dart';
+import 'package:fmcl/pages/download/modrinth/info_page.dart';
+import 'package:fmcl/utils/dio_client.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/utils/slide_page_route.dart';
+import 'package:fmcl/widgets/app_card.dart';
+import 'package:fmcl/widgets/error_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DownloadResources extends StatefulWidget {
   const DownloadResources({super.key});
@@ -722,20 +723,15 @@ class DownloadResourcesState extends State<DownloadResources> {
     if (_isLoading) {
       body = const Center(child: CircularProgressIndicator());
     } else if (_error != null) {
-      body = Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(_error!),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => _isSearching
-                  ? _searchProjects(_searchController.text)
-                  : _fetchProjects(),
-              child: const Text('重试'),
-            ),
-          ],
-        ),
+      body = ErrorView(
+        body: _error!,
+        onRetry: () {
+          if (_isSearching) {
+            _searchProjects(_searchController.text);
+          } else {
+            _fetchProjects();
+          }
+        },
       );
     } else if (_projectsList.isEmpty) {
       body = Center(

@@ -1,16 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
-import 'package:fmcl/constants.dart';
-import 'package:fmcl/utils/dio_client.dart';
-import 'package:fmcl/utils/slide_page_route.dart';
-import 'package:fmcl/models/game/minecraft_version.dart';
-import 'package:fmcl/widgets/app_card.dart';
-import 'package:intl/intl.dart';
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/models/game/minecraft_version.dart';
 import 'package:fmcl/pages/download/download_version/download_game_page.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:fmcl/utils/dio_client.dart';
 import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/utils/slide_page_route.dart';
+import 'package:fmcl/widgets/app_card.dart';
+import 'package:fmcl/widgets/error_view.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DownloadVersionPage extends StatefulWidget {
   const DownloadVersionPage({super.key});
@@ -140,144 +142,123 @@ class DownloadVersionPageState extends State<DownloadVersionPage> {
     );
 
     return Scaffold(
-      body: Center(
-        child: FutureBuilder(
-          future: _versionsFuture,
-          builder: (context, snapshot) {
-            // 加载时显示CircularProgressIndicator
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            }
-            // 错误处理
-            if (snapshot.hasError || snapshot.data == null) {
-              // 返回错误信息和重试按钮
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.error_outline, fill: 1, size: 48),
-                  const SizedBox(height: kDefaultPadding),
-                  Text('Loading failed'),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: kDefaultPadding / 2,
-                      horizontal: kDefaultPadding * 2,
-                    ),
-                    child: Text(
-                      snapshot.error?.toString() ?? '数据为空',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  // 重试按钮
-                  ElevatedButton(
-                    onPressed: () {
-                      if (!mounted) return;
-                      setState(() {
-                        LogUtil.log('正在尝试重新拉取版本');
-                        _versionsFuture = _fetchAndParseVersionManifest();
-                      });
-                    },
-                    child: const Text('重试'),
-                  ),
-                ],
-              );
-            }
-            // 数据加载成功，显示版本列表
-            if (snapshot.connectionState == ConnectionState.done) {
-              // 强制转为Notnull
-              final List<MinecraftVersion> versions = snapshot.data!;
-              // 筛选当前选择的版本类型
-              final filteredVersions = versions
-                  .where(
-                    (version) => version.type == _versionTypeSelection.first,
-                  )
-                  .toList();
-              return CustomScrollView(
-                slivers: [
-                  SliverAppBar(
-                    pinned: true,
-                    floating: false,
-                    snap: false,
-                    title: SizedBox(
-                      width: double.infinity,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: SegmentedButton<VersionType>(
-                          segments: segments,
-                          selected: _versionTypeSelection,
-                          onSelectionChanged: (Set<VersionType> newSelection) {
-                            setState(() {
-                              _versionTypeSelection = newSelection;
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                    elevation: 4,
-                  ),
-                  // BMCL广告
-                  SliverToBoxAdapter(
-                    child: AppCard(
-                      margin: kPadding,
-                      child: ListTile(
-                        title: const Text('下载由 BMCLAPI 提供'),
-                        subtitle: const Text('赞助 BMCLAPI 喵~ 赞助 BMCLAPI 谢谢喵~ '),
-                        leading: const Icon(Icons.info),
-                        trailing: const Icon(Icons.open_in_new),
-                        onTap: () =>
-                            _launchURL('https://bmclapi2.bangbang93.com/'),
-                      ),
-                    ),
-                  ),
-                  // 版本列表
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate((context, index) {
-                      final version = filteredVersions[index];
-                      return AppCard(
-                        margin: kPadding,
+      body: FutureBuilder(
+        future: _versionsFuture,
+        builder: (context, snapshot) {
+          // 加载时显示CircularProgressIndicator
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-                        child: ListTile(
-                          title: Text(
-                            version.id,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          subtitle: Text(
-                            '更新时间: ${dateFormat.format(DateTime.parse(version.releaseTime).toLocal())}',
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                        ),
-                        onTap: () async {
-                          // 读取选择路径
-                          final prefs = await SharedPreferences.getInstance();
-                          final selectedDir = prefs.getString('SelectedPath');
-                          if (!mounted) return;
-                          // 检查下载路径是否存在
-                          if (selectedDir == null || selectedDir.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('请先选择下载目录')),
-                            );
-                          } else {
-                            LogUtil.log(
-                              '选择了版本: ${version.id} - URL: ${version.url}',
-                              level: 'INFO',
-                            );
-                            Navigator.push(
-                              context,
-                              SlidePageRoute(
-                                page: DownloadGamePage(version: version),
-                              ),
-                            );
-                          }
+          // 错误处理
+          if (snapshot.hasError || snapshot.data == null) {
+            final body = snapshot.error?.toString() ?? '数据为空';
+
+            return ErrorView(
+              body: body,
+              onRetry: () {
+                LogUtil.log('正在尝试重新拉取版本');
+
+                setState(() {
+                  _versionsFuture = _fetchAndParseVersionManifest();
+                });
+              },
+            );
+          }
+          // 数据加载成功，显示版本列表
+          if (snapshot.connectionState == ConnectionState.done) {
+            // 强制转为Notnull
+            final List<MinecraftVersion> versions = snapshot.data!;
+            // 筛选当前选择的版本类型
+            final filteredVersions = versions
+                .where((version) => version.type == _versionTypeSelection.first)
+                .toList();
+            return CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  pinned: true,
+                  floating: false,
+                  snap: false,
+                  title: SizedBox(
+                    width: double.infinity,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: SegmentedButton<VersionType>(
+                        segments: segments,
+                        selected: _versionTypeSelection,
+                        onSelectionChanged: (Set<VersionType> newSelection) {
+                          setState(() {
+                            _versionTypeSelection = newSelection;
+                          });
                         },
-                      );
-                    }, childCount: filteredVersions.length),
+                      ),
+                    ),
                   ),
-                ],
-              );
-            }
-            return const CircularProgressIndicator();
-          },
-        ),
+                  elevation: 4,
+                ),
+                // BMCL广告
+                SliverToBoxAdapter(
+                  child: AppCard(
+                    margin: kPadding,
+                    child: ListTile(
+                      title: const Text('下载由 BMCLAPI 提供'),
+                      subtitle: const Text('赞助 BMCLAPI 喵~ 赞助 BMCLAPI 谢谢喵~ '),
+                      leading: const Icon(Icons.info),
+                      trailing: const Icon(Icons.open_in_new),
+                      onTap: () =>
+                          _launchURL('https://bmclapi2.bangbang93.com/'),
+                    ),
+                  ),
+                ),
+                // 版本列表
+                SliverList(
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    final version = filteredVersions[index];
+                    return AppCard(
+                      margin: kPadding,
+
+                      child: ListTile(
+                        title: Text(
+                          version.id,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        subtitle: Text(
+                          '更新时间: ${dateFormat.format(DateTime.parse(version.releaseTime).toLocal())}',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                      onTap: () async {
+                        // 读取选择路径
+                        final prefs = await SharedPreferences.getInstance();
+                        final selectedDir = prefs.getString('SelectedPath');
+                        if (!mounted) return;
+                        // 检查下载路径是否存在
+                        if (selectedDir == null || selectedDir.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('请先选择下载目录')),
+                          );
+                        } else {
+                          LogUtil.log(
+                            '选择了版本: ${version.id} - URL: ${version.url}',
+                            level: 'INFO',
+                          );
+                          Navigator.push(
+                            context,
+                            SlidePageRoute(
+                              page: DownloadGamePage(version: version),
+                            ),
+                          );
+                        }
+                      },
+                    );
+                  }, childCount: filteredVersions.length),
+                ),
+              ],
+            );
+          }
+
+          return const Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }

@@ -1,15 +1,16 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
+
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:fmcl/widgets/app_card.dart';
-import 'package:path/path.dart' as path;
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:fmcl/utils/log_util.dart';
-import 'package:fmcl/utils/download.dart';
+import 'package:flutter/material.dart';
 import 'package:fmcl/constants.dart';
 import 'package:fmcl/utils/dio_client.dart';
+import 'package:fmcl/utils/download.dart';
+import 'package:fmcl/utils/log_util.dart';
+import 'package:fmcl/widgets/app_card.dart';
+import 'package:fmcl/widgets/error_view.dart';
+import 'package:path/path.dart' as path;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CurseforgeShaderPage extends StatefulWidget {
   const CurseforgeShaderPage({required this.modId, this.modName, super.key});
@@ -317,19 +318,7 @@ class CurseforgeShaderPageState extends State<CurseforgeShaderPage> {
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _error != null
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(_error!),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _fetchFiles,
-                    child: const Text('重试'),
-                  ),
-                ],
-              ),
-            )
+          ? ErrorView(body: _error!, onRetry: _fetchFiles)
           : Column(
               children: [
                 AppCard(
