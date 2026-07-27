@@ -80,9 +80,10 @@ Future<void> initLogs() async {
     await LogUtil.clearLogs();
   }
 
-  await LogUtil.log(
-    '启动$kAppNameAbb, 平台:${Platform.operatingSystem}, 版本: $gAppVersion, 构建号: $gAppBuildNumber${kDebugMode ? ", debug模式" : ""}',
-    level: 'INFO',
+  final mode = kDebugMode ? 'Debug' : 'Release';
+
+  LogUtil.log(
+    '启动 $kAppNameAbb [$mode], 平台: ${Platform.operatingSystem}, 版本: v$gAppVersion+$gAppBuildNumber',
   );
 }
 
