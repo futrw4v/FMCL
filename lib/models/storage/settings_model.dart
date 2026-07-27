@@ -1,0 +1,20 @@
+import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'settings_model.freezed.dart';
+part 'settings_model.g.dart';
+
+@freezed
+abstract class SettingsModel with _$SettingsModel {
+  /// 构造函数，定义设置与其默认值
+  const factory SettingsModel({
+    @Default(ThemeMode.system) ThemeMode themeMode,
+    @Default(true) bool autoClearLog,
+    @Default(0) int logLevel,
+    @Default(false) bool autoTranslate,
+  }) = _SettingsModel;
+
+  // 反序列化JSON支持
+  factory SettingsModel.fromJson(Map<String, dynamic> json) =>
+      _$SettingsModelFromJson(json);
+}

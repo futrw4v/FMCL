@@ -6,7 +6,7 @@ import 'package:fmcl/constants.dart';
 import 'package:fmcl/java/java_service.dart';
 import 'package:fmcl/pages/home/main_start_page.dart';
 import 'package:fmcl/pages/online/owner_page.dart';
-import 'package:fmcl/storage/managers/file_manager.dart';
+import 'package:fmcl/storage/storage_service.dart';
 import 'package:fmcl/utils/log_util.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -22,7 +22,7 @@ void main() async {
 
   await initLogs();
 
-  FileManager.init();
+  await StorageService.init();
 
   JavaService.initFuture = JavaService.init();
 
