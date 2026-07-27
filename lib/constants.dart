@@ -2,7 +2,7 @@
 /// 应用常量
 ///
 const kAppName = 'Flutter Minecraft Launcher';
-const kAppNameAbb = 'FCML';
+const kAppNameAbb = 'FMCL';
 const kAppId = 'fmcl';
 const kDefaultPadding = 16.0;
 const kMicrosoftClientId = r'3847de77-c7ca-4daa-a0b7-50850446d58c';
