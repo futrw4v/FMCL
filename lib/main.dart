@@ -4,13 +4,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fmcl/constants.dart';
 import 'package:fmcl/java/java_service.dart';
+import 'package:fmcl/notifiers/settings_notifier.dart';
 import 'package:fmcl/pages/home/main_start_page.dart';
 import 'package:fmcl/pages/online/owner_page.dart';
 import 'package:fmcl/storage/storage_service.dart';
 import 'package:fmcl/utils/log_util.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 
 void main() async {
@@ -18,15 +19,23 @@ void main() async {
 
   await initVersionInfo();
 
-  await initWindow();
+  await LogUtil.log(
+    '启动$kAppNameAbb, 平台:${Platform.operatingSystem}, 版本: $gAppVersion, 构建号: $gAppBuildNumber${kDebugMode ? ", debug模式" : ""}',
+    level: 'INFO',
+  );
 
-  await initLogs();
+  await initWindow();
 
   await StorageService.init();
 
   JavaService.initFuture = JavaService.init();
 
-  runApp(const FMCLBaseApp());
+  runApp(
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => SettingsNotifier())],
+      child: const FMCLBaseApp(),
+    ),
+  );
 }
 
 // 初始化窗口
@@ -75,20 +84,6 @@ Future<void> initVersionInfo() async {
   gAppUserAgent = '$kAppNameAbb/$gAppVersion';
 }
 
-// 日志
-Future<void> initLogs() async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final bool autoClearLog = prefs.getBool('autoClearLog') ?? true;
-  if (autoClearLog) {
-    await LogUtil.clearLogs();
-  }
-
-  await LogUtil.log(
-    '启动$kAppNameAbb, 平台:${Platform.operatingSystem}, 版本: $gAppVersion, 构建号: $gAppBuildNumber${kDebugMode ? ", debug模式" : ""}',
-    level: 'INFO',
-  );
-}
-
 class FMCLBaseApp extends StatefulWidget {
   const FMCLBaseApp({super.key});
 
@@ -100,102 +95,19 @@ class FMCLBaseApp extends StatefulWidget {
 }
 
 class FMCLBaseAppState extends State<FMCLBaseApp> {
-  ThemeMode _themeMode = ThemeMode.system;
-  Color _themeColor = Colors.blue;
-
-  ThemeMode get themeMode => _themeMode;
-  Color get themeColor => _themeColor;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadThemePrefs();
-  }
-
-  // 加载主题
-  Future<void> _loadThemePrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    final modeStr = prefs.getString('themeMode');
-    final colorInt = prefs.getInt('themeColor');
-    if (colorInt != null) {
-      // 从存储的整数值创建颜色对象
-      _themeColor = Color.fromARGB(
-        (colorInt >> 24) & 0xFF,
-        (colorInt >> 16) & 0xFF,
-        (colorInt >> 8) & 0xFF,
-        colorInt & 0xFF,
-      );
-    }
-    if (modeStr != null) {
-      switch (modeStr) {
-        case 'dark':
-          _themeMode = ThemeMode.dark;
-          break;
-        case 'light':
-          _themeMode = ThemeMode.light;
-          break;
-        default:
-          _themeMode = ThemeMode.system;
-      }
-    }
-    if (mounted) setState(() {});
-  }
-
-  Future<void> changeTheme(ThemeMode themeMode) async {
-    setState(() {
-      _themeMode = themeMode;
-    });
-    final prefs = await SharedPreferences.getInstance();
-    String modeStr;
-    switch (themeMode) {
-      case ThemeMode.dark:
-        modeStr = 'dark';
-        break;
-      case ThemeMode.light:
-        modeStr = 'light';
-        break;
-      default:
-        modeStr = 'system';
-    }
-    await prefs.setString('themeMode', modeStr);
-  }
-
-  Future<void> changeThemeColor(Color color) async {
-    setState(() {
-      _themeColor = color;
-    });
-
-    final prefs = await SharedPreferences.getInstance();
-
-    int colorValue =
-        (((color.a * 255.0).round() & 0xFF) << 24) |
-        (((color.r * 255.0).round() & 0xFF) << 16) |
-        (((color.g * 255.0).round() & 0xFF) << 8) |
-        ((color.b * 255.0).round() & 0xFF);
-
-    await prefs.setInt('themeColor', colorValue);
-  }
-
-  ThemeData _buildTheme(Brightness brightness) {
-    final scheme = ColorScheme.fromSeed(
-      seedColor: _themeColor,
-      brightness: brightness,
-    );
-
-    return ThemeData(
-      useMaterial3: true,
-      fontFamily: 'NotoSans',
-      colorScheme: scheme,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final settingsNotifier = context.watch<SettingsNotifier>();
+    final settings = settingsNotifier.settings;
+    final seedColor = Color(settings.themeColor);
+
     return MaterialApp(
       title: kAppName,
-      theme: _buildTheme(Brightness.light),
-      darkTheme: _buildTheme(Brightness.dark),
-      themeMode: _themeMode,
+      theme: _buildTheme(seedColor, Brightness.light),
+      darkTheme: _buildTheme(seedColor, Brightness.dark),
+
+      themeMode: settings.themeMode,
+
       home: const MainStartPage(),
 
       onGenerateRoute: (settings) {
@@ -209,6 +121,19 @@ class FMCLBaseAppState extends State<FMCLBaseApp> {
         }
         return null;
       },
+    );
+  }
+
+  ThemeData _buildTheme(Color seedColor, Brightness brightness) {
+    final scheme = ColorScheme.fromSeed(
+      seedColor: seedColor,
+      brightness: brightness,
+    );
+
+    return ThemeData(
+      useMaterial3: true,
+      fontFamily: 'NotoSans',
+      colorScheme: scheme,
     );
   }
 }

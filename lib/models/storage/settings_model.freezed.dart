@@ -15,7 +15,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SettingsModel {
 
- ThemeMode get themeMode; bool get autoClearLog; int get logLevel; bool get autoTranslate;
+// Colors.blue = 4280391411
+ int get themeColor; ThemeMode get themeMode; bool get autoClearLog; int get logLevel; bool get autoTranslate;
 /// Create a copy of SettingsModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +29,16 @@ $SettingsModelCopyWith<SettingsModel> get copyWith => _$SettingsModelCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingsModel&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.autoClearLog, autoClearLog) || other.autoClearLog == autoClearLog)&&(identical(other.logLevel, logLevel) || other.logLevel == logLevel)&&(identical(other.autoTranslate, autoTranslate) || other.autoTranslate == autoTranslate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingsModel&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.autoClearLog, autoClearLog) || other.autoClearLog == autoClearLog)&&(identical(other.logLevel, logLevel) || other.logLevel == logLevel)&&(identical(other.autoTranslate, autoTranslate) || other.autoTranslate == autoTranslate));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,themeMode,autoClearLog,logLevel,autoTranslate);
+int get hashCode => Object.hash(runtimeType,themeColor,themeMode,autoClearLog,logLevel,autoTranslate);
 
 @override
 String toString() {
-  return 'SettingsModel(themeMode: $themeMode, autoClearLog: $autoClearLog, logLevel: $logLevel, autoTranslate: $autoTranslate)';
+  return 'SettingsModel(themeColor: $themeColor, themeMode: $themeMode, autoClearLog: $autoClearLog, logLevel: $logLevel, autoTranslate: $autoTranslate)';
 }
 
 
@@ -48,7 +49,7 @@ abstract mixin class $SettingsModelCopyWith<$Res>  {
   factory $SettingsModelCopyWith(SettingsModel value, $Res Function(SettingsModel) _then) = _$SettingsModelCopyWithImpl;
 @useResult
 $Res call({
- ThemeMode themeMode, bool autoClearLog, int logLevel, bool autoTranslate
+ int themeColor, ThemeMode themeMode, bool autoClearLog, int logLevel, bool autoTranslate
 });
 
 
@@ -65,9 +66,10 @@ class _$SettingsModelCopyWithImpl<$Res>
 
 /// Create a copy of SettingsModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? themeMode = null,Object? autoClearLog = null,Object? logLevel = null,Object? autoTranslate = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? themeColor = null,Object? themeMode = null,Object? autoClearLog = null,Object? logLevel = null,Object? autoTranslate = null,}) {
   return _then(_self.copyWith(
-themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
+themeColor: null == themeColor ? _self.themeColor : themeColor // ignore: cast_nullable_to_non_nullable
+as int,themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as ThemeMode,autoClearLog: null == autoClearLog ? _self.autoClearLog : autoClearLog // ignore: cast_nullable_to_non_nullable
 as bool,logLevel: null == logLevel ? _self.logLevel : logLevel // ignore: cast_nullable_to_non_nullable
 as int,autoTranslate: null == autoTranslate ? _self.autoTranslate : autoTranslate // ignore: cast_nullable_to_non_nullable
@@ -156,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeMode themeMode,  bool autoClearLog,  int logLevel,  bool autoTranslate)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int themeColor,  ThemeMode themeMode,  bool autoClearLog,  int logLevel,  bool autoTranslate)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SettingsModel() when $default != null:
-return $default(_that.themeMode,_that.autoClearLog,_that.logLevel,_that.autoTranslate);case _:
+return $default(_that.themeColor,_that.themeMode,_that.autoClearLog,_that.logLevel,_that.autoTranslate);case _:
   return orElse();
 
 }
@@ -177,10 +179,10 @@ return $default(_that.themeMode,_that.autoClearLog,_that.logLevel,_that.autoTran
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeMode themeMode,  bool autoClearLog,  int logLevel,  bool autoTranslate)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int themeColor,  ThemeMode themeMode,  bool autoClearLog,  int logLevel,  bool autoTranslate)  $default,) {final _that = this;
 switch (_that) {
 case _SettingsModel():
-return $default(_that.themeMode,_that.autoClearLog,_that.logLevel,_that.autoTranslate);case _:
+return $default(_that.themeColor,_that.themeMode,_that.autoClearLog,_that.logLevel,_that.autoTranslate);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +199,10 @@ return $default(_that.themeMode,_that.autoClearLog,_that.logLevel,_that.autoTran
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeMode themeMode,  bool autoClearLog,  int logLevel,  bool autoTranslate)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int themeColor,  ThemeMode themeMode,  bool autoClearLog,  int logLevel,  bool autoTranslate)?  $default,) {final _that = this;
 switch (_that) {
 case _SettingsModel() when $default != null:
-return $default(_that.themeMode,_that.autoClearLog,_that.logLevel,_that.autoTranslate);case _:
+return $default(_that.themeColor,_that.themeMode,_that.autoClearLog,_that.logLevel,_that.autoTranslate);case _:
   return null;
 
 }
@@ -212,9 +214,11 @@ return $default(_that.themeMode,_that.autoClearLog,_that.logLevel,_that.autoTran
 @JsonSerializable()
 
 class _SettingsModel implements SettingsModel {
-  const _SettingsModel({this.themeMode = ThemeMode.system, this.autoClearLog = true, this.logLevel = 0, this.autoTranslate = false});
+  const _SettingsModel({this.themeColor = 4280391411, this.themeMode = ThemeMode.system, this.autoClearLog = true, this.logLevel = 0, this.autoTranslate = false});
   factory _SettingsModel.fromJson(Map<String, dynamic> json) => _$SettingsModelFromJson(json);
 
+// Colors.blue = 4280391411
+@override@JsonKey() final  int themeColor;
 @override@JsonKey() final  ThemeMode themeMode;
 @override@JsonKey() final  bool autoClearLog;
 @override@JsonKey() final  int logLevel;
@@ -233,16 +237,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SettingsModel&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.autoClearLog, autoClearLog) || other.autoClearLog == autoClearLog)&&(identical(other.logLevel, logLevel) || other.logLevel == logLevel)&&(identical(other.autoTranslate, autoTranslate) || other.autoTranslate == autoTranslate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SettingsModel&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.autoClearLog, autoClearLog) || other.autoClearLog == autoClearLog)&&(identical(other.logLevel, logLevel) || other.logLevel == logLevel)&&(identical(other.autoTranslate, autoTranslate) || other.autoTranslate == autoTranslate));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,themeMode,autoClearLog,logLevel,autoTranslate);
+int get hashCode => Object.hash(runtimeType,themeColor,themeMode,autoClearLog,logLevel,autoTranslate);
 
 @override
 String toString() {
-  return 'SettingsModel(themeMode: $themeMode, autoClearLog: $autoClearLog, logLevel: $logLevel, autoTranslate: $autoTranslate)';
+  return 'SettingsModel(themeColor: $themeColor, themeMode: $themeMode, autoClearLog: $autoClearLog, logLevel: $logLevel, autoTranslate: $autoTranslate)';
 }
 
 
@@ -253,7 +257,7 @@ abstract mixin class _$SettingsModelCopyWith<$Res> implements $SettingsModelCopy
   factory _$SettingsModelCopyWith(_SettingsModel value, $Res Function(_SettingsModel) _then) = __$SettingsModelCopyWithImpl;
 @override @useResult
 $Res call({
- ThemeMode themeMode, bool autoClearLog, int logLevel, bool autoTranslate
+ int themeColor, ThemeMode themeMode, bool autoClearLog, int logLevel, bool autoTranslate
 });
 
 
@@ -270,9 +274,10 @@ class __$SettingsModelCopyWithImpl<$Res>
 
 /// Create a copy of SettingsModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? themeMode = null,Object? autoClearLog = null,Object? logLevel = null,Object? autoTranslate = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? themeColor = null,Object? themeMode = null,Object? autoClearLog = null,Object? logLevel = null,Object? autoTranslate = null,}) {
   return _then(_SettingsModel(
-themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
+themeColor: null == themeColor ? _self.themeColor : themeColor // ignore: cast_nullable_to_non_nullable
+as int,themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as ThemeMode,autoClearLog: null == autoClearLog ? _self.autoClearLog : autoClearLog // ignore: cast_nullable_to_non_nullable
 as bool,logLevel: null == logLevel ? _self.logLevel : logLevel // ignore: cast_nullable_to_non_nullable
 as int,autoTranslate: null == autoTranslate ? _self.autoTranslate : autoTranslate // ignore: cast_nullable_to_non_nullable

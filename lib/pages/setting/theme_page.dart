@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart' show BlockPicker;
 import 'package:fmcl/constants.dart';
-import 'package:fmcl/main.dart';
+import 'package:fmcl/notifiers/settings_notifier.dart';
 import 'package:fmcl/widgets/app_card.dart';
+import 'package:provider/provider.dart';
 
 class ThemePage extends StatefulWidget {
   const ThemePage({super.key});
@@ -14,6 +15,9 @@ class ThemePage extends StatefulWidget {
 class ThemePageState extends State<ThemePage> {
   @override
   Widget build(BuildContext context) {
+    final settingsNotifier = context.watch<SettingsNotifier>();
+    final settings = settingsNotifier.settings;
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: kDefaultPadding * 2,
@@ -53,11 +57,14 @@ class ThemePageState extends State<ThemePage> {
                   label: Text('深色'),
                 ),
               ],
-              selected: {FMCLBaseApp.of(context).themeMode},
+
+              selected: {settings.themeMode},
 
               onSelectionChanged: (Set<ThemeMode> newSelection) {
                 setState(() {
-                  FMCLBaseApp.of(context).changeTheme(newSelection.first);
+                  settingsNotifier.update(
+                    settings.copyWith(themeMode: newSelection.first),
+                  );
                 });
               },
             ),
@@ -69,7 +76,7 @@ class ThemePageState extends State<ThemePage> {
               title: const Text('主题色'),
               subtitle: const Text('设置配色方案'),
               trailing: CircleAvatar(
-                backgroundColor: FMCLBaseApp.of(context).themeColor,
+                backgroundColor: Color(settings.themeColor),
                 radius: 12,
                 child: Container(
                   decoration: BoxDecoration(
@@ -79,7 +86,7 @@ class ThemePageState extends State<ThemePage> {
                 ),
               ),
 
-              onTap: () => _selectColor(),
+              onTap: () => _selectColor(settingsNotifier),
             ),
           ),
         ],
@@ -87,11 +94,13 @@ class ThemePageState extends State<ThemePage> {
     );
   }
 
-  Future<void> _selectColor() async {
+  Future<void> _selectColor(SettingsNotifier settingsNotifier) async {
+    final settings = settingsNotifier.settings;
+
     showDialog(
       context: context,
       builder: (context) {
-        final themeColor = FMCLBaseApp.of(context).themeColor;
+        final themeColor = Color(settings.themeColor);
 
         return AlertDialog(
           title: const Text('选择主题色'),
@@ -122,13 +131,14 @@ class ThemePageState extends State<ThemePage> {
                   );
                 },
             pickerColor: themeColor,
+
             // 不使用自带的颜色
             availableColors: Colors.primaries,
 
             onColorChanged: (Color color) {
-              setState(() {
-                FMCLBaseApp.of(context).changeThemeColor(color);
-              });
+              settingsNotifier.update(
+                settings.copyWith(themeColor: color.toARGB32()),
+              );
             },
           ),
 

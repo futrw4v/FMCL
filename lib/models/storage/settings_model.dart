@@ -8,6 +8,8 @@ part 'settings_model.g.dart';
 abstract class SettingsModel with _$SettingsModel {
   /// 构造函数，定义设置与其默认值
   const factory SettingsModel({
+    // Colors.blue = 4280391411
+    @Default(4280391411) int themeColor,
     @Default(ThemeMode.system) ThemeMode themeMode,
     @Default(true) bool autoClearLog,
     @Default(0) int logLevel,
