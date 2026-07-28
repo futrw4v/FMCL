@@ -61,18 +61,14 @@ class AboutPageState extends State<AboutPage> {
 
                     Text(
                       '$kAppName v$gAppVersion',
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
+                      style: TextStyle(fontSize: 18),
                       textAlign: TextAlign.center,
                     ),
 
                     Text(
                       'FMCL 基于 FML (by lxdklp) 二次开发\n'
                       'Copyright © 2026 futrw4v. Licensed under GPL v3',
-                      style: TextStyle(
-                        fontSize: 15,
-                      ),
+                      style: TextStyle(fontSize: 15),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -107,12 +103,9 @@ class AboutPageState extends State<AboutPage> {
 
                     ListTile(
                       title: const Text('lxdklp'),
-                      subtitle: const Text(
-                        'FML作者\nhttps://github.com/lxdklp/FML/releases/',
-                      ),
+                      subtitle: const Text('FML作者\nhttps://github.com/lxdklp/'),
                       trailing: const Icon(Icons.open_in_new),
-                      onTap: () =>
-                          _launchURL('https://github.com/lxdklp/FML/releases/'),
+                      onTap: () => _launchURL('https://github.com/lxdklp/'),
                     ),
 
                     ListTile(
@@ -134,6 +127,7 @@ class AboutPageState extends State<AboutPage> {
                       onTap: () =>
                           _launchURL('https://github.com/mcmod-info-mirror'),
                     ),
+
                     ListTile(
                       title: const Text('gh-proxy.com'),
                       subtitle: const Text('GitHub 加速下载\nhttps://gh-proxy.com'),
@@ -149,42 +143,22 @@ class AboutPageState extends State<AboutPage> {
                     ),
 
                     ListTile(
-                      title: const Text('CurseForge'),
-                      subtitle: const Text('资源下载\nhttps://www.curseforge.com'),
-                      trailing: const Icon(Icons.open_in_new),
-                      onTap: () => _launchURL('https://www.curseforge.com'),
-                    ),
-
-                    ListTile(
                       title: const Text('Sawaratsuki'),
                       subtitle: const Text(
-                        'Flutter Logo \nhttps://github.com/SAWARATSUKI/KawaiiLogos',
+                        '重绘制的 Flutter Logo \nhttps://github.com/SAWARATSUKI',
                       ),
                       trailing: const Icon(Icons.open_in_new),
-                      onTap: () => _launchURL(
-                        'https://github.com/SAWARATSUKI/KawaiiLogos',
-                      ),
+                      onTap: () => _launchURL('https://github.com/SAWARATSUKI'),
                     ),
 
                     ListTile(
                       title: const Text('Noto CJK fonts'),
                       subtitle: const Text(
-                        '软件字体\nhttps://github.com/notofonts/noto-cjk',
+                        '字体\nhttps://github.com/notofonts/noto-cjk',
                       ),
                       trailing: const Icon(Icons.open_in_new),
                       onTap: () =>
                           _launchURL('https://github.com/notofonts/noto-cjk'),
-                    ),
-
-                    ListTile(
-                      title: const Text('GNU General Public License Version 3'),
-                      subtitle: const Text(
-                        '开源协议\nhttps://www.gnu.org/licenses/gpl-3.0.html',
-                      ),
-                      trailing: const Icon(Icons.open_in_new),
-                      onTap: () => _launchURL(
-                        'https://www.gnu.org/licenses/gpl-3.0.html',
-                      ),
                     ),
 
                     ListTile(
@@ -248,16 +222,6 @@ class AboutPageState extends State<AboutPage> {
                     ),
 
                     ListTile(
-                      title: const Text('图标'),
-                      subtitle: const Text(
-                        'https://github.com/lxdklp/FML/pull/7',
-                      ),
-                      trailing: const Icon(Icons.open_in_new),
-                      onTap: () =>
-                          _launchURL('https://github.com/lxdklp/FML/pull/7'),
-                    ),
-
-                    ListTile(
                       title: const Text('Google 翻译'),
                       subtitle: const Text(
                         'https://translate.google.com/about',
@@ -267,16 +231,14 @@ class AboutPageState extends State<AboutPage> {
                           _launchURL('https://translate.google.com/about'),
                     ),
 
-                    ListTile(
-                      title: const Text('Cloudflare'),
-                      subtitle: const Text('https://www.cloudflare.com'),
-                      trailing: const Icon(Icons.open_in_new),
-                      onTap: () => _launchURL('https://www.cloudflare.com'),
-                    ),
-
                     const ListTile(
-                      title: Text('GitHub 上提出 Issue 等的各位'),
-                      subtitle: Text('谢谢大家'),
+                      title: Text('图标'),
+                      subtitle: Text(
+                        '画师不愿透露',
+                        style: TextStyle(
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                      ),
                     ),
                   ],
                 ),
