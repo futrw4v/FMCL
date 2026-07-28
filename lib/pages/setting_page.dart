@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fmcl/constants.dart';
 import 'package:fmcl/models/page/navigation_drawer_item.dart';
-import 'package:fmcl/pages/setting/theme_page.dart';
-import 'package:fmcl/pages/setting/java_page.dart';
-import 'package:fmcl/pages/setting/translate_page.dart';
-import 'package:fmcl/pages/setting/log_viewer_page.dart';
 import 'package:fmcl/pages/setting/about_page.dart';
+import 'package:fmcl/pages/setting/java_page.dart';
+import 'package:fmcl/pages/setting/launcher_settings_page.dart';
+import 'package:fmcl/pages/setting/log_viewer_page.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -19,10 +18,10 @@ class SettingPageState extends State<SettingPage> {
 
   final List<NavigationDrawerItem> _settingPageItems = const [
     NavigationDrawerItem(
-      page: ThemePage(),
+      page: LauncherSettingsPage(),
       destination: NavigationDrawerDestination(
-        icon: Icon(Icons.imagesearch_roller),
-        label: Text('主题'),
+        icon: Icon(Icons.rocket_launch),
+        label: Text('启动器'),
       ),
     ),
     NavigationDrawerItem(
@@ -30,13 +29,6 @@ class SettingPageState extends State<SettingPage> {
       destination: NavigationDrawerDestination(
         icon: Icon(Icons.code),
         label: Text('Java管理'),
-      ),
-    ),
-    NavigationDrawerItem(
-      page: TranslatePage(),
-      destination: NavigationDrawerDestination(
-        icon: Icon(Icons.translate),
-        label: Text('翻译'),
       ),
     ),
     NavigationDrawerItem(

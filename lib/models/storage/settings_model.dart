@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fmcl/pages/setting/translate_page.dart';
+import 'package:fmcl/models/enums/google_translate_api.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'settings_model.freezed.dart';
