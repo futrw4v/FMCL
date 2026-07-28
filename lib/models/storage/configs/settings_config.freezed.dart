@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'settings_model.dart';
+part of 'settings_config.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,23 +13,23 @@ part of 'settings_model.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$SettingsModel {
+mixin _$SettingsConfig {
 
 // Colors.blue = 4280391411
  int get themeColor; ThemeMode get themeMode; bool get autoClearLog; int get logLevel; bool get autoTranslate; bool get enableGoogleTranslate; GoogleTranslateApi get googleTranslateApi;
-/// Create a copy of SettingsModel
+/// Create a copy of SettingsConfig
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$SettingsModelCopyWith<SettingsModel> get copyWith => _$SettingsModelCopyWithImpl<SettingsModel>(this as SettingsModel, _$identity);
+$SettingsConfigCopyWith<SettingsConfig> get copyWith => _$SettingsConfigCopyWithImpl<SettingsConfig>(this as SettingsConfig, _$identity);
 
-  /// Serializes this SettingsModel to a JSON map.
+  /// Serializes this SettingsConfig to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingsModel&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.autoClearLog, autoClearLog) || other.autoClearLog == autoClearLog)&&(identical(other.logLevel, logLevel) || other.logLevel == logLevel)&&(identical(other.autoTranslate, autoTranslate) || other.autoTranslate == autoTranslate)&&(identical(other.enableGoogleTranslate, enableGoogleTranslate) || other.enableGoogleTranslate == enableGoogleTranslate)&&(identical(other.googleTranslateApi, googleTranslateApi) || other.googleTranslateApi == googleTranslateApi));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingsConfig&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.autoClearLog, autoClearLog) || other.autoClearLog == autoClearLog)&&(identical(other.logLevel, logLevel) || other.logLevel == logLevel)&&(identical(other.autoTranslate, autoTranslate) || other.autoTranslate == autoTranslate)&&(identical(other.enableGoogleTranslate, enableGoogleTranslate) || other.enableGoogleTranslate == enableGoogleTranslate)&&(identical(other.googleTranslateApi, googleTranslateApi) || other.googleTranslateApi == googleTranslateApi));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -38,15 +38,15 @@ int get hashCode => Object.hash(runtimeType,themeColor,themeMode,autoClearLog,lo
 
 @override
 String toString() {
-  return 'SettingsModel(themeColor: $themeColor, themeMode: $themeMode, autoClearLog: $autoClearLog, logLevel: $logLevel, autoTranslate: $autoTranslate, enableGoogleTranslate: $enableGoogleTranslate, googleTranslateApi: $googleTranslateApi)';
+  return 'SettingsConfig(themeColor: $themeColor, themeMode: $themeMode, autoClearLog: $autoClearLog, logLevel: $logLevel, autoTranslate: $autoTranslate, enableGoogleTranslate: $enableGoogleTranslate, googleTranslateApi: $googleTranslateApi)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $SettingsModelCopyWith<$Res>  {
-  factory $SettingsModelCopyWith(SettingsModel value, $Res Function(SettingsModel) _then) = _$SettingsModelCopyWithImpl;
+abstract mixin class $SettingsConfigCopyWith<$Res>  {
+  factory $SettingsConfigCopyWith(SettingsConfig value, $Res Function(SettingsConfig) _then) = _$SettingsConfigCopyWithImpl;
 @useResult
 $Res call({
  int themeColor, ThemeMode themeMode, bool autoClearLog, int logLevel, bool autoTranslate, bool enableGoogleTranslate, GoogleTranslateApi googleTranslateApi
@@ -57,14 +57,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$SettingsModelCopyWithImpl<$Res>
-    implements $SettingsModelCopyWith<$Res> {
-  _$SettingsModelCopyWithImpl(this._self, this._then);
+class _$SettingsConfigCopyWithImpl<$Res>
+    implements $SettingsConfigCopyWith<$Res> {
+  _$SettingsConfigCopyWithImpl(this._self, this._then);
 
-  final SettingsModel _self;
-  final $Res Function(SettingsModel) _then;
+  final SettingsConfig _self;
+  final $Res Function(SettingsConfig) _then;
 
-/// Create a copy of SettingsModel
+/// Create a copy of SettingsConfig
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? themeColor = null,Object? themeMode = null,Object? autoClearLog = null,Object? logLevel = null,Object? autoTranslate = null,Object? enableGoogleTranslate = null,Object? googleTranslateApi = null,}) {
   return _then(_self.copyWith(
@@ -82,8 +82,8 @@ as GoogleTranslateApi,
 }
 
 
-/// Adds pattern-matching-related methods to [SettingsModel].
-extension SettingsModelPatterns on SettingsModel {
+/// Adds pattern-matching-related methods to [SettingsConfig].
+extension SettingsConfigPatterns on SettingsConfig {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -96,10 +96,10 @@ extension SettingsModelPatterns on SettingsModel {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _SettingsModel value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _SettingsConfig value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _SettingsModel() when $default != null:
+case _SettingsConfig() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -118,10 +118,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _SettingsModel value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _SettingsConfig value)  $default,){
 final _that = this;
 switch (_that) {
-case _SettingsModel():
+case _SettingsConfig():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -139,10 +139,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _SettingsModel value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _SettingsConfig value)?  $default,){
 final _that = this;
 switch (_that) {
-case _SettingsModel() when $default != null:
+case _SettingsConfig() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -162,7 +162,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int themeColor,  ThemeMode themeMode,  bool autoClearLog,  int logLevel,  bool autoTranslate,  bool enableGoogleTranslate,  GoogleTranslateApi googleTranslateApi)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _SettingsModel() when $default != null:
+case _SettingsConfig() when $default != null:
 return $default(_that.themeColor,_that.themeMode,_that.autoClearLog,_that.logLevel,_that.autoTranslate,_that.enableGoogleTranslate,_that.googleTranslateApi);case _:
   return orElse();
 
@@ -183,7 +183,7 @@ return $default(_that.themeColor,_that.themeMode,_that.autoClearLog,_that.logLev
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int themeColor,  ThemeMode themeMode,  bool autoClearLog,  int logLevel,  bool autoTranslate,  bool enableGoogleTranslate,  GoogleTranslateApi googleTranslateApi)  $default,) {final _that = this;
 switch (_that) {
-case _SettingsModel():
+case _SettingsConfig():
 return $default(_that.themeColor,_that.themeMode,_that.autoClearLog,_that.logLevel,_that.autoTranslate,_that.enableGoogleTranslate,_that.googleTranslateApi);case _:
   throw StateError('Unexpected subclass');
 
@@ -203,7 +203,7 @@ return $default(_that.themeColor,_that.themeMode,_that.autoClearLog,_that.logLev
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int themeColor,  ThemeMode themeMode,  bool autoClearLog,  int logLevel,  bool autoTranslate,  bool enableGoogleTranslate,  GoogleTranslateApi googleTranslateApi)?  $default,) {final _that = this;
 switch (_that) {
-case _SettingsModel() when $default != null:
+case _SettingsConfig() when $default != null:
 return $default(_that.themeColor,_that.themeMode,_that.autoClearLog,_that.logLevel,_that.autoTranslate,_that.enableGoogleTranslate,_that.googleTranslateApi);case _:
   return null;
 
@@ -215,9 +215,9 @@ return $default(_that.themeColor,_that.themeMode,_that.autoClearLog,_that.logLev
 /// @nodoc
 @JsonSerializable()
 
-class _SettingsModel implements SettingsModel {
-  const _SettingsModel({this.themeColor = 4280391411, this.themeMode = ThemeMode.system, this.autoClearLog = true, this.logLevel = 0, this.autoTranslate = true, this.enableGoogleTranslate = true, this.googleTranslateApi = GoogleTranslateApi.at});
-  factory _SettingsModel.fromJson(Map<String, dynamic> json) => _$SettingsModelFromJson(json);
+class _SettingsConfig implements SettingsConfig {
+  const _SettingsConfig({this.themeColor = 4280391411, this.themeMode = ThemeMode.system, this.autoClearLog = true, this.logLevel = 0, this.autoTranslate = true, this.enableGoogleTranslate = true, this.googleTranslateApi = GoogleTranslateApi.at});
+  factory _SettingsConfig.fromJson(Map<String, dynamic> json) => _$SettingsConfigFromJson(json);
 
 // Colors.blue = 4280391411
 @override@JsonKey() final  int themeColor;
@@ -228,20 +228,20 @@ class _SettingsModel implements SettingsModel {
 @override@JsonKey() final  bool enableGoogleTranslate;
 @override@JsonKey() final  GoogleTranslateApi googleTranslateApi;
 
-/// Create a copy of SettingsModel
+/// Create a copy of SettingsConfig
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$SettingsModelCopyWith<_SettingsModel> get copyWith => __$SettingsModelCopyWithImpl<_SettingsModel>(this, _$identity);
+_$SettingsConfigCopyWith<_SettingsConfig> get copyWith => __$SettingsConfigCopyWithImpl<_SettingsConfig>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$SettingsModelToJson(this, );
+  return _$SettingsConfigToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SettingsModel&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.autoClearLog, autoClearLog) || other.autoClearLog == autoClearLog)&&(identical(other.logLevel, logLevel) || other.logLevel == logLevel)&&(identical(other.autoTranslate, autoTranslate) || other.autoTranslate == autoTranslate)&&(identical(other.enableGoogleTranslate, enableGoogleTranslate) || other.enableGoogleTranslate == enableGoogleTranslate)&&(identical(other.googleTranslateApi, googleTranslateApi) || other.googleTranslateApi == googleTranslateApi));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SettingsConfig&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.autoClearLog, autoClearLog) || other.autoClearLog == autoClearLog)&&(identical(other.logLevel, logLevel) || other.logLevel == logLevel)&&(identical(other.autoTranslate, autoTranslate) || other.autoTranslate == autoTranslate)&&(identical(other.enableGoogleTranslate, enableGoogleTranslate) || other.enableGoogleTranslate == enableGoogleTranslate)&&(identical(other.googleTranslateApi, googleTranslateApi) || other.googleTranslateApi == googleTranslateApi));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -250,15 +250,15 @@ int get hashCode => Object.hash(runtimeType,themeColor,themeMode,autoClearLog,lo
 
 @override
 String toString() {
-  return 'SettingsModel(themeColor: $themeColor, themeMode: $themeMode, autoClearLog: $autoClearLog, logLevel: $logLevel, autoTranslate: $autoTranslate, enableGoogleTranslate: $enableGoogleTranslate, googleTranslateApi: $googleTranslateApi)';
+  return 'SettingsConfig(themeColor: $themeColor, themeMode: $themeMode, autoClearLog: $autoClearLog, logLevel: $logLevel, autoTranslate: $autoTranslate, enableGoogleTranslate: $enableGoogleTranslate, googleTranslateApi: $googleTranslateApi)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$SettingsModelCopyWith<$Res> implements $SettingsModelCopyWith<$Res> {
-  factory _$SettingsModelCopyWith(_SettingsModel value, $Res Function(_SettingsModel) _then) = __$SettingsModelCopyWithImpl;
+abstract mixin class _$SettingsConfigCopyWith<$Res> implements $SettingsConfigCopyWith<$Res> {
+  factory _$SettingsConfigCopyWith(_SettingsConfig value, $Res Function(_SettingsConfig) _then) = __$SettingsConfigCopyWithImpl;
 @override @useResult
 $Res call({
  int themeColor, ThemeMode themeMode, bool autoClearLog, int logLevel, bool autoTranslate, bool enableGoogleTranslate, GoogleTranslateApi googleTranslateApi
@@ -269,17 +269,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$SettingsModelCopyWithImpl<$Res>
-    implements _$SettingsModelCopyWith<$Res> {
-  __$SettingsModelCopyWithImpl(this._self, this._then);
+class __$SettingsConfigCopyWithImpl<$Res>
+    implements _$SettingsConfigCopyWith<$Res> {
+  __$SettingsConfigCopyWithImpl(this._self, this._then);
 
-  final _SettingsModel _self;
-  final $Res Function(_SettingsModel) _then;
+  final _SettingsConfig _self;
+  final $Res Function(_SettingsConfig) _then;
 
-/// Create a copy of SettingsModel
+/// Create a copy of SettingsConfig
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? themeColor = null,Object? themeMode = null,Object? autoClearLog = null,Object? logLevel = null,Object? autoTranslate = null,Object? enableGoogleTranslate = null,Object? googleTranslateApi = null,}) {
-  return _then(_SettingsModel(
+  return _then(_SettingsConfig(
 themeColor: null == themeColor ? _self.themeColor : themeColor // ignore: cast_nullable_to_non_nullable
 as int,themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as ThemeMode,autoClearLog: null == autoClearLog ? _self.autoClearLog : autoClearLog // ignore: cast_nullable_to_non_nullable

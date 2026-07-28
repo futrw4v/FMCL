@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'settings_model.dart';
+part of 'settings_config.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_SettingsModel _$SettingsModelFromJson(Map<String, dynamic> json) =>
-    _SettingsModel(
+_SettingsConfig _$SettingsConfigFromJson(Map<String, dynamic> json) =>
+    _SettingsConfig(
       themeColor: (json['themeColor'] as num?)?.toInt() ?? 4280391411,
       themeMode:
           $enumDecodeNullable(_$ThemeModeEnumMap, json['themeMode']) ??
@@ -24,7 +24,7 @@ _SettingsModel _$SettingsModelFromJson(Map<String, dynamic> json) =>
           GoogleTranslateApi.at,
     );
 
-Map<String, dynamic> _$SettingsModelToJson(_SettingsModel instance) =>
+Map<String, dynamic> _$SettingsConfigToJson(_SettingsConfig instance) =>
     <String, dynamic>{
       'themeColor': instance.themeColor,
       'themeMode': _$ThemeModeEnumMap[instance.themeMode]!,

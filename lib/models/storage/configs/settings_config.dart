@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:fmcl/models/enums/google_translate_api.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'settings_model.freezed.dart';
-part 'settings_model.g.dart';
+part 'settings_config.freezed.dart';
+part 'settings_config.g.dart';
 
+/// 与 configs/settings.json 对应
 @freezed
-abstract class SettingsModel with _$SettingsModel {
+abstract class SettingsConfig with _$SettingsConfig {
   /// 构造函数，定义设置与其默认值
-  const factory SettingsModel({
+  const factory SettingsConfig({
     // Colors.blue = 4280391411
     @Default(4280391411) int themeColor,
 
@@ -19,9 +20,9 @@ abstract class SettingsModel with _$SettingsModel {
     @Default(true) bool autoTranslate,
     @Default(true) bool enableGoogleTranslate,
     @Default(GoogleTranslateApi.at) GoogleTranslateApi googleTranslateApi,
-  }) = _SettingsModel;
+  }) = _SettingsConfig;
 
   // 反序列化JSON支持
-  factory SettingsModel.fromJson(Map<String, dynamic> json) =>
-      _$SettingsModelFromJson(json);
+  factory SettingsConfig.fromJson(Map<String, dynamic> json) =>
+      _$SettingsConfigFromJson(json);
 }
