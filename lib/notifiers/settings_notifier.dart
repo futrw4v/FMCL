@@ -3,7 +3,7 @@ import 'package:fmcl/models/storage/configs/settings_config.dart';
 import 'package:fmcl/storage/storage_service.dart';
 
 class SettingsNotifier extends ChangeNotifier {
-  SettingsConfig get settings => StorageService.settings;
+  SettingsConfig get settings => StorageService.settingsConfig;
 
   Future<void> update(SettingsConfig newSettings) async {
     // 配置无变动时跳过更新

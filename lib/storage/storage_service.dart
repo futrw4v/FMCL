@@ -14,8 +14,8 @@ class StorageService {
   static final settingsStorage = SettingsStorage();
   static final accountsStorage = AccountsStorage();
 
-  static SettingsConfig get settings => settingsStorage.data;
-  static AccountsConfig get accounts => accountsStorage.data;
+  static SettingsConfig get settingsConfig => settingsStorage.data;
+  static AccountsConfig get accountsConfig => accountsStorage.data;
 
   /// 初始化存储服务
   static Future<void> init() async {

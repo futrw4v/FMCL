@@ -93,7 +93,7 @@ class InfoPageState extends State<InfoPage> {
         LogUtil.log('成功获取模组详情', level: 'INFO');
 
         // 尝试获取翻译
-        if (StorageService.settings.autoTranslate) {
+        if (StorageService.settingsConfig.autoTranslate) {
           await _applyTranslation(details);
           setState(() {
             projectDetails = details;
@@ -168,7 +168,7 @@ class InfoPageState extends State<InfoPage> {
     final translated = await DioClient().dio.post(
       'https://translate.lxdklp.top/translate_a/single',
       data: {
-        'client': StorageService.settings.googleTranslateApi.name,
+        'client': StorageService.settingsConfig.googleTranslateApi.name,
         'sl': 'auto',
         'tl': 'zh-CN',
         'dt': 't',
@@ -526,7 +526,7 @@ class InfoPageState extends State<InfoPage> {
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (StorageService.settings.enableGoogleTranslate) ...[
+          if (StorageService.settingsConfig.enableGoogleTranslate) ...[
             FloatingActionButton(
               heroTag: 'translate',
               onPressed: () async {
