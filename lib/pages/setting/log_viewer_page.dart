@@ -1,11 +1,12 @@
 import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:fmcl/constants.dart';
+import 'package:fmcl/pages/setting/log_viewer/log_setting_page.dart';
 import 'package:fmcl/utils/log_util.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
-import 'package:fmcl/pages/setting/log_viewer/log_setting_page.dart';
 import 'package:fmcl/widgets/app_card.dart';
 import 'package:intl/intl.dart';
 
@@ -190,8 +191,6 @@ class LogViewerPageState extends State<LogViewerPage> {
     );
 
     if (confirmed == true) {
-      await LogUtil.clearLogs();
-
       if (!mounted) return;
 
       setState(() {

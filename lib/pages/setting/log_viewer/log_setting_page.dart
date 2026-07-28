@@ -12,17 +12,14 @@ class LogSettingPage extends StatefulWidget {
 
 class LogSettingPageState extends State<LogSettingPage> {
   int _logLevel = 0;
-  bool _autoClearLog = false;
 
   // 读取日志配置信息
   Future<void> _readLogConfig() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final int logLevel = prefs.getInt('logLevel') ?? 0;
-    final bool autoClearLog = prefs.getBool('autoClearLog') ?? true;
 
     setState(() {
       _logLevel = logLevel;
-      _autoClearLog = autoClearLog;
     });
   }
 
@@ -30,12 +27,6 @@ class LogSettingPageState extends State<LogSettingPage> {
   Future<void> _saveLogLevel() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt('logLevel', _logLevel);
-  }
-
-  // 保存日志自动清理配置
-  Future<void> _saveAutoClearLog() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('autoClearLog', _autoClearLog);
   }
 
   @override
@@ -108,20 +99,6 @@ class LogSettingPageState extends State<LogSettingPage> {
                     ),
                   ],
                 ),
-              ),
-            ),
-
-            AppCard(
-              child: SwitchListTile(
-                title: const Text('打开 APP 时自动清理日志'),
-                subtitle: const Text('当遇到 APP 崩溃时,请关闭此选项尝试抓取日志'),
-                value: _autoClearLog,
-                onChanged: (bool value) {
-                  setState(() {
-                    _autoClearLog = value;
-                  });
-                  _saveAutoClearLog();
-                },
               ),
             ),
           ],

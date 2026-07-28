@@ -1,6 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 
 class LogUtil {
   // 解析调用信息
@@ -52,11 +53,5 @@ class LogUtil {
     final prefs = await SharedPreferences.getInstance();
     final logs = prefs.getStringList('logs') ?? [];
     return logs.map((log) => jsonDecode(log) as Map<String, dynamic>).toList();
-  }
-
-  // 清除所有日志
-  static Future<void> clearLogs() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('logs');
   }
 }
