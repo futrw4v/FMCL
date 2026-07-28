@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fmcl/models/storage/settings_model.dart';
 import 'package:fmcl/storage/managers/file_manager.dart';
 import 'package:fmcl/storage/managers/json_manager.dart';
@@ -14,6 +16,11 @@ class StorageService {
   static late SettingsModel _settingsModel;
 
   static SettingsModel get settings => _settingsModel;
+
+  /// 防抖
+  static Timer? _debounceTimer;
+
+  static const int kDefaultDebounceMilliseconds = 300;
 
   /// 初始化存储服务
   static Future<void> init() async {
@@ -48,10 +55,19 @@ class StorageService {
   static Future<void> saveSettings(SettingsModel newSettings) async {
     _settingsModel = newSettings;
 
-    final contentToWrite = _settingsModel.toJson();
+    // 若有正在倒计时的定时器则取消它
+    _debounceTimer?.cancel();
 
-    if (await JsonManager.writeJson(kSettingsJsonPath, contentToWrite)) {
-      LogUtil.log('写入配置文件成功');
-    }
+    // 开启一个新的延时任务来实现防抖
+    _debounceTimer = Timer(
+      const Duration(milliseconds: kDefaultDebounceMilliseconds),
+      () async {
+        final contentToWrite = _settingsModel.toJson();
+
+        if (await JsonManager.writeJson(kSettingsJsonPath, contentToWrite)) {
+          LogUtil.log('写入配置文件成功');
+        }
+      },
+    );
   }
 }
