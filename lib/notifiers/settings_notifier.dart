@@ -6,6 +6,10 @@ class SettingsNotifier extends ChangeNotifier {
   SettingsModel get settings => StorageService.settings;
 
   Future<void> update(SettingsModel newSettings) async {
+    if (newSettings == settings) {
+      return;
+    }
+
     await StorageService.saveSettings(newSettings);
 
     // 通知 Widget 刷新界面
