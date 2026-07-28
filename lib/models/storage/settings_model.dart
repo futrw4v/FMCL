@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fmcl/pages/setting/translate_page.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'settings_model.freezed.dart';
@@ -10,10 +11,14 @@ abstract class SettingsModel with _$SettingsModel {
   const factory SettingsModel({
     // Colors.blue = 4280391411
     @Default(4280391411) int themeColor,
+
     @Default(ThemeMode.system) ThemeMode themeMode,
     @Default(true) bool autoClearLog,
     @Default(0) int logLevel,
-    @Default(false) bool autoTranslate,
+
+    @Default(true) bool autoTranslate,
+    @Default(true) bool enableGoogleTranslate,
+    @Default(GoogleTranslateApi.at) GoogleTranslateApi googleTranslateApi,
   }) = _SettingsModel;
 
   // 反序列化JSON支持

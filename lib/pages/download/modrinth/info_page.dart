@@ -6,13 +6,13 @@ import 'package:fmcl/pages/download/modrinth/type/mod_page.dart';
 import 'package:fmcl/pages/download/modrinth/type/modpack_page.dart';
 import 'package:fmcl/pages/download/modrinth/type/resourcepack_page.dart';
 import 'package:fmcl/pages/download/modrinth/type/shader_page.dart';
+import 'package:fmcl/storage/storage_service.dart';
 import 'package:fmcl/utils/dio_client.dart';
 import 'package:fmcl/utils/log_util.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
 import 'package:fmcl/widgets/app_card.dart';
 import 'package:fmcl/widgets/error_view.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InfoPage extends StatefulWidget {
@@ -31,9 +31,6 @@ class InfoPageState extends State<InfoPage> {
   String? error;
   String body = '';
   int bodyTranslated = 0;
-  bool _autoTranslate = true;
-  bool _enableGoogleTranslate = true;
-  String _googleTranslateClient = 'at';
 
   // 项目类型映射
   final Map<String, String> projectTypeNames = {
@@ -46,31 +43,8 @@ class InfoPageState extends State<InfoPage> {
   @override
   void initState() {
     super.initState();
-    _fetchProjectDetails();
-    _getTranslateConfig();
-  }
 
-  // 获取翻译设置
-  Future<void> _getTranslateConfig() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool autoTranslate = prefs.getBool('autoTranslate') ?? true;
-    bool enableGoogleTranslate = prefs.getBool('enableGoogleTranslate') ?? true;
-    int googleTranslateClient = prefs.getInt('googleTranslateClient') ?? 0;
-    setState(() {
-      _autoTranslate = autoTranslate;
-      _enableGoogleTranslate = enableGoogleTranslate;
-      if (googleTranslateClient == 0) {
-        _googleTranslateClient = 'at';
-      } else if (googleTranslateClient == 1) {
-        _googleTranslateClient = 'gtx';
-      } else if (googleTranslateClient == 2) {
-        _googleTranslateClient = 't';
-      } else if (googleTranslateClient == 3) {
-        _googleTranslateClient = 'webapp';
-      } else {
-        _googleTranslateClient = 'at';
-      }
-    });
+    _fetchProjectDetails();
   }
 
   // 获取格式化的标题
@@ -117,8 +91,9 @@ class InfoPageState extends State<InfoPage> {
           response.data,
         );
         LogUtil.log('成功获取模组详情', level: 'INFO');
+
         // 尝试获取翻译
-        if (_autoTranslate) {
+        if (StorageService.settings.autoTranslate) {
           await _applyTranslation(details);
           setState(() {
             projectDetails = details;
@@ -193,7 +168,7 @@ class InfoPageState extends State<InfoPage> {
     final translated = await DioClient().dio.post(
       'https://translate.lxdklp.top/translate_a/single',
       data: {
-        'client': _googleTranslateClient,
+        'client': StorageService.settings.googleTranslateApi.name,
         'sl': 'auto',
         'tl': 'zh-CN',
         'dt': 't',
@@ -551,7 +526,7 @@ class InfoPageState extends State<InfoPage> {
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (_enableGoogleTranslate) ...[
+          if (StorageService.settings.enableGoogleTranslate) ...[
             FloatingActionButton(
               heroTag: 'translate',
               onPressed: () async {

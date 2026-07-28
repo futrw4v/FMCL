@@ -6,6 +6,7 @@ class SettingsNotifier extends ChangeNotifier {
   SettingsModel get settings => StorageService.settings;
 
   Future<void> update(SettingsModel newSettings) async {
+    // 配置无变动时跳过更新
     if (newSettings == settings) {
       return;
     }
