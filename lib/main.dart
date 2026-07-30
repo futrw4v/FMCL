@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fmcl/constants.dart';
 import 'package:fmcl/java/java_service.dart';
+import 'package:fmcl/notifiers/accounts_notifier.dart';
 import 'package:fmcl/notifiers/settings_notifier.dart';
 import 'package:fmcl/pages/home/main_start_page.dart';
 import 'package:fmcl/pages/online/owner_page.dart';
@@ -33,7 +34,10 @@ void main() async {
 
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => SettingsNotifier())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => SettingsNotifier()),
+        ChangeNotifierProvider(create: (_) => AccountsNotifier()),
+      ],
       child: const FMCLBaseApp(),
     ),
   );

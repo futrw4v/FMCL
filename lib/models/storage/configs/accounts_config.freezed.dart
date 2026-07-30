@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AccountsConfig {
 
- int get version; String get selectedAccountId; List<Account> get accounts;
+ int get version; String get selectedAccountUuid; List<Account> get accounts;
 /// Create a copy of AccountsConfig
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $AccountsConfigCopyWith<AccountsConfig> get copyWith => _$AccountsConfigCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountsConfig&&(identical(other.version, version) || other.version == version)&&(identical(other.selectedAccountId, selectedAccountId) || other.selectedAccountId == selectedAccountId)&&const DeepCollectionEquality().equals(other.accounts, accounts));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountsConfig&&(identical(other.version, version) || other.version == version)&&(identical(other.selectedAccountUuid, selectedAccountUuid) || other.selectedAccountUuid == selectedAccountUuid)&&const DeepCollectionEquality().equals(other.accounts, accounts));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,version,selectedAccountId,const DeepCollectionEquality().hash(accounts));
+int get hashCode => Object.hash(runtimeType,version,selectedAccountUuid,const DeepCollectionEquality().hash(accounts));
 
 @override
 String toString() {
-  return 'AccountsConfig(version: $version, selectedAccountId: $selectedAccountId, accounts: $accounts)';
+  return 'AccountsConfig(version: $version, selectedAccountUuid: $selectedAccountUuid, accounts: $accounts)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $AccountsConfigCopyWith<$Res>  {
   factory $AccountsConfigCopyWith(AccountsConfig value, $Res Function(AccountsConfig) _then) = _$AccountsConfigCopyWithImpl;
 @useResult
 $Res call({
- int version, String selectedAccountId, List<Account> accounts
+ int version, String selectedAccountUuid, List<Account> accounts
 });
 
 
@@ -65,10 +65,10 @@ class _$AccountsConfigCopyWithImpl<$Res>
 
 /// Create a copy of AccountsConfig
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? version = null,Object? selectedAccountId = null,Object? accounts = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? version = null,Object? selectedAccountUuid = null,Object? accounts = null,}) {
   return _then(_self.copyWith(
 version: null == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
-as int,selectedAccountId: null == selectedAccountId ? _self.selectedAccountId : selectedAccountId // ignore: cast_nullable_to_non_nullable
+as int,selectedAccountUuid: null == selectedAccountUuid ? _self.selectedAccountUuid : selectedAccountUuid // ignore: cast_nullable_to_non_nullable
 as String,accounts: null == accounts ? _self.accounts : accounts // ignore: cast_nullable_to_non_nullable
 as List<Account>,
   ));
@@ -155,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int version,  String selectedAccountId,  List<Account> accounts)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int version,  String selectedAccountUuid,  List<Account> accounts)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AccountsConfig() when $default != null:
-return $default(_that.version,_that.selectedAccountId,_that.accounts);case _:
+return $default(_that.version,_that.selectedAccountUuid,_that.accounts);case _:
   return orElse();
 
 }
@@ -176,10 +176,10 @@ return $default(_that.version,_that.selectedAccountId,_that.accounts);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int version,  String selectedAccountId,  List<Account> accounts)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int version,  String selectedAccountUuid,  List<Account> accounts)  $default,) {final _that = this;
 switch (_that) {
 case _AccountsConfig():
-return $default(_that.version,_that.selectedAccountId,_that.accounts);case _:
+return $default(_that.version,_that.selectedAccountUuid,_that.accounts);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +196,10 @@ return $default(_that.version,_that.selectedAccountId,_that.accounts);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int version,  String selectedAccountId,  List<Account> accounts)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int version,  String selectedAccountUuid,  List<Account> accounts)?  $default,) {final _that = this;
 switch (_that) {
 case _AccountsConfig() when $default != null:
-return $default(_that.version,_that.selectedAccountId,_that.accounts);case _:
+return $default(_that.version,_that.selectedAccountUuid,_that.accounts);case _:
   return null;
 
 }
@@ -210,12 +210,12 @@ return $default(_that.version,_that.selectedAccountId,_that.accounts);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _AccountsConfig implements AccountsConfig {
-  const _AccountsConfig({this.version = 1, this.selectedAccountId = '', final  List<Account> accounts = const []}): _accounts = accounts;
+class _AccountsConfig extends AccountsConfig {
+  const _AccountsConfig({this.version = 1, this.selectedAccountUuid = '', final  List<Account> accounts = const []}): _accounts = accounts,super._();
   factory _AccountsConfig.fromJson(Map<String, dynamic> json) => _$AccountsConfigFromJson(json);
 
 @override@JsonKey() final  int version;
-@override@JsonKey() final  String selectedAccountId;
+@override@JsonKey() final  String selectedAccountUuid;
  final  List<Account> _accounts;
 @override@JsonKey() List<Account> get accounts {
   if (_accounts is EqualUnmodifiableListView) return _accounts;
@@ -237,16 +237,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountsConfig&&(identical(other.version, version) || other.version == version)&&(identical(other.selectedAccountId, selectedAccountId) || other.selectedAccountId == selectedAccountId)&&const DeepCollectionEquality().equals(other._accounts, _accounts));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountsConfig&&(identical(other.version, version) || other.version == version)&&(identical(other.selectedAccountUuid, selectedAccountUuid) || other.selectedAccountUuid == selectedAccountUuid)&&const DeepCollectionEquality().equals(other._accounts, _accounts));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,version,selectedAccountId,const DeepCollectionEquality().hash(_accounts));
+int get hashCode => Object.hash(runtimeType,version,selectedAccountUuid,const DeepCollectionEquality().hash(_accounts));
 
 @override
 String toString() {
-  return 'AccountsConfig(version: $version, selectedAccountId: $selectedAccountId, accounts: $accounts)';
+  return 'AccountsConfig(version: $version, selectedAccountUuid: $selectedAccountUuid, accounts: $accounts)';
 }
 
 
@@ -257,7 +257,7 @@ abstract mixin class _$AccountsConfigCopyWith<$Res> implements $AccountsConfigCo
   factory _$AccountsConfigCopyWith(_AccountsConfig value, $Res Function(_AccountsConfig) _then) = __$AccountsConfigCopyWithImpl;
 @override @useResult
 $Res call({
- int version, String selectedAccountId, List<Account> accounts
+ int version, String selectedAccountUuid, List<Account> accounts
 });
 
 
@@ -274,10 +274,10 @@ class __$AccountsConfigCopyWithImpl<$Res>
 
 /// Create a copy of AccountsConfig
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? version = null,Object? selectedAccountId = null,Object? accounts = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? version = null,Object? selectedAccountUuid = null,Object? accounts = null,}) {
   return _then(_AccountsConfig(
 version: null == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
-as int,selectedAccountId: null == selectedAccountId ? _self.selectedAccountId : selectedAccountId // ignore: cast_nullable_to_non_nullable
+as int,selectedAccountUuid: null == selectedAccountUuid ? _self.selectedAccountUuid : selectedAccountUuid // ignore: cast_nullable_to_non_nullable
 as String,accounts: null == accounts ? _self._accounts : accounts // ignore: cast_nullable_to_non_nullable
 as List<Account>,
   ));

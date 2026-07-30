@@ -6,15 +6,30 @@ part 'accounts_config.g.dart';
 
 @freezed
 abstract class AccountsConfig with _$AccountsConfig {
+  const AccountsConfig._();
+
   const factory AccountsConfig({
     @Default(1) int version,
 
-    @Default('') String selectedAccountId,
+    @Default('') String selectedAccountUuid,
 
     @Default([]) List<Account> accounts,
   }) = _AccountsConfig;
 
-  // JSON 反序列化支持
+  /// 获取当前所选账号
+  Account? get selectedAccount {
+    if (selectedAccountUuid.isEmpty) return null;
+
+    try {
+      return accounts.firstWhere(
+        (account) => account.uuid == selectedAccountUuid,
+      );
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// JSON 反序列化支持
   factory AccountsConfig.fromJson(Map<String, dynamic> json) =>
       _$AccountsConfigFromJson(json);
 }

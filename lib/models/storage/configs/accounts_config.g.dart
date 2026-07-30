@@ -9,7 +9,7 @@ part of 'accounts_config.dart';
 _AccountsConfig _$AccountsConfigFromJson(Map<String, dynamic> json) =>
     _AccountsConfig(
       version: (json['version'] as num?)?.toInt() ?? 1,
-      selectedAccountId: json['selectedAccountId'] as String? ?? '',
+      selectedAccountUuid: json['selectedAccountUuid'] as String? ?? '',
       accounts:
           (json['accounts'] as List<dynamic>?)
               ?.map((e) => Account.fromJson(e as Map<String, dynamic>))
@@ -20,6 +20,6 @@ _AccountsConfig _$AccountsConfigFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$AccountsConfigToJson(_AccountsConfig instance) =>
     <String, dynamic>{
       'version': instance.version,
-      'selectedAccountId': instance.selectedAccountId,
+      'selectedAccountUuid': instance.selectedAccountUuid,
       'accounts': instance.accounts,
     };
