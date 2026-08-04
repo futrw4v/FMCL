@@ -1,4 +1,4 @@
-import 'package:fmcl/models/storage/entities/dot_minecraft_path.dart';
+import 'package:fmcl/models/storage/entities/dot_minecraft_folder.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'paths_config.freezed.dart';
@@ -14,18 +14,9 @@ abstract class PathsConfig with _$PathsConfig {
 
     @Default('') String selectedPathId,
 
-    @Default([]) List<DotMinecraftPath> paths,
+    @Default([]) List<DotMinecraftFolder> paths,
   }) = _PathsConfig;
 
   factory PathsConfig.fromJson(Map<String, dynamic> json) =>
       _$PathsConfigFromJson(json);
-
-  DotMinecraftPath? get selectedPath {
-    if (selectedPathId.isEmpty) return null;
-    try {
-      return paths.firstWhere((p) => p.id == selectedPathId);
-    } catch (_) {
-      return null;
-    }
-  }
 }

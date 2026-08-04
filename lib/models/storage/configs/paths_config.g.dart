@@ -11,7 +11,7 @@ _PathsConfig _$PathsConfigFromJson(Map<String, dynamic> json) => _PathsConfig(
   selectedPathId: json['selectedPathId'] as String? ?? '',
   paths:
       (json['paths'] as List<dynamic>?)
-          ?.map((e) => DotMinecraftPath.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => DotMinecraftFolder.fromJson(e as Map<String, dynamic>))
           .toList() ??
       const [],
 );
