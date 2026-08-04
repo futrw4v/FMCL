@@ -3,24 +3,34 @@ import 'dart:async';
 import 'package:fmcl/storage/managers/json_manager.dart';
 import 'package:fmcl/utils/log_util.dart';
 
-abstract class AbstractJsonStorage<T> {
+class JsonStorage<T> {
   /// 目标 JSON 文件的相对路径
-  String get jsonPath;
+  final String jsonPath;
 
   /// 内存中缓存的数据模型
   T? _data;
+
   T get data => _data ?? createDefault();
 
-  /// 读写 JSON 的方法
-  T fromJson(Map<String, dynamic> json);
-  Map<String, dynamic> toJson(T data);
+  /// 读写 JSON
+  final T Function(Map<String, dynamic> json) fromJson;
+
+  final Map<String, dynamic> Function(T data) toJson;
 
   // 创建初始化默认对象的方法
-  T createDefault();
+  final T Function() createDefault;
 
   /// 防抖
   Timer? _debounceTimer;
   static const int kDefaultDebounceMilliseconds = 300;
+
+  /// 构造函数
+  JsonStorage({
+    required this.jsonPath,
+    required this.fromJson,
+    required this.toJson,
+    required this.createDefault,
+  });
 
   /// 全局初始化
   Future<void> load() async {
