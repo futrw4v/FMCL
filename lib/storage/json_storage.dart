@@ -58,8 +58,6 @@ class JsonStorage<T> {
     _debounceTimer?.cancel();
 
     // 开启一个新的延时任务来实现防抖
-    _debounceTimer?.cancel();
-
     _debounceTimer = Timer(
       const Duration(milliseconds: kDefaultDebounceMilliseconds),
       () async {
