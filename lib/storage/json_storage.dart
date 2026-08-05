@@ -1,9 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:fmcl/storage/managers/json_manager.dart';
 import 'package:fmcl/utils/log_util.dart';
 
-class JsonStorage<T> {
+class JsonStorage<T> extends ChangeNotifier {
   /// 目标 JSON 文件的相对路径
   final String jsonPath;
 
@@ -56,6 +57,8 @@ class JsonStorage<T> {
   Future<void> save(T newData) async {
     // 若有正在倒计时的定时器则取消它
     _debounceTimer?.cancel();
+
+    _data = newData;
 
     // 开启一个新的延时任务来实现防抖
     _debounceTimer = Timer(
