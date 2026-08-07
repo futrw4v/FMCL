@@ -23,7 +23,7 @@ class JsonStorage<T> extends ChangeNotifier {
 
   /// 防抖
   Timer? _debounceTimer;
-  static const int kDefaultDebounceMilliseconds = 300;
+  static const int kDefaultDebounceMilliseconds = 500;
 
   /// 构造函数
   JsonStorage({
