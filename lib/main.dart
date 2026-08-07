@@ -4,10 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fmcl/constants.dart';
 import 'package:fmcl/java/java_service.dart';
-import 'package:fmcl/notifiers/accounts_notifier.dart';
-import 'package:fmcl/notifiers/settings_notifier.dart';
+import 'package:fmcl/models/storage/configs/settings_config.dart';
 import 'package:fmcl/pages/home/main_start_page.dart';
 import 'package:fmcl/pages/online/owner_page.dart';
+import 'package:fmcl/storage/json_storage.dart';
 import 'package:fmcl/storage/storage_service.dart';
 import 'package:fmcl/utils/log_util.dart';
 import 'package:fmcl/utils/slide_page_route.dart';
@@ -35,8 +35,8 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => SettingsNotifier()),
-        ChangeNotifierProvider(create: (_) => AccountsNotifier()),
+        ChangeNotifierProvider.value(value: StorageService.settingsStorage),
+        ChangeNotifierProvider.value(value: StorageService.accountsStorage),
       ],
       child: const FMCLBaseApp(),
     ),
@@ -102,8 +102,8 @@ class FMCLBaseApp extends StatefulWidget {
 class FMCLBaseAppState extends State<FMCLBaseApp> {
   @override
   Widget build(BuildContext context) {
-    final settingsNotifier = context.watch<SettingsNotifier>();
-    final settings = settingsNotifier.settings;
+    final settingsNotifier = context.watch<JsonStorage<SettingsConfig>>();
+    final settings = settingsNotifier.data;
     final seedColor = Color(settings.themeColor);
 
     return MaterialApp(

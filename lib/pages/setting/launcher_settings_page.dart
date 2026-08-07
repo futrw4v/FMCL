@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart' show BlockPicker;
 import 'package:fmcl/constants.dart';
 import 'package:fmcl/models/enums/google_translate_api.dart';
-import 'package:fmcl/notifiers/settings_notifier.dart';
+import 'package:fmcl/models/storage/configs/settings_config.dart';
+import 'package:fmcl/storage/json_storage.dart';
 import 'package:fmcl/widgets/app_card.dart';
 import 'package:provider/provider.dart';
 
@@ -11,8 +12,8 @@ class LauncherSettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final settingsNotifier = context.watch<SettingsNotifier>();
-    final settings = settingsNotifier.settings;
+    final settingsNotifier = context.watch<JsonStorage<SettingsConfig>>();
+    final settings = settingsNotifier.data;
     final textTheme = Theme.of(context).textTheme;
 
     return ListView(
@@ -160,8 +161,11 @@ class LauncherSettingsPage extends StatelessWidget {
   }
 
   /// 颜色选择弹窗
-  void _selectColor(BuildContext context, SettingsNotifier settingsNotifier) {
-    final settings = settingsNotifier.settings;
+  void _selectColor(
+    BuildContext context,
+    JsonStorage<SettingsConfig> settingsStorage,
+  ) {
+    final settings = settingsStorage.data;
 
     showDialog(
       context: context,
@@ -189,7 +193,7 @@ class LauncherSettingsPage extends StatelessWidget {
               );
             },
             onColorChanged: (Color color) {
-              settingsNotifier.update(
+              settingsStorage.update(
                 settings.copyWith(themeColor: color.toARGB32()),
               );
             },

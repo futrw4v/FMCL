@@ -54,11 +54,14 @@ class JsonStorage<T> extends ChangeNotifier {
     }
   }
 
-  Future<void> save(T newData) async {
+  Future<void> update(T newData) async {
     // 若有正在倒计时的定时器则取消它
     _debounceTimer?.cancel();
 
     _data = newData;
+
+    // 立刻通知 Listeners
+    notifyListeners();
 
     // 开启一个新的延时任务来实现防抖
     _debounceTimer = Timer(
