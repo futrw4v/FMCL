@@ -62,7 +62,7 @@ class JsonManager {
       // 写入JSON到.tmp文件
       const encoder = JsonEncoder.withIndent('  ');
       final jsonString = encoder.convert(data);
-      await tempFile.writeAsString(jsonString, flush: true);
+      await tempFile.writeAsString(jsonString);
 
       // 原子重命名
       await tempFile.rename(targetPath);
