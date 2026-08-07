@@ -35,8 +35,8 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(value: StorageService.settingsStorage),
-        ChangeNotifierProvider.value(value: StorageService.accountsStorage),
+        ChangeNotifierProvider.value(value: StorageService.settingsJson),
+        ChangeNotifierProvider.value(value: StorageService.accountsJson),
       ],
       child: const FMCLBaseApp(),
     ),
