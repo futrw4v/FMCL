@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PathsConfig {
 
- int get version; String get selectedPathId; List<DotMinecraftFolder> get paths;
+ int get version; String get selectedPath; List<DotMinecraftFolder> get paths;
 /// Create a copy of PathsConfig
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PathsConfigCopyWith<PathsConfig> get copyWith => _$PathsConfigCopyWithImpl<Path
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PathsConfig&&(identical(other.version, version) || other.version == version)&&(identical(other.selectedPathId, selectedPathId) || other.selectedPathId == selectedPathId)&&const DeepCollectionEquality().equals(other.paths, paths));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PathsConfig&&(identical(other.version, version) || other.version == version)&&(identical(other.selectedPath, selectedPath) || other.selectedPath == selectedPath)&&const DeepCollectionEquality().equals(other.paths, paths));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,version,selectedPathId,const DeepCollectionEquality().hash(paths));
+int get hashCode => Object.hash(runtimeType,version,selectedPath,const DeepCollectionEquality().hash(paths));
 
 @override
 String toString() {
-  return 'PathsConfig(version: $version, selectedPathId: $selectedPathId, paths: $paths)';
+  return 'PathsConfig(version: $version, selectedPath: $selectedPath, paths: $paths)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $PathsConfigCopyWith<$Res>  {
   factory $PathsConfigCopyWith(PathsConfig value, $Res Function(PathsConfig) _then) = _$PathsConfigCopyWithImpl;
 @useResult
 $Res call({
- int version, String selectedPathId, List<DotMinecraftFolder> paths
+ int version, String selectedPath, List<DotMinecraftFolder> paths
 });
 
 
@@ -65,10 +65,10 @@ class _$PathsConfigCopyWithImpl<$Res>
 
 /// Create a copy of PathsConfig
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? version = null,Object? selectedPathId = null,Object? paths = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? version = null,Object? selectedPath = null,Object? paths = null,}) {
   return _then(_self.copyWith(
 version: null == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
-as int,selectedPathId: null == selectedPathId ? _self.selectedPathId : selectedPathId // ignore: cast_nullable_to_non_nullable
+as int,selectedPath: null == selectedPath ? _self.selectedPath : selectedPath // ignore: cast_nullable_to_non_nullable
 as String,paths: null == paths ? _self.paths : paths // ignore: cast_nullable_to_non_nullable
 as List<DotMinecraftFolder>,
   ));
@@ -155,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int version,  String selectedPathId,  List<DotMinecraftFolder> paths)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int version,  String selectedPath,  List<DotMinecraftFolder> paths)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PathsConfig() when $default != null:
-return $default(_that.version,_that.selectedPathId,_that.paths);case _:
+return $default(_that.version,_that.selectedPath,_that.paths);case _:
   return orElse();
 
 }
@@ -176,10 +176,10 @@ return $default(_that.version,_that.selectedPathId,_that.paths);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int version,  String selectedPathId,  List<DotMinecraftFolder> paths)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int version,  String selectedPath,  List<DotMinecraftFolder> paths)  $default,) {final _that = this;
 switch (_that) {
 case _PathsConfig():
-return $default(_that.version,_that.selectedPathId,_that.paths);case _:
+return $default(_that.version,_that.selectedPath,_that.paths);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +196,10 @@ return $default(_that.version,_that.selectedPathId,_that.paths);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int version,  String selectedPathId,  List<DotMinecraftFolder> paths)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int version,  String selectedPath,  List<DotMinecraftFolder> paths)?  $default,) {final _that = this;
 switch (_that) {
 case _PathsConfig() when $default != null:
-return $default(_that.version,_that.selectedPathId,_that.paths);case _:
+return $default(_that.version,_that.selectedPath,_that.paths);case _:
   return null;
 
 }
@@ -211,11 +211,11 @@ return $default(_that.version,_that.selectedPathId,_that.paths);case _:
 @JsonSerializable()
 
 class _PathsConfig extends PathsConfig {
-  const _PathsConfig({this.version = 1, this.selectedPathId = '', final  List<DotMinecraftFolder> paths = const []}): _paths = paths,super._();
+  const _PathsConfig({this.version = 1, this.selectedPath = '', final  List<DotMinecraftFolder> paths = const []}): _paths = paths,super._();
   factory _PathsConfig.fromJson(Map<String, dynamic> json) => _$PathsConfigFromJson(json);
 
 @override@JsonKey() final  int version;
-@override@JsonKey() final  String selectedPathId;
+@override@JsonKey() final  String selectedPath;
  final  List<DotMinecraftFolder> _paths;
 @override@JsonKey() List<DotMinecraftFolder> get paths {
   if (_paths is EqualUnmodifiableListView) return _paths;
@@ -237,16 +237,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PathsConfig&&(identical(other.version, version) || other.version == version)&&(identical(other.selectedPathId, selectedPathId) || other.selectedPathId == selectedPathId)&&const DeepCollectionEquality().equals(other._paths, _paths));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PathsConfig&&(identical(other.version, version) || other.version == version)&&(identical(other.selectedPath, selectedPath) || other.selectedPath == selectedPath)&&const DeepCollectionEquality().equals(other._paths, _paths));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,version,selectedPathId,const DeepCollectionEquality().hash(_paths));
+int get hashCode => Object.hash(runtimeType,version,selectedPath,const DeepCollectionEquality().hash(_paths));
 
 @override
 String toString() {
-  return 'PathsConfig(version: $version, selectedPathId: $selectedPathId, paths: $paths)';
+  return 'PathsConfig(version: $version, selectedPath: $selectedPath, paths: $paths)';
 }
 
 
@@ -257,7 +257,7 @@ abstract mixin class _$PathsConfigCopyWith<$Res> implements $PathsConfigCopyWith
   factory _$PathsConfigCopyWith(_PathsConfig value, $Res Function(_PathsConfig) _then) = __$PathsConfigCopyWithImpl;
 @override @useResult
 $Res call({
- int version, String selectedPathId, List<DotMinecraftFolder> paths
+ int version, String selectedPath, List<DotMinecraftFolder> paths
 });
 
 
@@ -274,10 +274,10 @@ class __$PathsConfigCopyWithImpl<$Res>
 
 /// Create a copy of PathsConfig
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? version = null,Object? selectedPathId = null,Object? paths = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? version = null,Object? selectedPath = null,Object? paths = null,}) {
   return _then(_PathsConfig(
 version: null == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
-as int,selectedPathId: null == selectedPathId ? _self.selectedPathId : selectedPathId // ignore: cast_nullable_to_non_nullable
+as int,selectedPath: null == selectedPath ? _self.selectedPath : selectedPath // ignore: cast_nullable_to_non_nullable
 as String,paths: null == paths ? _self._paths : paths // ignore: cast_nullable_to_non_nullable
 as List<DotMinecraftFolder>,
   ));

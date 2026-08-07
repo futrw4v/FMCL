@@ -12,7 +12,7 @@ abstract class PathsConfig with _$PathsConfig {
   const factory PathsConfig({
     @Default(1) int version,
 
-    @Default('') String selectedPathId,
+    @Default('') String selectedPath,
 
     @Default([]) List<DotMinecraftFolder> paths,
   }) = _PathsConfig;
