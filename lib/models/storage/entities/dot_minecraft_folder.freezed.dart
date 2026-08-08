@@ -211,8 +211,8 @@ return $default(_that.name,_that.path);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _DotMinecraftFolder implements DotMinecraftFolder {
-  const _DotMinecraftFolder({this.name = '', this.path = ''});
+class _DotMinecraftFolder extends DotMinecraftFolder {
+  const _DotMinecraftFolder({this.name = '', this.path = ''}): super._();
   factory _DotMinecraftFolder.fromJson(Map<String, dynamic> json) => _$DotMinecraftFolderFromJson(json);
 
 /// UI 上显示的名称

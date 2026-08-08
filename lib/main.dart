@@ -37,6 +37,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider.value(value: StorageService.settingsJson),
         ChangeNotifierProvider.value(value: StorageService.accountsJson),
+        ChangeNotifierProvider.value(value: StorageService.pathsJson),
       ],
       child: const FMCLBaseApp(),
     ),

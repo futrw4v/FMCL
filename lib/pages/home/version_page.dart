@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fmcl/utils/slide_page_route.dart';
+import 'package:fmcl/constants.dart';
+import 'package:fmcl/models/storage/configs/paths_config.dart';
+import 'package:fmcl/storage/extensions/paths_storage_ext.dart';
+import 'package:fmcl/storage/json_storage.dart';
 import 'package:fmcl/widgets/app_card.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:fmcl/pages/home/version/add_path_page.dart';
-import 'package:fmcl/pages/home/version/selected_game_page.dart';
+import 'package:provider/provider.dart';
 
 class VersionPage extends StatefulWidget {
   const VersionPage({super.key});
@@ -14,87 +14,42 @@ class VersionPage extends StatefulWidget {
 }
 
 class VersionPageState extends State<VersionPage> {
-  List<String> _pathList = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _loadPaths();
-  }
-
-  // 读取游戏文件夹列表
-  Future<void> _loadPaths() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _pathList = prefs.getStringList('PathList') ?? [];
-    });
-  }
-
-  // 获取文件夹路径
-  Future<String?> _getPath(String name) async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('Path_$name');
-  }
-
-  // 添加文件夹后刷新
-  Future<void> _addPath() async {
-    await Navigator.push(context, SlidePageRoute(page: const AddPathPage()));
-    _loadPaths();
-  }
-
-  // 刷新文件夹列表
-  Future<void> _refreshPaths(path) async {
-    Navigator.push(context, SlidePageRoute(page: SelectedGamePage(path: path)));
-    await _loadPaths();
-  }
-
-  // 选择文件夹
-  Future<void> _selectPath(String name) async {
-    if (!mounted) return;
-    _refreshPaths(name);
-  }
-
   @override
   Widget build(BuildContext context) {
+    final pathsStorage = context.watch<JsonStorage<PathsConfig>>();
+    final pathsConfig = pathsStorage.data;
+    final dotMinecraftFolders = pathsConfig.paths;
+
     return Scaffold(
       appBar: AppBar(title: const Text('版本文件夹管理')),
-      body: _pathList.isEmpty
+      body: dotMinecraftFolders.isEmpty
           ? const Center(child: Text('暂无版本文件夹'))
           : ListView.builder(
-              itemCount: _pathList.length,
+              padding: const EdgeInsets.all(kDefaultPadding),
+              itemCount: dotMinecraftFolders.length,
               itemBuilder: (context, index) {
+                final folder = dotMinecraftFolders[index];
+                final isSelected = folder.path == pathsConfig.selectedPath;
+
                 return AppCard(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 8,
                   ),
+                  color: isSelected
+                      ? Theme.of(context).colorScheme.secondaryContainer
+                      : null,
                   child: ListTile(
-                    title: Text(_pathList[index]),
-                    subtitle: FutureBuilder<String?>(
-                      future: _getPath(_pathList[index]),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Text('加载中...');
-                        } else if (snapshot.hasError) {
-                          return const Text('加载失败');
-                        } else {
-                          return Text(snapshot.data ?? '未知路径');
-                        }
-                      },
-                    ),
+                    title: Text(folder.name.isEmpty ? '游戏文件夹' : folder.name),
+                    subtitle: Text(folder.path),
                     leading: const Icon(Icons.folder),
                     onTap: () {
-                      _selectPath(_pathList[index]);
+                      pathsStorage.selectPath(folder.path);
                     },
                   ),
                 );
               },
             ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addPath,
-        child: const Icon(Icons.library_add),
-      ),
     );
   }
 }
