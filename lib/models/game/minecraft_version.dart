@@ -1,3 +1,4 @@
+import 'package:fmcl/models/enums/minecraft_version_type.dart';
 import 'package:fmcl/utils/log_util.dart';
 
 /// 从API解析出来的Minecraft版本
@@ -11,7 +12,7 @@ import 'package:fmcl/utils/log_util.dart';
 /// }
 class MinecraftVersion {
   final String id, url, time, releaseTime;
-  final VersionType type;
+  final MinecraftVersionType type;
   const MinecraftVersion({
     required this.id,
     required this.type,
@@ -27,7 +28,7 @@ class MinecraftVersion {
     try {
       return MinecraftVersion(
         id: json['id'] as String,
-        type: VersionType.fromString(json['type'] as String),
+        type: MinecraftVersionType.fromString(json['type'] as String),
         url: json['url'] as String,
         time: json['time'] as String,
         releaseTime: json['releaseTime'] as String,
@@ -41,62 +42,5 @@ class MinecraftVersion {
   @override
   String toString() {
     return 'MinecraftVersion(id: $id, type: $type, url: $url, time: $time, releaseTime: $releaseTime)';
-  }
-}
-
-enum VersionType {
-  release,
-  snapshot,
-  oldBeta,
-  oldAlpha,
-  unknown;
-
-  ///
-  /// 从字符串解析出对应的VersionType
-  ///
-  static VersionType fromString(String name) {
-    final normalizedName = name.toLowerCase().replaceAll('_', '');
-
-    try {
-      return values.firstWhere(
-        (type) => type.name.toLowerCase() == normalizedName,
-      );
-    } catch (e) {
-      LogUtil.log("无法将 '$name' 解析为 VersionType!", level: 'ERROR');
-      return VersionType.unknown;
-    }
-  }
-
-  ///
-  /// 确保输出的字符串与Mojang API返回的格式匹配
-  ///
-  @override
-  String toString() {
-    switch (this) {
-      case VersionType.oldBeta:
-        return 'old_beta';
-      case VersionType.oldAlpha:
-        return 'old_alpha';
-      default:
-        return name;
-    }
-  }
-
-  ///
-  /// 用于UI上的标签
-  ///
-  String getVersionTypeLabel() {
-    switch (this) {
-      case VersionType.release:
-        return '正式版';
-      case VersionType.snapshot:
-        return '快照版';
-      case VersionType.oldBeta:
-        return '远古Beta版';
-      case VersionType.oldAlpha:
-        return '远古Alpha版';
-      case VersionType.unknown:
-        return '未知';
-    }
   }
 }

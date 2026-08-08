@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fmcl/constants.dart';
+import 'package:fmcl/models/enums/minecraft_version_type.dart';
 import 'package:fmcl/models/game/minecraft_version.dart';
 import 'package:fmcl/pages/download/download_version/download_game_page.dart';
 import 'package:fmcl/utils/dio_client.dart';
@@ -25,28 +26,30 @@ class DownloadVersionPageState extends State<DownloadVersionPage> {
   ///
   /// 当前选择的版本，默认为正式版
   ///
-  Set<VersionType> _versionTypeSelection = <VersionType>{VersionType.release};
+  Set<MinecraftVersionType> _versionTypeSelection = <MinecraftVersionType>{
+    MinecraftVersionType.release,
+  };
 
   late Future<List<MinecraftVersion>> _versionsFuture;
   static final DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
 
   // 顶部ButtonSegments
-  static final segments = <ButtonSegment<VersionType>>[
-    ButtonSegment<VersionType>(
-      value: VersionType.release,
-      label: Text(VersionType.release.getVersionTypeLabel()),
+  static final segments = <ButtonSegment<MinecraftVersionType>>[
+    ButtonSegment<MinecraftVersionType>(
+      value: MinecraftVersionType.release,
+      label: Text(MinecraftVersionType.release.getVersionTypeLabel()),
     ),
-    ButtonSegment<VersionType>(
-      value: VersionType.snapshot,
-      label: Text(VersionType.snapshot.getVersionTypeLabel()),
+    ButtonSegment<MinecraftVersionType>(
+      value: MinecraftVersionType.snapshot,
+      label: Text(MinecraftVersionType.snapshot.getVersionTypeLabel()),
     ),
-    ButtonSegment<VersionType>(
-      value: VersionType.oldBeta,
-      label: Text(VersionType.oldBeta.getVersionTypeLabel()),
+    ButtonSegment<MinecraftVersionType>(
+      value: MinecraftVersionType.oldBeta,
+      label: Text(MinecraftVersionType.oldBeta.getVersionTypeLabel()),
     ),
-    ButtonSegment<VersionType>(
-      value: VersionType.oldAlpha,
-      label: Text(VersionType.oldAlpha.getVersionTypeLabel()),
+    ButtonSegment<MinecraftVersionType>(
+      value: MinecraftVersionType.oldAlpha,
+      label: Text(MinecraftVersionType.oldAlpha.getVersionTypeLabel()),
     ),
   ];
 
@@ -183,14 +186,15 @@ class DownloadVersionPageState extends State<DownloadVersionPage> {
                     width: double.infinity,
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
-                      child: SegmentedButton<VersionType>(
+                      child: SegmentedButton<MinecraftVersionType>(
                         segments: segments,
                         selected: _versionTypeSelection,
-                        onSelectionChanged: (Set<VersionType> newSelection) {
-                          setState(() {
-                            _versionTypeSelection = newSelection;
-                          });
-                        },
+                        onSelectionChanged:
+                            (Set<MinecraftVersionType> newSelection) {
+                              setState(() {
+                                _versionTypeSelection = newSelection;
+                              });
+                            },
                       ),
                     ),
                   ),
