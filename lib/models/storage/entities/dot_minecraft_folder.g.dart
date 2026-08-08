@@ -10,7 +10,16 @@ _DotMinecraftFolder _$DotMinecraftFolderFromJson(Map<String, dynamic> json) =>
     _DotMinecraftFolder(
       name: json['name'] as String? ?? '',
       path: json['path'] as String? ?? '',
+      versions:
+          (json['versions'] as List<dynamic>?)
+              ?.map((e) => MinecraftGame.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$DotMinecraftFolderToJson(_DotMinecraftFolder instance) =>
-    <String, dynamic>{'name': instance.name, 'path': instance.path};
+    <String, dynamic>{
+      'name': instance.name,
+      'path': instance.path,
+      'versions': instance.versions,
+    };
